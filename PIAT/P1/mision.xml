@@ -7,7 +7,7 @@
     xmlns:tns="http://www.piat.upm.es/misionSchemaXSD" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.piat.upm.es/misionSchemaXSD ./misionSchema.xsd"
-			
+
 	xmlns:id="http://www.piat.upm.es/identificacionSchemaXSD" 
 	xmlns:d="http://www.piat.upm.es/dronSchemaXSD"
 	xmlns:s="http://www.piat.upm.es/sensorSchemaXSD"
@@ -139,7 +139,7 @@
         </t:responsableTarea>
         <t:dronesTarea>
             <t:dronTarea>
-                <t:matricula>DR001</t:matricula>
+                <t:matricula>DR001</t:matricula> 
                 <t:actividadMision>tiene que analizar el agua del rio Manzanares</t:actividadMision>
             </t:dronTarea>
         </t:dronesTarea>

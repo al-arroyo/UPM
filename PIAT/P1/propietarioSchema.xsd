@@ -7,13 +7,13 @@
 <xsd:complexType name="tipoPropietario">
     <xsd:sequence>
         <xsd:element name="nombrePR" type="xsd:token"/>
-        <xsd:element name="contacto" type="tns:tipoContacto" maxOccurs="unbounded"/>
+        <xsd:element name="contacto" type="tns:tipoContacto"/>
     </xsd:sequence>
 </xsd:complexType>
 <xsd:complexType name="tipoContacto">
     <xsd:sequence>
-        <xsd:element name="email" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
-        <xsd:element name="email" minOccurs="0" type="xsd:string"/>
+        <xsd:element name="email" minOccurs="0" maxOccurs="unbounded" type="xsd:anyURI"/>
+        <xsd:element name="url" minOccurs="0" type="xsd:anyURI"/>
     </xsd:sequence>
     <xsd:attribute name="identificadorFiscal">
         <xsd:simpleType>

@@ -32,21 +32,30 @@
 </xsd:complexType>
 <xsd:complexType name="tipoDatosMision">
     <xsd:sequence>
-        <!-- DUDA para rellenar los elementos que faltan-->
-        <xsd:element name="descripcionDM"/>
-        <xsd:element name="formatoDatos"/>
-        <xsd:element name="lenguaje"/>
+        <xsd:element name="descripcionDM" type="tns:tipoDescripcionDM"/>
+        <xsd:element name="formatoDatos" type="tns:tipoFormatoDatos"/>
+        <xsd:element name="lenguaje" type="xsd:language"/>
         <xsd:element name="fecha" type="xsd:date"/>
-        <xsd:element name="datosSensores"/>
-        <xsd:element name="datosActuadores"/>
-        <xsd:element name="imagenes" minOccurs="0" maxOccurs="unbounded">
-            <xsd:complexType>
-                <xsd:all>
-                    <xsd:element name="imagen" type="i:tipoImagen"/>
-                </xsd:all>
-            </xsd:complexType>
-        </xsd:element>
+        <xsd:element name="datosSensores" type="xsd:string"/>
+        <xsd:element name="datosActuadores" type="xsd:string"/>
+        <xsd:element name="imagenes" minOccurs="0" maxOccurs="unbounded" type="tns:tipoImagen"/>
     </xsd:sequence>
     <xsd:attribute name="idDM" type="xsd:integer"/>
+</xsd:complexType>
+<xsd:complexType name="tipoDescripcionDM" mixed="true">
+    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="negrita"/>
+        <xsd:element name="cursiva"/>
+    </xsd:choice>
+</xsd:complexType>
+<xsd:simpleType name="tipoFormatoDatos">
+    <xsd:restriction base="xsd:string">
+        <xsd:pattern value="(XML|JSON|XSLX|CSV)"/>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="tipoImagen">
+    <xsd:all>
+        <xsd:element name="imagen" type="i:tipoImagen"/>
+    </xsd:all>
 </xsd:complexType>
 </xsd:schema>	
