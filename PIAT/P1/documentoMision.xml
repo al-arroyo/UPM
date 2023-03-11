@@ -9,33 +9,32 @@
     
     <tns:metadatos>
         <tns:identificacion version="a4b5"/>
-        <p:propietario identificadorFiscal="24243535A">
+        <tns:propietario identificadorFiscal="04798723A">
             <p:nombrePR>Alicia</p:nombrePR>
             <p:contacto>
-                <email>a.fernandez.alonso@alumnos.upm.es</email>
-                <url>https://worlds-highest-website.com/es/</url>
+                <p:email>a.fernandez.alonso@alumnos.upm.es</p:email>
+                <p:url>https://worlds-highest-website.com/es/</p:url>
             </p:contacto>
-        </p:propietario>
+        </tns:propietario>
     </tns:metadatos>
     <tns:datosMision idDM="124">
         <tns:descripcionDM>datos de la mision</tns:descripcionDM>
         <tns:formatoDatos>JSON</tns:formatoDatos>
-        <tns:lenguaje>I-1,</tns:lenguaje>
+        <tns:lenguaje>ES</tns:lenguaje>
         <tns:fecha>2023-03-22</tns:fecha>
         <tns:datosSensores><![CDATA[ datos de los sensores]]></tns:datosSensores>
         <tns:datosActuadores><![CDATA[ datos de los actuadores]]></tns:datosActuadores>
         <tns:imagenes>
-            <i:imagen idImagen="IMAG01">
+            <tns:imagen idImagen="IMAG01">
                 <i:datosImagen>
                     <i:dimensiones>
                         <i:ancho>476</i:ancho>
                         <i:alto>280</i:alto>
                     </i:dimensiones>
                     <i:descripcion>cadena de caracteres de longitud indefinida</i:descripcion>
-                    <i:contenido formato="GIF">
-                    </i:contenido>
+                    <i:contenido formato="GIF"/>
                 </i:datosImagen>
-            </i:imagen>
+            </tns:imagen>
         </tns:imagenes>
     </tns:datosMision>
 </tns:documentoMision>
