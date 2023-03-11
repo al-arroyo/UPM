@@ -32,7 +32,7 @@
                         <i:alto>280</i:alto>
                     </i:dimensiones>
                     <i:descripcion>cadena de caracteres de longitud indefinida</i:descripcion>
-                    <i:contenido>jpeg</i:contenido>
+                    <i:contenido formato="i:gif"/>
                 </i:datosImagen>
             </tns:imagen>
         </tns:imagenes>
