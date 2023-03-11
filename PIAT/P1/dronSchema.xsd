@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			targetNamespace="http://www.piat.upm.es/dronSchemaXSD" 
+			xmlns:tns="http://www.piat.upm.es/dronSchemaXSD" 
+			xmlns:s="http://www.piat.upm.es/sensoresSchemaXSD"
+			xmlns:a="http://www.piat.upm.es/actuadoresSchemaXSD" 
+			elementFormDefault="qualified">
+<xsd:import namespace="http://www.piat.upm.es/sensoresSchemaXSD" schemaLocation="./sensoresSchema.xsd"/>
+<xsd:import namespace="http://www.piat.upm.es/actuadoresSchemaXSD" schemaLocation="./actuadoresSchema.xsd"/>
+
+<xsd:element name="dron" type="tns:tipoDron"/>
+<xsd:complexType name="tipoDron">
+	<xsd:sequence>
+		<xsd:element name="claseDron" type="tns:tipoClaseDron"/>
+		<xsd:element name="homologaciones" type="tns:tipoHomologaciones" maxOccurs="unbounded"/>
+		<xsd:element name="configuracionDron" type="tns:tipoConfiguracionDron"/>
+	</xsd:sequence>
+	<xsd:attribute name="matriculaDron" type="tns:tipoIdDron" use="required"/>
+</xsd:complexType>
+<xsd:simpleType name="tipoClaseDron">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="(autónomo|controlado|monitorizado) [0-9]"/>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="tipoHomologaciones">
+	<xsd:all>
+		<xsd:element name="nacional" type="xsd:string"/>
+		<xsd:element name="internacional" type="xsd:string"/>
+	</xsd:all>
+</xsd:complexType>
+<xsd:complexType name="tipoConfiguracionDron">
+	<xsd:sequence>
+		<xsd:element name="sensores" type="s:tipoSensores" minOccurs="0">
+			<xsd:key name="idSensorKey">
+				<xsd:selector xpath="./s:sensor"/>
+				<xsd:field xpath="@idSensor"/>
+			</xsd:key>
+		</xsd:element>
+		<xsd:element name="actuadores" type="a:tipoActuadores" minOccurs="0">
+			<xsd:key name="idActuadorKey">
+				<xsd:selector xpath="./a:actuador"/>
+				<xsd:field xpath="@idActuador"/>
+			</xsd:key>
+		</xsd:element>
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:simpleType name="tipoIdDron">
+	<xsd:restriction base="xsd:string">
+	 <xsd:pattern value="[a-zA-Z]{5}[0-9]"/>
+	</xsd:restriction>
+</xsd:simpleType>
+</xsd:schema>	

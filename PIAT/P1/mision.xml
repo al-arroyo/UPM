@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+<tns:mision 
+    xmlns:tns="http://www.piat.upm.es/misionSchemaXSD" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.piat.upm.es/misionSchemaXSD ./misionSchema.xsd"
+			
+	xmlns:id="http://www.piat.upm.es/identificacionSchemaXSD" 
+	xmlns:d="http://www.piat.upm.es/dronSchemaXSD"
+	xmlns:s="http://www.piat.upm.es/sensorSchemaXSD"
+	xmlns:a="http://www.piat.upm.es/actuadorSchemaXSD"
+	xmlns:t="http://www.piat.upm.es/tareaSchemaXSD">
+
+
+<tns:identificacion codigoMision="M145ab">
+    <id:descripcion>
+         La misión consiste en <id:keyword> reparar </id:keyword> una
+        <id:keyword> conexión </id:keyword> de <id:keyword> una torre de media tensión </id:keyword> del Campus Sur.
+    </id:descripcion>
+</tns:identificacion>
+<tns:drones>
+        <tns:dron matriculaDron="DRONA1">
+            <d:claseDron>controlado 5</d:claseDron>
+            <d:homologaciones>
+                <d:nacional>Madrid1</d:nacional>
+                <d:internacional>España37</d:internacional>
+            </d:homologaciones>
+            <d:configuracionDron>
+                <d:sensores>
+                    <s:numeroSensores>3</s:numeroSensores>
+                    <s:sensor idSensor="SEN1-sm">
+                        <s:elementoSensado>salinidad del agua</s:elementoSensado>
+                        <s:rango>
+                            1
+                            13.5
+                            19
+                        </s:rango>
+                    </s:sensor>
+                    <s:sensor idSensor="SEN2-sm">
+                        <s:elementoSensado>temperatura del agua</s:elementoSensado>
+                        <s:rango>
+                            7
+                            33.225
+                            18.42
+                        </s:rango>
+                    </s:sensor>
+                    <s:sensor idSensor="SEN4-sm">
+                        <s:elementoSensado>aturacion de oxigeno</s:elementoSensado>
+                        <s:rango>
+                            8
+                            5.3
+                            22
+                        </s:rango>
+                    </s:sensor>
+                </d:sensores>
+            <d:actuadores>
+                <a:numeroActuadores>2</a:numeroActuadores>
+                <a:actuador idActuador="AC$01">
+                    <alcanceActuacion>
+                        <tipoActuacion>Urgente</tipoActuacion>
+                        <fechasActuacion>
+                            2023-03-01
+                            2023-03-05
+                        </fechasActuacion>
+                    </alcanceActuacion>
+                </a:actuador>
+                <a:actuador idActuador="AC$02">
+                    <alcanceActuacion>
+                        <tipoActuacion>Normal</tipoActuacion>
+                        <fechasActuacion>
+                            2023-03-15
+                            2023-03-25
+                        </fechasActuacion>
+                    </alcanceActuacion>
+                </a:actuador>
+            </d:actuadores>
+        </d:configuracionDron>
+    </tns:dron>
+    <tns:dron matriculaDron="DRONA2">
+        <d:claseDron>autónomo 2</d:claseDron>
+        <d:homologaciones>
+            <d:nacional>Valencia3</d:nacional>
+            <d:internacional>España103</d:internacional>
+        </d:homologaciones>
+        <d:configuracionDron>
+            <d:sensores>
+                <s:numeroSensores>2</s:numeroSensores>
+                <s:sensor idSensor="SEN1-sm">
+                    <s:elementoSensado>organismos detectados</s:elementoSensado>
+                    <s:rango>
+                        43
+                        73.5
+                        107
+                    </s:rango>
+                </s:sensor>
+                <s:sensor idSensor="SEN2-sm">
+                    <s:elementoSensado>mediciones ultravioleta</s:elementoSensado>
+                    <s:rango>
+                        2
+                        5
+                        9
+                    </s:rango>
+                </s:sensor>
+            </d:sensores>
+            <d:actuadores>
+                <a:numeroActuadores>2</a:numeroActuadores>
+                <a:actuador idActuador="AC$11">
+                    <a:alcanceActuacion>
+                        <a:tipoActuacion>Normal</a:tipoActuacion>
+                        <a:fechasActuacion>
+                            2023-03-01
+                            2023-03-05
+                        </a:fechasActuacion>
+                    </a:alcanceActuacion>
+                </a:actuador>
+                <a:actuador idActuador="AC$22">
+                    <a:alcanceActuacion>
+                        <a:tipoActuacion>Normal</a:tipoActuacion>
+                        <a:fechasActuacion>
+                            2023-03-05
+                            2023-03-07
+                        </a:fechasActuacion>
+                    </a:alcanceActuacion>
+                </a:actuador>
+            </d:actuadores>
+        </d:configuracionDron>
+    </tns:dron>
+</tns:drones>
+<tns:tareas>
+    <tns:tarea idTarea="TAR-00001">
+        <t:descripcionTarea>analizar el agua</t:descripcionTarea>
+        <t:responsableTarea>
+            <t:email>ba.rodriguez@upm.es</t:email>
+            <t:email>g.fernandez@alumnos.upm.es</t:email>
+            <t:url>https://cat-bounce.com/</t:url>
+        </t:responsableTarea>
+        <t:dronesTarea>
+            <t:dronTarea>
+                <t:matricula>DR001</t:matricula>
+                <t:actividadMision>tiene que analizar el agua del rio Manzanares</t:actividadMision>
+            </t:dronTarea>
+        </t:dronesTarea>
+        <t:areaGeografica>
+            <t:centro>
+                <t:longitud>-3.3679400</t:longitud>
+                <t:latitud>39.0172200</t:latitud>
+            </t:centro>
+            <t:profundidad>
+                0.30
+                3.5
+            </t:profundidad>
+            <t:forma>esfera</t:forma>
+        </t:areaGeografica>
+    </tns:tarea>
+    <tns:tarea idTarea="TAR-00002">
+        <t:descripcionTarea>Detección de organismos</t:descripcionTarea>
+        <t:responsableTarea>
+            <t:email>g.rodriguez.gutierrez@upm.es</t:email>
+            <t:email>al.garcia@alumnos.upm.es</t:email>
+            <t:url>https://es.eurobilltracker.com/</t:url>
+        </t:responsableTarea>
+        <t:dronesTarea>
+            <t:dronTarea>
+                <t:matricula>DR002</t:matricula>
+                <t:actividadMision>tiene que analizar la tierra del parque Chera Sot de Chera</t:actividadMision>
+            </t:dronTarea>
+        </t:dronesTarea>
+        <t:areaGeografica>
+            <t:centro>
+                <t:longitud>-0.910013</t:longitud>
+                <t:latitud>39.6211</t:latitud>
+            </t:centro>
+            <t:profundidad>
+                10
+                30
+            </t:profundidad>
+            <t:forma>paralelepípedo</t:forma>
+        </t:areaGeografica>
+    </tns:tarea>
+</tns:tareas>
+</tns:mision>

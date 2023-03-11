@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			targetNamespace="http://www.piat.upm.es/sensoresSchemaXSD" 
+			xmlns:tns="http://www.piat.upm.es/sensoresSchemaXSD" 
+			elementFormDefault="qualified">
+<xsd:element name="sensores" type="tns:tipoSensores"/>
+<xsd:complexType name="tipoSensores">
+    <xsd:sequence>
+        <xsd:element name="numeroSensores" type="xsd:integer"/>
+        <xsd:element name="sensor" type="tns:tipoSensor" maxOccurs="unbounded"/>
+     </xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoSensor">
+    <xsd:sequence>
+        <xsd:element name="elementoSensado" type="xsd:string"/>
+        <xsd:element name="rango" type="tns:tipoRango2"/>
+    </xsd:sequence>
+    <xsd:attribute name="idSensor" type="tns:tipoIdSensor" use="required"/>
+</xsd:complexType>
+<xsd:simpleType name="tipoRango">
+    <xsd:list itemType="tns:intOrDouble"/>
+</xsd:simpleType>
+<xsd:simpleType name="tipoRango2">
+    <xsd:restriction base="tns:tipoRango">
+        <xsd:maxLength value="3"></xsd:maxLength>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tipoIdSensor">
+    <xsd:restriction base="xsd:string">
+        <xsd:pattern value="[A-Z]{3}[0-9][-][a-z]{2}"/>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="intOrDouble">
+    <xsd:union memberTypes="xsd:integer 
+                            xsd:double"/>
+</xsd:simpleType>
+</xsd:schema>

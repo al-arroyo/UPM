@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			targetNamespace="http://www.piat.upm.es/imagenSchemaXSD" 
+			xmlns:tns="http://www.piat.upm.es/imagenSchemaXSD" 
+			elementFormDefault="qualified">
+<xsd:element name="imagen" type="tns:tipoImagen"/>
+<xsd:complexType name="tipoImagen">
+    <xsd:sequence>
+        <xsd:element name="datosImagen" type="tns:tipoDatosImagen"/>
+    </xsd:sequence>
+    <xsd:attribute name="idImagen">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:pattern value="IMAG[0-9]{2}"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:attribute>
+</xsd:complexType>
+<xsd:complexType name="tipoDatosImagen">
+    <xsd:sequence>
+        <xsd:element name="dimensiones" type="tns:tipoDimensiones"/>
+        <xsd:element name="descripcion" type="xsd:string" minOccurs="0"/>
+        <xsd:element name="contenido" type="tns:tipoContenido"/>
+    </xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoDimensiones">
+    <xsd:sequence>
+        <xsd:element name="ancho" type="xsd:double"/>
+        <xsd:element name="alto" type="xsd:double"/>
+    </xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoContenido">
+    <xsd:attribute name="formato">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:token">
+                <xsd:enumeration value="GIF"/>
+                <xsd:enumeration value="JPEG"/>
+                <xsd:enumeration value="PNG"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:attribute>
+</xsd:complexType>
+</xsd:schema>

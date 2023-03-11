@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			targetNamespace="http://www.piat.upm.es/tareaSchemaXSD" 
+			xmlns:tns="http://www.piat.upm.es/tareaSchemaXSD" 
+			elementFormDefault="qualified"> 
+<xsd:element name="tareas" type="tns:tipoTareas"/>
+<xsd:complexType name="tipoTareas">
+	<xsd:sequence maxOccurs="unbounded">
+		<xsd:element name="tarea" type="tns:tipoTarea"/>
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoTarea">
+	<xsd:sequence>
+		<xsd:element name="descripcionTarea" type="xsd:string"/>
+		<xsd:element name="responsableTarea" type="tns:tipoResponsable" minOccurs="0"/>
+		<xsd:element name="dronesTarea" type="tns:tipoDronTarea"/>
+		<xsd:element name="areaGeografica" type="tns:tipoAreaGeografica"/>
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoResponsable">
+	<xsd:sequence>
+		<xsd:element name="email" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+		</xsd:element>
+		<xsd:element name="url" minOccurs="0" type="xsd:string"/>
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoDronTarea">
+	<xsd:sequence maxOccurs="unbounded">
+		<xsd:element name="dronTarea">
+			<xsd:complexType>
+				<xsd:all>
+					<xsd:element name="matricula">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:token">
+								<xsd:length value="5"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="actividadMision" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoAreaGeografica">
+	<xsd:sequence>
+		<xsd:element name="centro">
+			<xsd:complexType>
+				<xsd:sequence>
+					<xsd:element name="longitud" type="xsd:double"/>
+					<xsd:element name="latitud" type="xsd:double"/>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:element>
+		<xsd:element name="profundidad" minOccurs="2" maxOccurs="2">
+			<xsd:simpleType>
+				<xsd:list itemType="xsd:double"/>
+			</xsd:simpleType>
+		</xsd:element>
+		<xsd:element name="forma">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="esfera"/>
+					<xsd:enumeration value="cilindro"/>
+					<xsd:enumeration value="paralelepípedo"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:element>
+	</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>	

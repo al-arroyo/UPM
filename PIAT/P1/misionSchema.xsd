@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			targetNamespace="http://www.piat.upm.es/misionSchemaXSD" 
+			xmlns:tns="http://www.piat.upm.es/misionSchemaXSD" 
+            xmlns:id="http://www.piat.upm.es/identificacionSchemaXSD"
+            xmlns:d="http://www.piat.upm.es/dronSchemaXSD"
+            xmlns:t="http://www.piat.upm.es/tareaSchemaXSD" 
+			elementFormDefault="qualified">
+
+<xsd:import namespace="http://www.piat.upm.es/identificacionSchemaXSD" schemaLocation="./identificacionSchema.xsd"/>
+<xsd:import namespace="http://www.piat.upm.es/dronSchemaXSD" schemaLocation="./dronSchema.xsd"/>
+<xsd:import namespace="http://www.piat.upm.es/tareaSchemaXSD" schemaLocation="./tareaSchema.xsd"/>
+<xsd:element name="mision" type="tns:tipoMision"/>
+<xsd:complexType name="tipoMision">
+	<xsd:sequence>
+		<xsd:element name="identificacion" type="id:tipoIdentificacion"/>
+		<xsd:element name="drones" type="tns:tipoDron" />
+		<xsd:element name="tareas" type="tns:tipoTareas"/>
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoTareas">
+	<xsd:sequence maxOccurs="unbounded">
+		<xsd:element name="tarea" type="t:tipoTarea"/>
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoDron">
+	<xsd:sequence maxOccurs="unbounded">
+		<xsd:element name="dron" type="d:tipoDron"/>
+	</xsd:sequence> 
+</xsd:complexType>
+</xsd:schema>	

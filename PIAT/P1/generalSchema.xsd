@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			targetNamespace="http://www.piat.upm.es/generalSchemaXSD" 
+			xmlns:tns="http://www.piat.upm.es/generalSchemaXSD" 
+            xmlns:m="http://www.piat.upm.es/misionSchemaXSD" 
+            xmlns:d="http://www.piat.upm.es/documentoMisionSchemaXSD" 
+            elementFormDefault="qualified">
+
+            <xsd:import namespace="http://www.piat.upm.es/misionSchemaXSD" schemaLocation="./misionSchema.xsd"/>
+            <xsd:import namespace="http://www.piat.upm.es/documentoMisionSchemaXSD" schemaLocation="./documentoMisionSchema.xsd"/>
+<xsd:element name="generalMision" type="tns:tipoGeneral"/>
+<xsd:complexType name="tipoGeneral">
+    <xsd:sequence>
+        <xsd:element name="mision" type="m:tipoMision"/>
+        <xsd:element name="documentoMision" type="d:tipoDocumentoMision"/>
+    </xsd:sequence>
+</xsd:complexType>
+</xsd:schema>

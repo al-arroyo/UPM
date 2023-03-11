@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			targetNamespace="http://www.piat.upm.es/documentoMisionchemaXSD" 
+			xmlns:tns="http://www.piat.upm.es/documentoMisionchemaXSD" 
+            xmlns:p="http://www.piat.upm.es/propietarioSchemaXSD" 
+            xmlns:i="http://www.piat.upm.es/imagenSchemaXSD" 
+            elementFormDefault="qualified">
+
+<xsd:import namespace="http://www.piat.upm.es/propietarioSchemaXSD" schemaLocation="./propietarioSchema.xsd"/>
+<xsd:import namespace="http://www.piat.upm.es/imagenSchemaXSD" schemaLocation="./imagenSchema.xsd"/>
+<xsd:element name="documentoMision" type="tns:tipoDocumentoMision"/>
+<xsd:complexType name="tipoDocumentoMision">
+	<xsd:sequence>
+		<xsd:element name="metadatos" type="tns:tipoMetadatos"/>
+		<xsd:element name="datosMision" type="tns:tipoDatosMision" maxOccurs="unbounded"/>
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoMetadatos">
+    <xsd:sequence>
+        <xsd:element name="identificacion" type="tns:tipoIdentificacion"/>
+        <xsd:element name="propietario" type="p:tipoPropietario"/>
+    </xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="tipoIdentificacion">
+    <xsd:attribute name="version">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:token">
+                <xsd:pattern value="([a-z][0-9][A-Z]) {4}"></xsd:pattern>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:attribute>
+</xsd:complexType>
+<xsd:complexType name="tipoDatosMision">
+    <xsd:sequence>
+        <!-- DUDA para rellenar los elementos que faltan-->
+        <xsd:element name="descripcionDM"/>
+        <xsd:element name="formatoDatos"/>
+        <xsd:element name="lenguaje"/>
+        <xsd:element name="fecha" type="xsd:date"/>
+        <xsd:element name="datosSensores"/>
+        <xsd:element name="datosActuadores"/>
+        <xsd:element name="imagenes" minOccurs="0" maxOccurs="unbounded">
+            <xsd:complexType>
+                <xsd:all>
+                    <xsd:element name="imagen" type="i:tipoImagen"/>
+                </xsd:all>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="idDM" type="xsd:integer"/>
+</xsd:complexType>
+</xsd:schema>	
