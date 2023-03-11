@@ -10,8 +10,8 @@
 
 	xmlns:id="http://www.piat.upm.es/identificacionSchemaXSD" 
 	xmlns:d="http://www.piat.upm.es/dronSchemaXSD"
-	xmlns:s="http://www.piat.upm.es/sensorSchemaXSD"
-	xmlns:a="http://www.piat.upm.es/actuadorSchemaXSD"
+	xmlns:s="http://www.piat.upm.es/sensoresSchemaXSD"
+	xmlns:a="http://www.piat.upm.es/actuadoresSchemaXSD"
 	xmlns:t="http://www.piat.upm.es/tareaSchemaXSD">
 
 
@@ -30,7 +30,7 @@
             </d:homologaciones>
             <d:configuracionDron>
                 <d:sensores>
-                    <s:numeroSensores>3</s:numeroSensores>
+					<s:numeroSensores>3</s:numeroSensores>
                     <s:sensor idSensor="SEN1-sm">
                         <s:elementoSensado>salinidad del agua</s:elementoSensado>
                         <s:rango>
@@ -54,32 +54,32 @@
                             5.3
                             22
                         </s:rango>
-                    </s:sensor>
+					</s:sensor>
                 </d:sensores>
             <d:actuadores>
                 <a:numeroActuadores>2</a:numeroActuadores>
                 <a:actuador idActuador="AC$01">
-                    <alcanceActuacion>
-                        <tipoActuacion>Urgente</tipoActuacion>
-                        <fechasActuacion>
+                    <a:alcanceActuacion>
+                        <a:tipoActuacion>Urgente</a:tipoActuacion>
+                        <a:fechasActuacion>
                             2023-03-01
                             2023-03-05
-                        </fechasActuacion>
-                    </alcanceActuacion>
+                        </a:fechasActuacion>
+                    </a:alcanceActuacion>
                 </a:actuador>
                 <a:actuador idActuador="AC$02">
-                    <alcanceActuacion>
-                        <tipoActuacion>Normal</tipoActuacion>
-                        <fechasActuacion>
+                    <a:alcanceActuacion>
+                        <a:tipoActuacion>Normal</a:tipoActuacion>
+                        <a:fechasActuacion>
                             2023-03-15
                             2023-03-25
-                        </fechasActuacion>
-                    </alcanceActuacion>
+                        </a:fechasActuacion>
+                    </a:alcanceActuacion>
                 </a:actuador>
             </d:actuadores>
         </d:configuracionDron>
     </tns:dron>
-    <tns:dron matriculaDron="DRONA2">
+    <tns:dron matriculaDron="DRONA1">
         <d:claseDron>autónomo 2</d:claseDron>
         <d:homologaciones>
             <d:nacional>Valencia3</d:nacional>
@@ -152,10 +152,10 @@
                 0.30
                 3.5
             </t:profundidad>
-            <t:forma>esfera</t:forma>
+			<t:forma>esfera</t:forma>
         </t:areaGeografica>
     </tns:tarea>
-    <tns:tarea idTarea="TAR-00002">
+    <tns:tarea idTarea="TAR-00001">
         <t:descripcionTarea>Detección de organismos</t:descripcionTarea>
         <t:responsableTarea>
             <t:email>g.rodriguez.gutierrez@upm.es</t:email>

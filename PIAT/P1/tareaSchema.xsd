@@ -27,8 +27,8 @@
 <xsd:complexType name="tipoAreaGeografica">
 	<xsd:sequence>
 		<xsd:element name="centro" type="tns:tipoCentro"/>
-		<xsd:element name="profundidad" minOccurs="2" maxOccurs="2" type="tns:tipoProfundidad"/>
-		<xsd:element name="forma" type="tns:tipoForma"/>
+		<xsd:element name="profundidad" minOccurs="1" maxOccurs="2" type="tns:tipoProfundidad"/>
+		<xsd:element name="forma" type="tns:tipoForma" minOccurs="1" maxOccurs="unbounded"/>
 	</xsd:sequence>
 </xsd:complexType>
 <xsd:simpleType name="tipoIdTarea">

@@ -22,7 +22,7 @@
 </xsd:simpleType>
 <xsd:simpleType name="tipoRango2">
     <xsd:restriction base="tns:tipoRango">
-        <xsd:maxLength value="3"></xsd:maxLength>
+        <xsd:maxLength value="3"/>
     </xsd:restriction>
 </xsd:simpleType>
 <xsd:simpleType name="tipoIdSensor">

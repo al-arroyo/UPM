@@ -8,11 +8,37 @@
 
             <xsd:import namespace="http://www.piat.upm.es/misionSchemaXSD" schemaLocation="./misionSchema.xsd"/>
             <xsd:import namespace="http://www.piat.upm.es/documentoMisionchemaXSD" schemaLocation="./documentoMisionSchema.xsd"/>
-<xsd:element name="generalMision" type="tns:tipoGeneral"/>
-<xsd:complexType name="tipoGeneral">
+<xsd:element name="generalMision">
+<xsd:complexType>
     <xsd:sequence>
         <xsd:element name="mision" type="m:tipoMision"/>
         <xsd:element name="documentoMision" type="d:tipoDocumentoMision"/>
     </xsd:sequence>
 </xsd:complexType>
+<xsd:key name="codigoMision">
+	<xsd:selector xpath="./tns:mision/m:mision"/>
+	<xsd:field xpath="@codigoMision"/>
+</xsd:key>
+<xsd:keyref name="codigoMatriculaRef" refer="tns:codigoMision">
+	<xsd:selector xpath="./tns:mision/m:mision/m:identificacion"/>
+	<xsd:field xpath="m:codigoMision"/>
+</xsd:keyref>
+<xsd:key name="identificacion">
+	<xsd:selector xpath="./tns:documentoMision/d:documentoMision"/>
+	<xsd:field xpath="@identificacion"/>
+</xsd:key>
+<xsd:keyref name="identificacionRef" refer="tns:identificacion">
+	<xsd:selector xpath="./tns:documentoMision/d:documentoMision/d:metadatos"/>
+	<xsd:field xpath="d:identificacion"/>
+</xsd:keyref>
+</xsd:element>
+<xsd:complexType name="tipoDocumentoMision">
+	<xsd:attributeGroup ref="tns:grupo"/>
+</xsd:complexType>
+<xsd:attributeGroup name="grupo">
+	<xsd:attribute name="numeroOrden" type="xsd:integer">
+	</xsd:attribute>
+	<xsd:attribute name="propietario">
+	</xsd:attribute>
+</xsd:attributeGroup>
 </xsd:schema>

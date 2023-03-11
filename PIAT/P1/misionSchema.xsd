@@ -12,10 +12,10 @@
 <xsd:import namespace="http://www.piat.upm.es/tareaSchemaXSD" schemaLocation="./tareaSchema.xsd"/>
 <xsd:element name="mision" type="tns:tipoMision">
 	<xsd:key name="matriculaDron">
-		<xsd:selector xpath="./d:dron"/>
+		<xsd:selector xpath="./tns:drones/d:dron"/>
 		<xsd:field xpath="@matriculaDron"/>
 	</xsd:key>
-	<xsd:keyref name="matricularef" refer ="tns:matriculaDron">
+	<xsd:keyref name="matriculaDronRef" refer ="tns:matriculaDron">
 		<xsd:selector xpath="./tns:tareas/t:tarea/t:dronesTarea/t:dronTarea"/>
 		<xsd:field xpath="t:matricula"/>
 	</xsd:keyref>
@@ -23,8 +23,14 @@
 <xsd:complexType name="tipoMision">
 	<xsd:sequence>
 		<xsd:element name="identificacion" type="id:tipoIdentificacion"/>
-		<xsd:element name="drones" type="tns:tipoDron" />
-		<xsd:element name="tareas" type="tns:tipoTareas"/>
+		<xsd:element name="drones" type="tns:tipoDron">
+		</xsd:element>
+		<xsd:element name="tareas" type="tns:tipoTareas">
+			<xsd:key name="idTareakey">
+				<xsd:selector xpath="./t:tarea"/>
+				<xsd:field xpath="@idTarea"/>
+			</xsd:key>
+		</xsd:element>
 	</xsd:sequence>
 </xsd:complexType>
 <xsd:complexType name="tipoTareas">

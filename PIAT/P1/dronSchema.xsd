@@ -30,13 +30,13 @@
 </xsd:complexType>
 <xsd:complexType name="tipoConfiguracionDron">
 	<xsd:sequence>
-		<xsd:element name="sensores" type="s:tipoSensores" minOccurs="0">
+		<xsd:element name="sensores" type="s:tipoSensores" minOccurs="0" maxOccurs="unbounded">
 			<xsd:key name="idSensorKey">
 				<xsd:selector xpath="./s:sensor"/>
 				<xsd:field xpath="@idSensor"/>
 			</xsd:key>
 		</xsd:element>
-		<xsd:element name="actuadores" type="a:tipoActuadores" minOccurs="0">
+		<xsd:element name="actuadores" type="a:tipoActuadores" minOccurs="0" maxOccurs="unbounded">
 			<xsd:key name="idActuadorKey">
 				<xsd:selector xpath="./a:actuador"/>
 				<xsd:field xpath="@idActuador"/>
