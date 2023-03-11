@@ -11,6 +11,10 @@
 <xsd:import namespace="http://www.piat.upm.es/dronSchemaXSD" schemaLocation="./dronSchema.xsd"/>
 <xsd:import namespace="http://www.piat.upm.es/tareaSchemaXSD" schemaLocation="./tareaSchema.xsd"/>
 <xsd:element name="mision" type="tns:tipoMision">
+	<xsd:key name="matriculaDron">
+		<xsd:selector xpath="./d:dron"/>
+		<xsd:field xpath="@matriculaDron"/>
+	</xsd:key>
 	<xsd:keyref name="matricularef" refer ="tns:matriculaDron">
 		<xsd:selector xpath="./tns:tareas/t:tarea/t:dronesTarea/t:dronTarea"/>
 		<xsd:field xpath="t:matricula"/>
@@ -30,12 +34,7 @@
 </xsd:complexType>
 <xsd:complexType name="tipoDron">
 	<xsd:sequence maxOccurs="unbounded">
-		<xsd:element name="dron" type="d:tipoDron">
-			<xsd:key name="matriculaDron">
-				<xsd:selector xpath="./d:dron"/>
-				<xsd:field xpath="@matriculaDron"/>
-			</xsd:key>
-		</xsd:element>
+		<xsd:element name="dron" type="d:tipoDron"/>
 	</xsd:sequence> 
 </xsd:complexType>
 </xsd:schema>	
