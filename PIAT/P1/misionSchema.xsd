@@ -15,10 +15,6 @@
 		<xsd:selector xpath="./tns:tareas/tns:tarea"/>
 		<xsd:field xpath="@idTarea"/>
 	</xsd:key>
-	<xsd:key name="email">
-		<xsd:selector xpath="./tns:tareas/tns:tarea/t:responsable/t:email"/>
-		<xsd:field xpath="@email"/>
-	</xsd:key>
 	<xsd:key name="matriculaDron">
 		<xsd:selector xpath="./tns:drones/tns:dron"/>
 		<xsd:field xpath="@matriculaDron"/>
@@ -32,7 +28,12 @@
 	<xsd:sequence>
 		<xsd:element name="identificacion" type="id:tipoIdentificacion"/>
 		<xsd:element name="drones" type="tns:tipoDron"/>
-		<xsd:element name="tareas" type="tns:tipoTareas"/>
+		<xsd:element name="tareas" type="tns:tipoTareas">
+			<xsd:key name="email">
+				<xsd:selector xpath="./tns:tarea/tns:responsableTarea"/>
+				<xsd:field xpath="t:email"/>
+			</xsd:key>
+		</xsd:element>
 	</xsd:sequence>
 </xsd:complexType>
 <xsd:complexType name="tipoTareas">

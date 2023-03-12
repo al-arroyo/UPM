@@ -49,7 +49,7 @@
         <xsd:element name="datosActuadores" type="xsd:string"/>
         <xsd:element name="imagenes" minOccurs="0" type="tns:tipoImagen">
 			<xsd:key name="idImagen">
-				<xsd:selector xpath="./tns:idImagen"/>
+				<xsd:selector xpath="./tns:imagen"/>
 				<xsd:field xpath="@idImagen"/>
 			</xsd:key>
 		</xsd:element>

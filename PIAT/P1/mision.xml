@@ -129,10 +129,7 @@
     <tns:tarea idTarea="TAR-00001">
         <t:descripcionTarea>analizar el agua</t:descripcionTarea>
         <t:responsableTarea>
-            <t:email>ba.rodriguez@upm.es</t:email>
-			<t:email>ba.rodriguez@upm.es</t:email>
-			<t:email>ba.rodriguez@upm.es</t:email>
-            <t:email>g.fernandez@alumnos.upm.es</t:email>
+
             <t:url>https://cat-bounce.com/</t:url>
         </t:responsableTarea>
         <t:dronesTarea>
@@ -156,8 +153,10 @@
     <tns:tarea idTarea="TAR-00002">
         <t:descripcionTarea>Detección de organismos</t:descripcionTarea>
         <t:responsableTarea>
-            <t:email>g.rodriguez.gutierrez@upm.es</t:email>
-            <t:email>al.garcia@alumnos.upm.es</t:email>
+			<t:email>g.rodriguez.gutierrez@upm.es</t:email>
+			<t:email>al.garcia@alumnos.upm.es</t:email>
+			<t:email>g.rodriguez.gutierrez@upm.es</t:email>
+			<t:email>al.garcia@alumnos.upm.es</t:email>
             <t:url>https://es.eurobilltracker.com/</t:url>
         </t:responsableTarea>
         <t:dronesTarea>

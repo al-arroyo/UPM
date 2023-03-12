@@ -35,7 +35,7 @@
                     <i:contenido formato="i:gif"/>
                 </i:datosImagen>
             </tns:imagen>
-			<tns:imagen idImagen="IMAG01">
+			<tns:imagen idImagen="IMAG02">
                 <i:datosImagen>
                     <i:dimensiones>
                         <i:ancho>476</i:ancho>

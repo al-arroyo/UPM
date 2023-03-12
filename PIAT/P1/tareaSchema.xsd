@@ -6,11 +6,14 @@
 			elementFormDefault="qualified"> 
 <xsd:import namespace="http://www.piat.upm.es/dronSchemaXSD" schemaLocation="./dronSchema.xsd"/>
 
-<xsd:element name="tarea" type="tns:tipoTarea"/>
+<xsd:element name="tarea" type="tns:tipoTarea">
+
+</xsd:element>
 <xsd:complexType name="tipoTarea">
 	<xsd:sequence>
 		<xsd:element name="descripcionTarea" type="xsd:string"/>
-		<xsd:element name="responsableTarea" type="tns:tipoResponsable" minOccurs="0"/>
+		<xsd:element name="responsableTarea" type="tns:tipoResponsable" minOccurs="0">
+		</xsd:element>
 		<xsd:element name="dronesTarea" type="tns:tipoDronesTarea"/>
 		<xsd:element name="areaGeografica" type="tns:tipoAreaGeografica"/>
 	</xsd:sequence>
@@ -18,7 +21,8 @@
 </xsd:complexType>
 <xsd:complexType name="tipoResponsable">
 	<xsd:sequence>
-		<xsd:element name="email" type="xsd:anyURI" minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:element name="email" type="xsd:anyURI" minOccurs="0" maxOccurs="unbounded">
+		</xsd:element>
 		<xsd:element name="url" minOccurs="0" type="xsd:string"/>
 	</xsd:sequence>
 </xsd:complexType>
