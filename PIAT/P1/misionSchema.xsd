@@ -16,7 +16,7 @@
 		<xsd:field xpath="@idTarea"/>
 	</xsd:key>
 	<xsd:key name="email">
-		<xsd:selector xpath="./tns:tareas/tns:tarea/t:email"/>
+		<xsd:selector xpath="./tns:tareas/tns:tarea/t:responsable/t:email"/>
 		<xsd:field xpath="@email"/>
 	</xsd:key>
 	<xsd:key name="matriculaDron">
