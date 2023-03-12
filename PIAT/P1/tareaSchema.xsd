@@ -11,11 +11,11 @@
 	<xsd:sequence>
 		<xsd:element name="descripcionTarea" type="xsd:string"/>
 		<xsd:element name="responsableTarea" type="tns:tipoResponsable" minOccurs="0">
-			<xsd:key name="uniqueEmail">
-			<xsd:selector xpath="./tns:email"/>
+			<xsd:key name="refEmail">
+				<xsd:selector xpath="./tns:email"/>
 				<xsd:field xpath="."/>
 			</xsd:key>
-			<xsd:keyref name="emailRef" refer="tns:uniqueEmail">
+			<xsd:keyref name="emailRef" refer="tns:refEmail">
 				<xsd:selector xpath="tns:tarea/tns:responsableTarea"/>
 				<xsd:field xpath="tns:email"/>
 			</xsd:keyref>

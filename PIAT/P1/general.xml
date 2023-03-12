@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tns:general
-	xmlns:tns="http://www.piat.upm.es/generalSchemaXSD"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.piat.upm.es/generalSchemaXSD ./generalSchema.xsd"
-	
+    xmlns:tns="http://www.piat.upm.es/generalSchemaXSD"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.piat.upm.es/generalSchemaXSD ./generalSchema.xsd"
+
 	xmlns:m="http://www.piat.upm.es/misionSchemaXSD" 
 	xmlns:d="http://www.piat.upm.es/documentoMisionchemaXSD">
     <tns:mision>M1234ab</tns:mision>
