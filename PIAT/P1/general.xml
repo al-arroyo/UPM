@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<general>
-    <mision>M1234ab</mision>
-    <documentoMision numeroOrden="1" propietario="24243535A">
-		<identificacion>a4b5</identificacion>
-	</documentoMision>
-</general>
+<tns:general
+	xmlns:tns="http://www.piat.upm.es/generalSchemaXSD"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.piat.upm.es/generalSchemaXSD ./generalSchema.xsd"
+	
+	xmlns:m="http://www.piat.upm.es/misionSchemaXSD" 
+	xmlns:d="http://www.piat.upm.es/documentoMisionchemaXSD">
+    <tns:mision>M1234ab</tns:mision>
+    <tns:documentoMision numeroOrden="1" propietario="24243535A">
+		<d:identificacion>a4b5</d:identificacion>
+	</tns:documentoMision>
+</tns:general>

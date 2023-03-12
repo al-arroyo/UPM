@@ -8,7 +8,20 @@
 
 <xsd:import namespace="http://www.piat.upm.es/propietarioSchemaXSD" schemaLocation="./propietarioSchema.xsd"/>
 <xsd:import namespace="http://www.piat.upm.es/imagenSchemaXSD" schemaLocation="./imagenSchema.xsd"/>
-<xsd:element name="documentoMision" type="tns:tipoDocumentoMision"/>
+<xsd:element name="documentoMision" type="tns:tipoDocumentoMision">
+	<xsd:key name="identificadorFiscal">
+		<xsd:selector xpath="./tns:documentoMision/tns:metadatos/tns:propietario"/>
+		<xsd:field xpath="@identificadorFiscal"/>
+	</xsd:key>
+	<xsd:key name="idDM">
+		<xsd:selector xpath="./tns:documentoMision/tns:datosMision"/>
+		<xsd:field xpath="@idDM"/>
+	</xsd:key>
+	<xsd:key name="idImagen">
+		<xsd:selector xpath="./tns:documentoMision/tns:datosMision/tns:imagenes/tns:imagen"/>
+		<xsd:field xpath="@matriculaDron"/>
+	</xsd:key>
+</xsd:element>
 <xsd:complexType name="tipoDocumentoMision">
 	<xsd:sequence>
 		<xsd:element name="metadatos" type="tns:tipoMetadatos"/>
@@ -38,7 +51,7 @@
         <xsd:element name="fecha" type="xsd:date"/>
         <xsd:element name="datosSensores" type="xsd:string"/>
         <xsd:element name="datosActuadores" type="xsd:string"/>
-        <xsd:element name="imagenes" minOccurs="0" maxOccurs="unbounded" type="tns:tipoImagen"/>
+        <xsd:element name="imagenes" minOccurs="0" type="tns:tipoImagen"/>
     </xsd:sequence>
     <xsd:attribute name="idDM" type="xsd:integer"/>
 </xsd:complexType>
@@ -61,8 +74,8 @@
     </xsd:restriction>
 </xsd:simpleType>
 <xsd:complexType name="tipoImagen">
-    <xsd:all>
+    <xsd:sequence maxOccurs="unbounded">
         <xsd:element name="imagen" type="i:tipoImagen"/>
-    </xsd:all>
+    </xsd:sequence>
 </xsd:complexType>
 </xsd:schema>	

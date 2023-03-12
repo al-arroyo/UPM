@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
-
-
 <tns:mision 
-    xmlns:tns="http://www.piat.upm.es/misionSchemaXSD" 
+	xmlns:tns="http://www.piat.upm.es/misionSchemaXSD" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.piat.upm.es/misionSchemaXSD ./misionSchema.xsd"
 
@@ -79,7 +75,7 @@
             </d:actuadores>
         </d:configuracionDron>
     </tns:dron>
-    <tns:dron matriculaDron="DRONA1">
+    <tns:dron matriculaDron="DRONA2">
         <d:claseDron>autónomo 2</d:claseDron>
         <d:homologaciones>
             <d:nacional>Valencia3</d:nacional>
@@ -134,12 +130,14 @@
         <t:descripcionTarea>analizar el agua</t:descripcionTarea>
         <t:responsableTarea>
             <t:email>ba.rodriguez@upm.es</t:email>
+			<t:email>ba.rodriguez@upm.es</t:email>
+			<t:email>ba.rodriguez@upm.es</t:email>
             <t:email>g.fernandez@alumnos.upm.es</t:email>
             <t:url>https://cat-bounce.com/</t:url>
         </t:responsableTarea>
         <t:dronesTarea>
             <t:dronTarea>
-                <t:matricula>DR001</t:matricula> 
+                <t:matricula>DRONA1</t:matricula> 
                 <t:actividadMision>tiene que analizar el agua del rio Manzanares</t:actividadMision>
             </t:dronTarea>
         </t:dronesTarea>
@@ -155,7 +153,7 @@
 			<t:forma>esfera</t:forma>
         </t:areaGeografica>
     </tns:tarea>
-    <tns:tarea idTarea="TAR-00001">
+    <tns:tarea idTarea="TAR-00002">
         <t:descripcionTarea>Detección de organismos</t:descripcionTarea>
         <t:responsableTarea>
             <t:email>g.rodriguez.gutierrez@upm.es</t:email>
@@ -164,7 +162,7 @@
         </t:responsableTarea>
         <t:dronesTarea>
             <t:dronTarea>
-                <t:matricula>DR002</t:matricula>
+                <t:matricula>DRONA2</t:matricula>
                 <t:actividadMision>tiene que analizar la tierra del parque Chera Sot de Chera</t:actividadMision>
             </t:dronTarea>
         </t:dronesTarea>

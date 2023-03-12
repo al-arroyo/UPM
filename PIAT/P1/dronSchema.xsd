@@ -15,7 +15,7 @@
 		<xsd:element name="homologaciones" type="tns:tipoHomologaciones" maxOccurs="unbounded"/>
 		<xsd:element name="configuracionDron" type="tns:tipoConfiguracionDron"/>
 	</xsd:sequence>
-	<xsd:attribute name="matriculaDron" type="tns:tipoIdDron" use="required"/>
+	<xsd:attribute name="matriculaDron" type="tns:tipoMatriculaDron" use="required"/>
 </xsd:complexType>
 <xsd:simpleType name="tipoClaseDron">
     <xsd:restriction base="xsd:string">
@@ -44,7 +44,7 @@
 		</xsd:element>
 	</xsd:sequence>
 </xsd:complexType>
-<xsd:simpleType name="tipoIdDron">
+<xsd:simpleType name="tipoMatriculaDron">
 	<xsd:restriction base="xsd:string">
 	 <xsd:pattern value="[a-zA-Z]{5}[0-9]"/>
 	</xsd:restriction>

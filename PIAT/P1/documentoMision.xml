@@ -35,6 +35,16 @@
                     <i:contenido formato="i:gif"/>
                 </i:datosImagen>
             </tns:imagen>
+			<tns:imagen idImagen="IMAG01">
+                <i:datosImagen>
+                    <i:dimensiones>
+                        <i:ancho>476</i:ancho>
+                        <i:alto>280</i:alto>
+                    </i:dimensiones>
+                    <i:descripcion>cadena de caracteres de longitud indefinida</i:descripcion>
+                    <i:contenido formato="i:gif"/>
+                </i:datosImagen>
+            </tns:imagen>
         </tns:imagenes>
     </tns:datosMision>
 </tns:documentoMision>

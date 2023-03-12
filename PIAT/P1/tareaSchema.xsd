@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 			targetNamespace="http://www.piat.upm.es/tareaSchemaXSD" 
-			xmlns:tns="http://www.piat.upm.es/tareaSchemaXSD" 
+			xmlns:tns="http://www.piat.upm.es/tareaSchemaXSD"
+			xmlns:d="http://www.piat.upm.es/dronSchemaXSD"		 
 			elementFormDefault="qualified"> 
+<xsd:import namespace="http://www.piat.upm.es/dronSchemaXSD" schemaLocation="./dronSchema.xsd"/>
+
 <xsd:element name="tarea" type="tns:tipoTarea"/>
 <xsd:complexType name="tipoTarea">
 	<xsd:sequence>
@@ -11,7 +14,7 @@
 		<xsd:element name="dronesTarea" type="tns:tipoDronesTarea"/>
 		<xsd:element name="areaGeografica" type="tns:tipoAreaGeografica"/>
 	</xsd:sequence>
-	<xsd:attribute name="idTarea" type="tns:tipoIdTarea" use="required"></xsd:attribute>
+	<xsd:attribute name="idTarea" type="tns:tipoIdTarea" use="required"/>
 </xsd:complexType>
 <xsd:complexType name="tipoResponsable">
 	<xsd:sequence>
@@ -37,16 +40,10 @@
 		</xsd:restriction>
 </xsd:simpleType>
 <xsd:complexType name="tipoDronTarea">
-	<xsd:all>
-		<xsd:element name="matricula">
-			<xsd:simpleType>
-				<xsd:restriction base="xsd:token">
-					<xsd:length value="5"/>
-				</xsd:restriction>
-			</xsd:simpleType>
-		</xsd:element>
+	<xsd:sequence>
+		<xsd:element name="matricula" type="d:tipoMatriculaDron"/>
 		<xsd:element name="actividadMision" type="xsd:string"/>
-	</xsd:all>
+	</xsd:sequence>
 </xsd:complexType>
 <xsd:complexType name="tipoCentro">
 	<xsd:sequence>
