@@ -3,15 +3,17 @@
 			targetNamespace="http://www.piat.upm.es/generalSchemaXSD" 
 			xmlns:tns="http://www.piat.upm.es/generalSchemaXSD" 
             xmlns:m="http://www.piat.upm.es/misionSchemaXSD" 
-            xmlns:d="http://www.piat.upm.es/documentoMisionchemaXSD" 
+            xmlns:d="http://www.piat.upm.es/documentoMisionchemaXSD"
+			xmlns:p="http://www.piat.upm.es/propietarioSchemaXSD" 
             elementFormDefault="qualified">
 
             <xsd:import namespace="http://www.piat.upm.es/misionSchemaXSD" schemaLocation="./misionSchema.xsd"/>
             <xsd:import namespace="http://www.piat.upm.es/documentoMisionchemaXSD" schemaLocation="./documentoMisionSchema.xsd"/>
+			<xsd:import namespace="http://www.piat.upm.es/propietarioSchemaXSD" schemaLocation="./propietarioSchema.xsd"/>
 <xsd:element name="generalMision">
 <xsd:complexType>
     <xsd:sequence>
-        <xsd:element name="mision" type="m:tipoMision"/>
+		<xsd:element name="mision" type="m:tipoMision"/>
         <xsd:element name="documentoMision" type="d:tipoDocumentoMision"/>
     </xsd:sequence>
 </xsd:complexType>
@@ -31,14 +33,20 @@
 	<xsd:selector xpath="./tns:documentoMision/d:documentoMision/d:metadatos"/>
 	<xsd:field xpath="d:identificacion"/>
 </xsd:keyref>
+<xsd:key name="identificadorFiscal">
+	<xsd:selector xpath="./tns:documentoMision/d:documentoMision/d:metadatos/d:propietario"/>
+	<xsd:field xpath="@identificadorFiscal"/>
+</xsd:key>
+<xsd:keyref name="identificadorFiscalRef" refer="tns:identificacion">
+	<xsd:selector xpath="./tns:documentoMision/d:documentoMision/d:metadatos/d:propietario"/>
+	<xsd:field xpath="p:identificadorFiscal"/>
+</xsd:keyref>
 </xsd:element>
 <xsd:complexType name="tipoDocumentoMision">
 	<xsd:attributeGroup ref="tns:grupo"/>
 </xsd:complexType>
 <xsd:attributeGroup name="grupo">
-	<xsd:attribute name="numeroOrden" type="xsd:integer">
-	</xsd:attribute>
-	<xsd:attribute name="propietario">
-	</xsd:attribute>
+	<xsd:attribute name="numeroOrden" type="xsd:integer" use="required"/>
+	<xsd:attribute name="propietario" type="p:tipoIdFiscal" use="required"/>
 </xsd:attributeGroup>
 </xsd:schema>

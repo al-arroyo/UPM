@@ -16,7 +16,8 @@
     <tns:mision>
 		<m:identificacion codigoMision="M123bc">
 			<id:descripcion>
-
+				La misión consiste en <id:keyword> reparar </id:keyword> una
+				<id:keyword> conexión </id:keyword> de <id:keyword> una torre de media tensión </id:keyword> del Campus Sur.
 			</id:descripcion>
 		</m:identificacion>
 		<m:drones>
@@ -104,7 +105,7 @@
 			</m:tarea>
 		</m:tareas>
 	</tns:mision>
-    <tns:documentoMision>
+	<tns:documentoMision numeroOrden="2" propietario="03467799G">
 		<doc:metadatos>
 			<doc:identificacion version="a4b5"/>
 			<doc:propietario>

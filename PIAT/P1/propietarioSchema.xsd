@@ -9,13 +9,7 @@
         <xsd:element name="nombrePR" type="xsd:token"/>
         <xsd:element name="contacto" type="tns:tipoContacto"/>
     </xsd:sequence>
-	<xsd:attribute name="identificadorFiscal">
-		<xsd:simpleType>
-			<xsd:restriction base="xsd:string">
-				<xsd:pattern value="[0-9]{8}[A-Z]"/>
-			</xsd:restriction>
-		</xsd:simpleType>
-	</xsd:attribute>
+	<xsd:attribute name="identificadorFiscal" type="tns:tipoIdFiscal"/>
 </xsd:complexType>
 <xsd:complexType name="tipoContacto">
     <xsd:sequence>
@@ -23,4 +17,9 @@
         <xsd:element name="url" minOccurs="0" type="xsd:anyURI"/>
     </xsd:sequence>
 </xsd:complexType>
+<xsd:simpleType name="tipoIdFiscal">
+	<xsd:restriction base="xsd:string">
+		<xsd:pattern value="[0-9]{8}[A-Z]"/>
+	</xsd:restriction>
+</xsd:simpleType>
 </xsd:schema>
