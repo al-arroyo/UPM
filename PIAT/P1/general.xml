@@ -1,13 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:general
+<tns:generalMision
     xmlns:tns="http://www.piat.upm.es/generalSchemaXSD"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.piat.upm.es/generalSchemaXSD ./generalSchema.xsd"
 
 	xmlns:m="http://www.piat.upm.es/misionSchemaXSD" 
-	xmlns:d="http://www.piat.upm.es/documentoMisionchemaXSD">
-    <tns:mision>M1234ab</tns:mision>
-    <tns:documentoMision numeroOrden="1" propietario="24243535A">
-		<d:identificacion>a4b5</d:identificacion>
+	xmlns:doc="http://www.piat.upm.es/documentoMisionchemaXSD"
+	xmlns:d="http://www.piat.upm.es/dronSchemaXSD"
+	xmlns:s="http://www.piat.upm.es/sensoresSchemaXSD"
+	xmlns:a="http://www.piat.upm.es/actuadoresSchemaXSD"
+	xmlns:t="http://www.piat.upm.es/tareaSchemaXSD"
+	xmlns:id="http://www.piat.upm.es/identificacionSchemaXSD"
+	xmlns:p="http://www.piat.upm.es/propietarioSchemaXSD"
+	xmlns:i="http://www.piat.upm.es/imagenSchemaXSD">
+    <tns:mision>
+		<m:identificacion codigoMision="M123bc">
+			<id:descripcion>
+
+			</id:descripcion>
+		</m:identificacion>
+		<m:drones>
+			<m:dron matriculaDron="DRONA1">
+				<d:claseDron>controlado 5</d:claseDron>
+				<d:homologaciones>
+					<d:nacional>Madrid1</d:nacional>
+					<d:internacional>España37</d:internacional>
+				</d:homologaciones>
+				<d:configuracionDron>
+					<d:sensores>
+						<s:numeroSensores>3</s:numeroSensores>
+						<s:sensor idSensor="SEN1-sm">
+							<s:elementoSensado>salinidad del agua</s:elementoSensado>
+							<s:rango>
+								1
+								13.5
+								19
+							</s:rango>
+						</s:sensor>
+						<s:sensor idSensor="SEN2-sm">
+							<s:elementoSensado>temperatura del agua</s:elementoSensado>
+							<s:rango>
+								7
+								33.225
+								18.42
+							</s:rango>
+						</s:sensor>
+						<s:sensor idSensor="SEN4-sm">
+							<s:elementoSensado>aturacion de oxigeno</s:elementoSensado>
+							<s:rango>
+								8
+								5.3
+								22
+							</s:rango>
+						</s:sensor>
+					</d:sensores>
+				<d:actuadores>
+					<a:numeroActuadores>2</a:numeroActuadores>
+					<a:actuador idActuador="AC$01">
+						<a:alcanceActuacion>
+							<a:tipoActuacion>Urgente</a:tipoActuacion>
+							<a:fechasActuacion>
+								2023-03-01
+								2023-03-05
+							</a:fechasActuacion>
+						</a:alcanceActuacion>
+					</a:actuador>
+					<a:actuador idActuador="AC$02">
+						<a:alcanceActuacion>
+							<a:tipoActuacion>Normal</a:tipoActuacion>
+							<a:fechasActuacion>
+								2023-03-15
+								2023-03-25
+							</a:fechasActuacion>
+						</a:alcanceActuacion>
+					</a:actuador>
+				</d:actuadores>
+			</d:configuracionDron>
+			</m:dron>
+		</m:drones>
+		<m:tareas>
+			<m:tarea idTarea="TAR-00001">
+				<t:descripcionTarea>analizar el agua</t:descripcionTarea>
+				<t:responsableTarea>
+					<t:url>https://cat-bounce.com/</t:url>
+				</t:responsableTarea>
+				<t:dronesTarea>
+					<t:dronTarea>
+						<t:matricula>DRONA1</t:matricula> 
+						<t:actividadMision>tiene que analizar el agua del rio Manzanares</t:actividadMision>
+					</t:dronTarea>
+				</t:dronesTarea>
+				<t:areaGeografica>
+					<t:centro>
+						<t:longitud>-3.3679400</t:longitud>
+						<t:latitud>39.0172200</t:latitud>
+					</t:centro>
+					<t:profundidad>
+						0.30
+						3.5
+					</t:profundidad>
+					<t:forma>esfera</t:forma>
+				</t:areaGeografica>
+			</m:tarea>
+		</m:tareas>
+	</tns:mision>
+    <tns:documentoMision>
+		<doc:metadatos>
+			<doc:identificacion version="a4b5"/>
+			<doc:propietario>
+				<p:nombrePR>Alicia</p:nombrePR>
+				<p:contacto>
+					<p:email>a.fernandez.alonso@alumnos.upm.es</p:email>
+					<p:url>https://worlds-highest-website.com/es/</p:url>
+				</p:contacto>
+			</doc:propietario>
+		</doc:metadatos>
+		<doc:datosMision>
+			<doc:descripcionDM>datos de la mision</doc:descripcionDM>
+			<doc:formatoDatos>JSON</doc:formatoDatos>
+			<doc:lenguaje>ES</doc:lenguaje>
+			<doc:fecha>2023-03-22</doc:fecha>
+			<doc:datosSensores><![CDATA[ datos de los sensores]]></doc:datosSensores>
+			<doc:datosActuadores><![CDATA[ datos de los actuadores]]></doc:datosActuadores>
+			<doc:imagenes>
+				<doc:imagen idImagen="IMAG01">
+					<i:datosImagen>
+						<i:dimensiones>
+							<i:ancho>476</i:ancho>
+							<i:alto>280</i:alto>
+						</i:dimensiones>
+						<i:descripcion>cadena de caracteres de longitud indefinida</i:descripcion>
+						<i:contenido formato="i:gif"/>
+					</i:datosImagen>
+				</doc:imagen>
+				<doc:imagen idImagen="IMAG02">
+					<i:datosImagen>
+						<i:dimensiones>
+							<i:ancho>476</i:ancho>
+							<i:alto>280</i:alto>
+						</i:dimensiones>
+						<i:descripcion>cadena de caracteres de longitud indefinida</i:descripcion>
+						<i:contenido formato="i:gif"/>
+					</i:datosImagen>
+				</doc:imagen>
+			</doc:imagenes>
+		</doc:datosMision>
 	</tns:documentoMision>
-</tns:general>
+</tns:generalMision>
