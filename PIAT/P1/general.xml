@@ -2,17 +2,8 @@
 <tns:generalMision
     xmlns:tns="http://www.piat.upm.es/generalSchemaXSD"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.piat.upm.es/generalSchemaXSD ./generalSchema.xsd"
-
-	xmlns:m="http://www.piat.upm.es/misionSchemaXSD" 
-	xmlns:doc="http://www.piat.upm.es/documentoMisionchemaXSD"
-	xmlns:d="http://www.piat.upm.es/dronSchemaXSD"
-	xmlns:s="http://www.piat.upm.es/sensoresSchemaXSD"
-	xmlns:a="http://www.piat.upm.es/actuadoresSchemaXSD"
-	xmlns:t="http://www.piat.upm.es/tareaSchemaXSD"
-	xmlns:id="http://www.piat.upm.es/identificacionSchemaXSD"
-	xmlns:p="http://www.piat.upm.es/propietarioSchemaXSD"
-	xmlns:i="http://www.piat.upm.es/imagenSchemaXSD">
+    xsi:schemaLocation="http://www.piat.upm.es/generalSchemaXSD ./generalSchema.xsd">
     <tns:mision codigoMision="M456fh"/>
 	<tns:documentoMision numeroOrden="2" propietario="03467799G"/>
+	<tns:documentoMision numeroOrden="23" propietario="03467799G"/>
 </tns:generalMision>

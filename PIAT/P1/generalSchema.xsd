@@ -17,33 +17,13 @@
 <xsd:complexType>
     <xsd:sequence>
 		<xsd:element name="mision" type="tns:tipoMision"/>
-        <xsd:element name="documentoMision" type="tns:tipoDocumentoMision"/>
+        <xsd:element name="documentoMision" type="tns:tipoDocumentoMision" maxOccurs="unbounded"/>
     </xsd:sequence>
 </xsd:complexType>
-<xsd:key name="codigoMision">
-	<xsd:selector xpath="./tns:mision"/>
-	<xsd:field xpath="@codigoMision"/>
+<xsd:key name="numeroOrden">
+	<xsd:selector xpath="./tns:documentoMision"/>
+	<xsd:field xpath="@numeroOrden"/>
 </xsd:key>
-<xsd:keyref name="codigoMatriculaRef" refer="tns:codigoMision">
-	<xsd:selector xpath="./tns:mision/id:tipoCodigoMision"/>
-	<xsd:field xpath="m:codigoMision"/>
-</xsd:keyref>
-<xsd:key name="identificacion">
-	<xsd:selector xpath="./tns:documentoMision/d:documentoMision"/>
-	<xsd:field xpath="@identificacion"/>
-</xsd:key>
-<xsd:keyref name="identificacionRef" refer="tns:identificacion">
-	<xsd:selector xpath="./tns:documentoMision/d:documentoMision/d:metadatos"/>
-	<xsd:field xpath="d:identificacion"/>
-</xsd:keyref>
-<xsd:key name="identificadorFiscal">
-	<xsd:selector xpath="./tns:documentoMision/d:documentoMision/d:metadatos/d:propietario"/>
-	<xsd:field xpath="@identificadorFiscal"/>
-</xsd:key>
-<xsd:keyref name="identificadorFiscalRef" refer="tns:identificacion">
-	<xsd:selector xpath="./tns:documentoMision/d:documentoMision/d:metadatos/d:propietario"/>
-	<xsd:field xpath="p:identificadorFiscal"/>
-</xsd:keyref>
 </xsd:element>
 <xsd:complexType name="tipoMision">
 	<xsd:attribute name="codigoMision" type="id:tipoCodigoMision"/>
