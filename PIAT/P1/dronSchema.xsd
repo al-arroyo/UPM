@@ -35,10 +35,10 @@
 	</xsd:restriction>
 </xsd:simpleType>
 <xsd:complexType name="tipoHomologaciones">
-	<xsd:all>
+	<xsd:choice maxOccurs="unbounded">
 		<xsd:element name="nacional" type="xsd:string"/>
 		<xsd:element name="internacional" type="xsd:string"/>
-	</xsd:all>
+	</xsd:choice>
 </xsd:complexType>
 <xsd:complexType name="tipoConfiguracionDron">
 	<xsd:sequence>

@@ -22,7 +22,9 @@
         <tns:dron matriculaDron="DRONA1">
             <d:claseDron>controlado 5</d:claseDron>
             <d:homologaciones>
+				<d:internacional>España37</d:internacional>
                 <d:nacional>Madrid1</d:nacional>
+				<d:nacional>Madrid2</d:nacional>
                 <d:internacional>España37</d:internacional>
             </d:homologaciones>
             <d:configuracionDron>
