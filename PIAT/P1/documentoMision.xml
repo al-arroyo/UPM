@@ -9,7 +9,7 @@
     
     <tns:metadatos>
         <tns:identificacion version="a4b5"/>
-        <tns:propietario identificadorFiscal="04798723A">
+        <tns:propietario>
             <p:nombrePR>Alicia</p:nombrePR>
             <p:contacto>
                 <p:email>a.fernandez.alonso@alumnos.upm.es</p:email>

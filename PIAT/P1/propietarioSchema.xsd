@@ -3,13 +3,18 @@
 			targetNamespace="http://www.piat.upm.es/propietarioSchemaXSD" 
 			xmlns:tns="http://www.piat.upm.es/propietarioSchemaXSD" 
 			elementFormDefault="qualified">
-<xsd:element name="propietario" type="tns:tipoPropietario"/>
+<xsd:element name="propietario" type="tns:tipoPropietario">
+	<xsd:key name="identificadorFiscal">
+		<xsd:selector xpath="./tns:identificadorFiscal"/>
+		<xsd:field xpath="@identificadorFiscal"/>
+	</xsd:key>
+</xsd:element>
 <xsd:complexType name="tipoPropietario">
     <xsd:sequence>
         <xsd:element name="nombrePR" type="xsd:token"/>
         <xsd:element name="contacto" type="tns:tipoContacto"/>
     </xsd:sequence>
-	<xsd:attribute name="identificadorFiscal" type="tns:tipoIdFiscal"/>
+	<xsd:attribute name="identificadorFiscal" type="tns:tipoIdFiscal" use="optional"/>
 </xsd:complexType>
 <xsd:complexType name="tipoContacto">
     <xsd:sequence>

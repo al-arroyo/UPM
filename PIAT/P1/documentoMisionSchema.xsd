@@ -9,10 +9,6 @@
 <xsd:import namespace="http://www.piat.upm.es/propietarioSchemaXSD" schemaLocation="./propietarioSchema.xsd"/>
 <xsd:import namespace="http://www.piat.upm.es/imagenSchemaXSD" schemaLocation="./imagenSchema.xsd"/>
 <xsd:element name="documentoMision" type="tns:tipoDocumentoMision">
-	<xsd:key name="identificadorFiscal">
-		<xsd:selector xpath="./tns:metadatos/tns:propietario"/>
-		<xsd:field xpath="@identificadorFiscal"/>
-	</xsd:key>
 	<xsd:key name="idDM">
 		<xsd:selector xpath="./tns:datosMision"/>
 		<xsd:field xpath="@idDM"/>
@@ -46,7 +42,7 @@
         <xsd:element name="lenguaje" type="xsd:language"/>
         <xsd:element name="fecha" type="xsd:date"/>
         <xsd:element name="datosSensores" type="xsd:string"/>
-        <xsd:element name="datosActuadores" type="xsd:string"/>
+        <xsd:element name="datosActuadores" type="xsd:string" minOccurs="0"/>
         <xsd:element name="imagenes" minOccurs="0" type="tns:tipoImagen">
 			<xsd:key name="idImagen">
 				<xsd:selector xpath="./tns:imagen"/>
