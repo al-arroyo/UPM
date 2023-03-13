@@ -4,7 +4,7 @@
     xmlns:tns="http://www.piat.upm.es/generalSchemaXSD"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.piat.upm.es/generalSchemaXSD ./generalSchema.xsd">
-    <tns:mision codigoMision="M456fh"/>
+    <tns:mision>M456fh</tns:mision>
 	<tns:documentoMision version="R2D2" numeroOrden="2" propietario="03467799G"/>
 	<tns:documentoMision version="C3PO" numeroOrden="23" propietario="03467799G"/>
 </tns:generalMision>

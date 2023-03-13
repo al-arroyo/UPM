@@ -17,7 +17,7 @@
 <xsd:element name="generalMision">
 <xsd:complexType>
     <xsd:sequence>
-		<xsd:element name="mision" type="tns:tipoMision"/>
+		<xsd:element name="mision" type="id:tipoCodigoMision"/>
         <xsd:element name="documentoMision" type="tns:tipoDocumentoMision" maxOccurs="unbounded"/>
     </xsd:sequence>
 </xsd:complexType>
@@ -26,9 +26,6 @@
 	<xsd:field xpath="@numeroOrden"/>
 </xsd:key>
 </xsd:element>
-<xsd:complexType name="tipoMision">
-	<xsd:attribute name="codigoMision" type="id:tipoCodigoMision"/>
-</xsd:complexType>
 <xsd:complexType name="tipoDocumentoMision">
 	<xsd:complexContent>
 		<xsd:extension base="d:tipoIdentificacion">

@@ -19,9 +19,20 @@
 	<xsd:attribute name="matriculaDron" type="tns:tipoMatriculaDron" use="required"/>
 </xsd:complexType>
 <xsd:simpleType name="tipoClaseDron">
-    <xsd:restriction base="xsd:string">
-      <xsd:pattern value="(autónomo|controlado|monitorizado) [0-9]"/>
+    <xsd:restriction base="tns:tipoClaseDron2">
+      <xsd:length value="2"/>
     </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tipoClaseDron2">
+	<xsd:list itemType="tns:tipoStringOrInteger"/>
+</xsd:simpleType>
+<xsd:simpleType name="tipoStringOrInteger">
+	<xsd:union memberTypes="tns:tipoString xsd:integer"/>
+</xsd:simpleType>
+<xsd:simpleType name="tipoString">
+	<xsd:restriction base="xsd:string">
+		<xsd:pattern value="(autónomo|controlado|monitorizado)"/>
+	</xsd:restriction>
 </xsd:simpleType>
 <xsd:complexType name="tipoHomologaciones">
 	<xsd:all>
