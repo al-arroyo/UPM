@@ -1,0 +1,423 @@
+       LABORATORIO DE
+PROCESAMIENTO DE INFORMACIÓN
+             EN
+  APLICACIONES TELEMÁTICAS
+
+
+         Práctica 1.
+
+
+
+
+               Curso 2022/2023
+Procesamiento de Información en Aplicaciones Telemáticas. Práctica 1.   Curso 2022/2023
+
+
+1 Objetivos
+Aplicar los conocimientos adquiridos en las clases de teoría sobre:
+                Generación de documentos XML bien formados.
+                Definición de esquemas de documento mediante XMLSchema.
+                Generación de documentos XML válidos con respecto a un
+                 esquema de documento.
+
+
+2 Descripción del modelo.
+Un organismo público encargado de promocionar los ODS (Objetivos de
+Desarrollo Sostenible) en las ciudades ha decidido realizar una serie de
+medidas de control de contaminación, en las costas marítimas de su
+competencia, con el fin de controlar el estado de dichas costas y poder
+tomar las medidas correctoras adecuadas en caso de deterioro del estado
+natural de las costas.
+Para ello ha decidido adquirir un conjunto de drones submarinos que, de
+manera coordinada y colaborativa, llevarán a cabo una misión de detección
+y corrección del estado de las costas.
+Además, también ha decidido que, tanto los datos relacionados con la
+realización de la misión como los datos obtenidos en ella sean publicados en
+su portal de datos abiertos, de manera que puedan ser utilizados por quien
+lo desee.
+Este organismo ha decidido utilizar tres documentos XML:
+     •   Uno para la configuración de la misión de los drones submarinos.
+     •   Otro para la publicación de los resultados obtenidos en el portal de
+         datos abiertos.
+     •   Otro más, que no será publicado, que relaciona los dos anteriores y
+         se utilizará para la gestión interna.
+Para generar los esquemas correspondientes a los tres documentos XML ha
+decidido utilizar la tecnología XMLSchema.
+
+2.1 Esquema de configuración de la misión
+El elemento raíz de este documento se denominará mision y estará formado
+por una secuencia de los siguientes tres elementos obligatorios:
+    identificacion, con:
+                El atributo obligatorio de nombre codigoMision, cuyos valores
+                 comienzan por una letra mayúscula seguido de tres números y
+                 por últimos dos letras minúsculas, por ejemplo “M123ab”.
+
+
+
+
+                                       Práctica 1 – página 1 –
+Procesamiento de Información en Aplicaciones Telemáticas. Práctica 1.   Curso 2022/2023
+                Un elemento obligatorio de nombre descripcion, que podrá
+                 estar compuesto por una combinación de cadenas de
+                 caracteres, que contendrán la descripción del catálogo, y de
+                 elementos keyword que identificarán palabras clave dentro de
+                 descripcion. Dentro de descripcion podrán aparecer tantas
+                 palabras clave como sea necesario, pero ninguna podrá tener
+                 una longitud mayor de 30 caracteres ni menor de 2. Por
+                 ejemplo:
+                 La misión consiste en <keyword> reparar </keyword> una
+                 <keyword> conexión </keyword> de <keyword> una torre de
+                 media tensión </keyword> del Campus Sur.
+
+    drones: elemento compuesto por una secuencia de entre uno y un
+     número indeterminado de elementos dron. Cada elemento dron estará
+     compuesto por una secuencia de los siguientes elementos:
+                claseDron: Elemento obligatorio que deberá estar formado por
+                 una lista de dos palabras:
+                 La primera tomará uno de entre los siguientes valores:
+                  autónomo, controlado o monitorizado.
+                 La segunda es un valor entero que representa el número de
+                  motores que tiene el dron.
+                  Nota: modelar este tipo de la forma más aproximada posible.
+                homologaciones: Elemento obligatorio que indica el organismo
+                 que ha homologado el dron. Estará formado por uno o varios
+                 de los siguientes elementos:
+                    o nacional.
+                    o internacional.
+                 Estos elementos contendrán una cadena de caracteres y
+                 podrán aparecer simultáneamente, con varias ocurrencias si
+                 fuera necesario, y en cualquier orden.
+                configuracionDron: elemento obligatorio compuesto por la
+                 secuencia de los siguientes elementos:
+                    o sensores: elemento opcional compuesto por la secuencia
+                       de los siguientes elementos:
+                                 numeroSensores: valor entero. Indica el número de
+                                  sensores que tiene incorporados el dron.
+                                  Obligatorio.
+                                 Una secuencia de entre uno y un número
+                                  indeterminado de elementos sensor. Cada
+                                  elemento sensor estará compuesto por los
+                                  siguientes elementos obligatorios:
+                                      •    elementoSensado: contendrá una cadena de
+                                           caracteres. Especifica que elemento de la
+
+                                       Práctica 1 – página 2 –
+Procesamiento de Información en Aplicaciones Telemáticas. Práctica 1.       Curso 2022/2023
+                                           naturaleza marina detecta el sensor. Ej.:
+                                           salinidad del agua.
+                                      •    rango: lista de tres numeros, cada uno de
+                                           ellos podrá ser o bien un número real o
+                                           bien un número entero que identifican los
+                                           valores máximo y mínimo que proporciona
+                                           el sensor y el porcentaje máximo de error
+                                           que tiene las medidas que proporciona el
+                                           sensor. Ej: “1.5 15.75 5”.
+                                      Además, tendrá un atributo obligatorio de
+                                      nombre idSensor cuyo valor es un texto
+                                      formado por tres letras mayúsculas seguidas
+                                      de un carácter numérico, un guion y de dos
+                                      letras minúsculas que identifica el sensor. Ej.:
+                                      “SEN4-sm”. Deberá tomar valor único dentro
+                                      del conjunto se sensores del dron. Puede haber
+                                      otros sensores de otro dron con el mismo valor
+                                      de atributo.
+                     o   actuadores: elemento opcional compuesto                  por   la
+                         secuencia de los siguientes elementos:
+                                 numeroActuadores: contendrá un valor entero.
+                                  Indica el número de actuadores que tiene
+                                  incorporados el dron. Obligatorio.
+                                 Una secuencia de entre uno y un número
+                                  indeterminado de elementos actuador. Cada
+                                  elemento actuador tendrá :
+                                      •    El atributo obligatorio idActuador, que es un
+                                           texto formado por dos letras mayúsculas,
+                                           un símbolo $ y dos caracteres numéricos
+                                           que identifica el actuador. Ej.: “AC$03”.
+                                           Deberá tomar valor único dentro del
+                                           conjunto de actuadores de dron. Puede
+                                           haber otros actuadores de otro dron con el
+                                           mismo valor de atributo.
+                                      •    Un elemento opcional alcanceActuacion
+                                           compuesto por uno de los siguientes
+                                           elementos:
+                                               o    tipoActuacion: cadena de caracteres
+                                                    que especifica la actuación.
+                                               o    fechasActuacion: lista de dos fechas,
+                                                    en    formato     yyyy-mm-dd,    que
+
+
+
+                                       Práctica 1 – página 3 –
+Procesamiento de Información en Aplicaciones Telemáticas. Práctica 1.      Curso 2022/2023
+                                                    especifican el inicio y el fin de la
+                                                    validez de la actuación.
+            Además, el elemento dron tendrá un atributo obligatorio                    de
+            nombre matriculaDron, de tipo palabra de cinco caracteres                  de
+            longitud con el número de identificación, ante el Ministerio               de
+            Industria, de su propietario. Deberá tomar valor único entre              los
+            elementos del documento XML.
+    tareas: elemento obligatorio compuesto por un conjunto de entre uno
+     y un número indeterminado de elementos tarea. Cada elemento tarea
+     estará compuesto por una secuencia de los siguientes elementos:
+           descripcionTarea: de tipo cadena de caracteres, contiene la
+            descripción de la tarea. Obligatorio.
+           responsableTarea: elemento opcional, formado por los siguientes
+            elementos.:
+                email: dirección de correo electrónico. Puede aparecer entre
+                 cero y un número indeterminado de veces. Dentro del
+                 conjunto de tareas del documento XML no puede haber dos
+                 elementos email que tengan la misma dirección de correo.
+                url: página web. Opcional.
+           dronesTarea: elemento obligatorio compuesto por un conjunto de
+            entre uno y un número indeterminado de elementos dronTarea.
+            Cada elemento dronTarea está formado por los siguientes
+            elementos obligatorios:
+                  o matricula: que deberá ser alguno de los especificados en
+                     alguno de los atributos matriculaDron de los elementos
+                     dron descendientes de mision/drones.
+                  o actividadMision: cadena de caracteres que describe la
+                     actividad que realiza el dron en la misión.
+            No podrá haber dos drones con la misma matrícula en la tarea o
+            en tareas diferentes.
+
+           areaGeografica: elemento que determina el área geográfica en la
+            que deberá ejecutarse la tarea. Está compuesto por la secuencia
+            de los elementos siguientes elementos obligatorios:
+                centro: punto central del área en la que se localiza la
+                 actuación de la reparación a realizar. Formado por la
+                 secuencia de los siguientes elementos obligatorios:
+                     o longitud: valor real. Representa la longitud del punto
+                       geográfico.
+                     o latitud: valor real. Representa la latitud del punto
+                       geográfico.
+
+
+
+
+                                       Práctica 1 – página 4 –
+Procesamiento de Información en Aplicaciones Telemáticas. Práctica 1.   Curso 2022/2023
+                 profundidad: lista de dos valores reales que representan las
+                  profundidades mínima y máxima que tendrá la tarea.
+                 forma: representa la forma que tiene el área geográfica. Es
+                  una de las siguientes palabras: esfera, cilindro, o
+                  paralelepípedo.
+
+        Además, el elemento tarea tendrá un atributo obligatorio de nombre
+        idTarea de tipo palabra. Estará formado por los caracteres TAR
+        seguidos de un guion y cinco caracteres numéricos. Deberá tomar un
+        valor único dentro del conjunto de tareas del documento XML. Ej:
+        “TAR-00001”.
+
+2.2 Esquema de publicación de los resultados obtenidos en el
+    portal de datos abiertos.
+El elemento raíz de este documento se denominará documentoMision y
+estará formado por una secuencia de los siguientes elementos:
+    metadatos: contiene información sobre el propio documento y sobre la
+     autoría y propiedad de los conjuntos de datos publicados por el portal.
+     Obligatorio.
+    datosMision: contiene todos los datos de la misión. Aparecerá entre
+     uno y un número indeterminado de veces.
+   El elemento metadatos está compuesto por la siguiente secuencia de
+   elementos:
+      identificacion: elemento obligatorio de tipo cadena de caracteres que
+       posee el atributo obligatorio versión, compuesto por cuatro caracteres
+       alfanuméricos.
+      propietario: este elemento deberá aparecer entre una y un número
+       indeterminado de veces. De cada uno contendrá los siguientes
+       elementos:
+              nombrePR: cadena de caracteres que indica el nombre del
+               propietario. Obligatorio.
+             contacto: elemento formado por un elemento email y/o un
+               elemento url, que pueden aparecer cualquier número de veces,
+               pero al menos uno debe de aparecer. Estos elementos se
+               caracterizan por:
+                   o email: dirección de correo electrónico. Puede aparecer
+                      entre cero y un número indeterminado de veces.
+                   o url: página web.
+            Además, tendrá el atributo opcional identificadorFiscal, de tipo
+            palabra, cuyo valor será un número de identificación formado por
+            8 caracteres numéricos seguidos por una letra mayúscula. Tomará
+            valor único entre los elementos del documento.
+
+
+
+                                       Práctica 1 – página 5 –
+Procesamiento de Información en Aplicaciones Telemáticas. Práctica 1.              Curso 2022/2023
+
+
+
+   El elemento datosMision, que contiene la información sobre un conjunto
+   de datos parcial o total de la misión. Aparecerá entre una y un número
+   indeterminado de veces. Contendrá los siguientes elementos:
+              descripcionDM: de tipo cadena de caracteres que contiene la
+               descripción del contenido de este elemento datosMision. En el
+               contenido puede haber algunas palabras dentro de elementos
+               de nombre negrita, otras en elementos de nombre cursiva y
+               otras en elementos negrita y cursiva. Obligatorio.
+             formatoDatos: elemento obligatorio de tipo palabra que
+               identifica el formato del conjunto de datos. Tomará uno de los
+               siguientes valores: XML, JSON, XSLX o CSV.
+              lenguaje: lenguaje en el que se encuentra el texto del conjunto
+               de datos de sensores y actuadores. El código de lenguaje que e
+               utiliza es el W3C, según se especifica en la recomendación
+               RFC1766.
+              fecha: día, mes y año, en formato yyyy-mm-dd, en el que se
+               creó este elemento datosMision.
+              datosSensores: cadena de caracteres. Será un sección CDATA
+               en la que estarán los datos tomados por los sensores de los
+               drones. El formato no es relevante para la práctica. Obligatorio.
+             datosActuadores: cadena de caracteres. Será un sección CDATA
+               en la que estarán los datos enviados a los actuadores de los
+               drones. El formato no es relevante para la práctica. Opcional.
+             imagenes, formado por una secuencia de entre cero y un
+               número indeterminado de elementos imagen, que contiene
+               imágenes tomadas por los drones que participaron en la
+               misión. El elemento imagen, tiene:
+                   o Un atributo obligatorio, de nombre idImagen:, formado
+                      por seis caracteres, de los cuales los cuatro primeros son
+                      IMAG y los dos últimos son numéricos. Ej: “IMAG01”.
+                      Tomará valor único entre los elementos imagen del
+                      documento.
+                   o Un elemento obligatorio de nombre datosImagen
+                      formado por la siguiente secuencia de elementos:
+                             dimensiones: elemento obligatorio compuesto por la
+                              siguiente secuencia de elementos.
+                               o   ancho: número real que representan el ancho de
+                                   la    imagen,   expresado    en    centímetros.
+                                   Obligatorio.
+                               o   alto: número real que representan el alto de la
+                                   imagen, expresado en centímetros. Obligatorio.
+                             descripcion: cadena                de   caracteres   de   longitud
+                              indefinida. Opcional.
+
+                                       Práctica 1 – página 6 –
+Procesamiento de Información en Aplicaciones Telemáticas. Práctica 1.   Curso 2022/2023
+                             contenido de la imagen. Puesto que el contenido de
+                              una imagen es binario, y en un documento XML solo
+                              puede haber texto, habrá que realizar una
+                              codificación a Base64Binary del binario de la imagen.
+                              No es relevante para esta práctica realizar esto, por
+                              lo que puede contener texto 1. Este elemento tendrá
+                              un atributo, llamado formato, cuyo contenido se
+                              modelará mediante el uso de notaciones. Podrá ser
+                              GIF (image/gif), JPEG (image/jpeg) o PNG
+                              (image/png).
+
+
+            Además, datosMision tendrá el tributo obligatorio idDM, de tipo
+            entero, que tomará valor único entre los elementos del
+            documento.
+
+2.3 Esquema general de la misión.
+El elemento raíz de este documento se denominará generalMision y estará
+formado por una secuencia de los siguientes elementos obligatorios:
+     mision: elemento cuyo contenido tendrá el mismo formato que el
+      atributo codigoMision del elemento identificacion, hijo del elemento
+      mision modelado en el apartado 2.1.
+     documentoMision: obligatorio que puede aparecer entre uno y un
+      número indeterminado de veces. El formato de este elemento es el
+      mismo que el del elemento identificacion, hijo del elemento metadatos,
+      hijo del elemento documentoMision, modelado en el apartado 2.2, pero
+      al que se le ha añadido un grupo de atributos, que consta de los dos
+      siguientes:
+              o   numeroOrden: atributo obligatorio que es un numero entero
+                  que indica el número de orden del documento dentro de todos
+                  los de la misión. Tendrá un valor único dentro del documento
+                  XML.
+              o   propietario: atributo obligatorio que tendrá el mismo formato
+                  que el atributo identificadorFiscal perteneciente al elemento
+                  propietario, hijo del elemento metadatos, hijo del elemento
+                  documentacionMision modelado en el apartado 2.2.
+
+
+
+
+1
+ Si desea poner el contenido de una imagen, puede realizar la codificación a
+Base64binary usando un conversor de binario a texto on-line
+
+                                       Práctica 1 – página 7 –
+Procesamiento de Información en Aplicaciones Telemáticas. Práctica 1.   Curso 2022/2023
+
+3 Se pide
+El objetivo final es realizar la especificación de datos completa. Para ello
+efectuará una definición incremental estructurando el trabajo en fases. En
+cada una de las fases se deberá implementar únicamente lo indicado.
+Todos los documentos deben usar una codificación UTF-8 versión 1, tanto
+en la declaración XML como el propio fichero.
+
+3.1 FASE 1
+Escribir los siguientes documentos XML bien formados:
+       Documento mision.xml. Su contenido será el especificado en el
+        apartado 2.1 Contendrá al menos dos elementos dron, uno de los
+        cuales tendrá al menos dos elementos sensor y el otro dos elementos
+        actuador. Tendrá al menos dos elementos tarea.
+       Documento documentoMision.xml. Su contenido será el
+        especificado en el apartado 2.2. Contendrá al menos dos elementos
+        datosMision, uno de los cuales tendrá al menos dos elementos
+        imagen.
+       Documento general.xml. Su contenido será el especificado en el
+        apartado 2.3. Contendrá al menos dos elementos documentoMision.
+
+3.2 FASE 2
+Escribir los siguientes documentos XMLSchema, cada uno de los cuales
+tendrá su propio espacio de nombre que será determinado por el alumno.
+Los elementos procedentes del espacio de nombres de XMLSchema deberán
+estar prefijado con xsd.
+       Documento misionSchema.xsd: representará el esquema del
+        elemento mision. Para ello se deberán escribir también los siguientes
+        documentos, que tendrán que ser importados a este documento:
+           o Documento identificacionSchema.xsd: representará el
+             esquema del tipo de datos del elemento identificacion.
+           o Documento dronSchema.xsd: representará el esquema del
+             tipo de datos dron. Para ello deberán ser importados los
+             siguientes documentos:
+                  Documento sensoresSchema.xsd: representará el
+                    esquema del tipo de datos sensores.
+                  Documento actuadoresSchema.xsd: representará el
+                    esquema del tipo de datos actuadores.
+           o Documento tareaSchema.xsd: representará el esquema del
+             tipo de datos tarea.
+
+
+
+
+                                       Práctica 1 – página 8 –
+Procesamiento de Información en Aplicaciones Telemáticas. Práctica 1.   Curso 2022/2023
+       Documento       documentoMisionSchema.xsd:       representará    el
+        esquema del elemento documentoMision. Para ello se deberán escribir
+        también los siguientes documentos, que deberán ser importados en
+        este documento:
+           o Documento         propietarioSchema.xsd:    representará    el
+              esquema del tipo de datos propietario.
+           o Documento imagenSchema.xsd: representará el esquema
+              del tipo de datos imagen.
+
+       Documento generalSchema.xsd: representará el esquema del
+        elemento generalMision.
+
+3.3 FASE 3
+Escribir los siguientes documentos XML:
+       Documento mision.xml: documento válido con respecto a
+        misionEsquema.xsd.
+       Documento      documentoMision.xml: documento válido con
+        respecto a documentoMisionEsquema.xsd.
+       Documento general.xml: documento válido con respecto a
+        generalEsquema.xsd.
+
+
+
+4 Entrega
+Con anterioridad al 13 de marzo de 2023 a las 15:30 horas, deberá
+entregar en Moodle, dentro del recurso “Espacio para la entrega de la
+práctica 1”, un fichero comprimido que incluirá los ficheros .xml y .xsd
+correspondientes a las fases 2 y 3 de la práctica. Se debe poner como
+comentario el nombre del alumno al principio de todos los ficheros.
+Es obligatorio presentar esta práctica para poderse presentar al examen del
+día 15 de marzo.
+
+
+
+
+                                       Práctica 1 – página 9 –
+
