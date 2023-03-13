@@ -4,25 +4,28 @@
 			xmlns:tns="http://www.piat.upm.es/generalSchemaXSD" 
             xmlns:m="http://www.piat.upm.es/misionSchemaXSD" 
             xmlns:d="http://www.piat.upm.es/documentoMisionchemaXSD"
-			xmlns:p="http://www.piat.upm.es/propietarioSchemaXSD" 
+			xmlns:p="http://www.piat.upm.es/propietarioSchemaXSD"
+			xmlns:id="http://www.piat.upm.es/identificacionSchemaXSD" 
             elementFormDefault="qualified">
 
             <xsd:import namespace="http://www.piat.upm.es/misionSchemaXSD" schemaLocation="./misionSchema.xsd"/>
             <xsd:import namespace="http://www.piat.upm.es/documentoMisionchemaXSD" schemaLocation="./documentoMisionSchema.xsd"/>
 			<xsd:import namespace="http://www.piat.upm.es/propietarioSchemaXSD" schemaLocation="./propietarioSchema.xsd"/>
+			<xsd:import namespace="http://www.piat.upm.es/identificacionSchemaXSD" schemaLocation="./identificacionSchema.xsd"/>
+
 <xsd:element name="generalMision">
 <xsd:complexType>
     <xsd:sequence>
-		<xsd:element name="mision" type="m:tipoMision"/>
-        <xsd:element name="documentoMision" type="d:tipoDocumentoMision"/>
+		<xsd:element name="mision" type="tns:tipoMision"/>
+        <xsd:element name="documentoMision" type="tns:tipoDocumentoMision"/>
     </xsd:sequence>
 </xsd:complexType>
 <xsd:key name="codigoMision">
-	<xsd:selector xpath="./tns:mision/m:mision"/>
+	<xsd:selector xpath="./tns:mision"/>
 	<xsd:field xpath="@codigoMision"/>
 </xsd:key>
 <xsd:keyref name="codigoMatriculaRef" refer="tns:codigoMision">
-	<xsd:selector xpath="./tns:mision/m:mision/m:identificacion"/>
+	<xsd:selector xpath="./tns:mision/id:tipoCodigoMision"/>
 	<xsd:field xpath="m:codigoMision"/>
 </xsd:keyref>
 <xsd:key name="identificacion">
@@ -42,6 +45,9 @@
 	<xsd:field xpath="p:identificadorFiscal"/>
 </xsd:keyref>
 </xsd:element>
+<xsd:complexType name="tipoMision">
+	<xsd:attribute name="codigoMision" type="id:tipoCodigoMision"/>
+</xsd:complexType>
 <xsd:complexType name="tipoDocumentoMision">
 	<xsd:attributeGroup ref="tns:grupo"/>
 </xsd:complexType>

@@ -105,46 +105,5 @@
 			</m:tarea>
 		</m:tareas>
 	</tns:mision>
-	<tns:documentoMision numeroOrden="2" propietario="03467799G">
-		<doc:metadatos>
-			<doc:identificacion version="a4b5"/>
-			<doc:propietario>
-				<p:nombrePR>Alicia</p:nombrePR>
-				<p:contacto>
-					<p:email>a.fernandez.alonso@alumnos.upm.es</p:email>
-					<p:url>https://worlds-highest-website.com/es/</p:url>
-				</p:contacto>
-			</doc:propietario>
-		</doc:metadatos>
-		<doc:datosMision>
-			<doc:descripcionDM>datos de la mision</doc:descripcionDM>
-			<doc:formatoDatos>JSON</doc:formatoDatos>
-			<doc:lenguaje>ES</doc:lenguaje>
-			<doc:fecha>2023-03-22</doc:fecha>
-			<doc:datosSensores><![CDATA[ datos de los sensores]]></doc:datosSensores>
-			<doc:datosActuadores><![CDATA[ datos de los actuadores]]></doc:datosActuadores>
-			<doc:imagenes>
-				<doc:imagen idImagen="IMAG01">
-					<i:datosImagen>
-						<i:dimensiones>
-							<i:ancho>476</i:ancho>
-							<i:alto>280</i:alto>
-						</i:dimensiones>
-						<i:descripcion>cadena de caracteres de longitud indefinida</i:descripcion>
-						<i:contenido formato="i:gif"/>
-					</i:datosImagen>
-				</doc:imagen>
-				<doc:imagen idImagen="IMAG02">
-					<i:datosImagen>
-						<i:dimensiones>
-							<i:ancho>476</i:ancho>
-							<i:alto>280</i:alto>
-						</i:dimensiones>
-						<i:descripcion>cadena de caracteres de longitud indefinida</i:descripcion>
-						<i:contenido formato="i:gif"/>
-					</i:datosImagen>
-				</doc:imagen>
-			</doc:imagenes>
-		</doc:datosMision>
-	</tns:documentoMision>
+	<tns:documentoMision numeroOrden="2" propietario="03467799G"/>
 </tns:generalMision>

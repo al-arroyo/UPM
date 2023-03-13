@@ -8,13 +8,7 @@
 	<xsd:sequence>
 		<xsd:element name="descripcion" type="tns:tipoDescripion"/>
 	</xsd:sequence>
-	<xsd:attribute name="codigoMision" use="required">
-		<xsd:simpleType>
-			<xsd:restriction base="xsd:string">
-				<xsd:pattern value="[A-Z][1-9]{3}[a-z]{2}"/>
-			</xsd:restriction>
-		</xsd:simpleType>
-	</xsd:attribute>
+	<xsd:attribute name="codigoMision" use="required" type="tns:tipoCodigoMision"/>
 </xsd:complexType>
 <xsd:complexType name="tipoDescripion" mixed="true">
 	<xsd:choice minOccurs="0" maxOccurs="unbounded">
@@ -25,6 +19,11 @@
 	<xsd:restriction base="xsd:string">
 		<xsd:minLength value="2"/>
 		<xsd:maxLength value="30"/>
+	</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tipoCodigoMision">
+	<xsd:restriction base="xsd:string">
+		<xsd:pattern value="[A-Z][1-9]{3}[a-z]{2}"/>
 	</xsd:restriction>
 </xsd:simpleType>
 </xsd:schema>
