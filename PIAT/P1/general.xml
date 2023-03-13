@@ -4,6 +4,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.piat.upm.es/generalSchemaXSD ./generalSchema.xsd">
     <tns:mision codigoMision="M456fh"/>
-	<tns:documentoMision numeroOrden="2" propietario="03467799G"/>
-	<tns:documentoMision numeroOrden="23" propietario="03467799G"/>
+	<tns:documentoMision version="r2d2" numeroOrden="2" propietario="03467799G"/>
+	<tns:documentoMision version="aa22" numeroOrden="23" propietario="03467799G"/>
 </tns:generalMision>

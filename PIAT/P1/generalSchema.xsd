@@ -29,7 +29,11 @@
 	<xsd:attribute name="codigoMision" type="id:tipoCodigoMision"/>
 </xsd:complexType>
 <xsd:complexType name="tipoDocumentoMision">
-	<xsd:attributeGroup ref="tns:grupo"/>
+	<xsd:complexContent>
+		<xsd:extension base="d:tipoIdentificacion">
+			<xsd:attributeGroup ref="tns:grupo"/>
+		</xsd:extension>
+	</xsd:complexContent>
 </xsd:complexType>
 <xsd:attributeGroup name="grupo">
 	<xsd:attribute name="numeroOrden" type="xsd:integer" use="required"/>
