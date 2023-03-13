@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Álvaro Miguel Arroyo González -->
 <tns:generalMision
     xmlns:tns="http://www.piat.upm.es/generalSchemaXSD"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.piat.upm.es/generalSchemaXSD ./generalSchema.xsd">
     <tns:mision codigoMision="M456fh"/>
-	<tns:documentoMision version="r2d2" numeroOrden="2" propietario="03467799G"/>
-	<tns:documentoMision version="aa22" numeroOrden="23" propietario="03467799G"/>
+	<tns:documentoMision version="R2D2" numeroOrden="2" propietario="03467799G"/>
+	<tns:documentoMision version="C3PO" numeroOrden="23" propietario="03467799G"/>
 </tns:generalMision>

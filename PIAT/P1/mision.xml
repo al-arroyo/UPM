@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Álvaro Miguel Arroyo González -->
 <tns:mision 
 	xmlns:tns="http://www.piat.upm.es/misionSchemaXSD" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -83,21 +84,13 @@
         </d:homologaciones>
         <d:configuracionDron>
             <d:sensores>
-                <s:numeroSensores>2</s:numeroSensores>
+                <s:numeroSensores>1</s:numeroSensores>
                 <s:sensor idSensor="SEN1-sm">
                     <s:elementoSensado>organismos detectados</s:elementoSensado>
                     <s:rango>
                         43
                         73.5
                         107
-                    </s:rango>
-                </s:sensor>
-                <s:sensor idSensor="SEN2-sm">
-                    <s:elementoSensado>mediciones ultravioleta</s:elementoSensado>
-                    <s:rango>
-                        2
-                        5
-                        9
                     </s:rango>
                 </s:sensor>
             </d:sensores>

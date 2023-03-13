@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Álvaro Miguel Arroyo González -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 			targetNamespace="http://www.piat.upm.es/tareaSchemaXSD" 
 			xmlns:tns="http://www.piat.upm.es/tareaSchemaXSD"
@@ -39,7 +40,7 @@
 <xsd:complexType name="tipoAreaGeografica">
 	<xsd:sequence>
 		<xsd:element name="centro" type="tns:tipoCentro"/>
-		<xsd:element name="profundidad" minOccurs="1" maxOccurs="2" type="tns:tipoProfundidad"/>
+		<xsd:element name="profundidad" type="tns:tipoProfundidad2"/>
 		<xsd:element name="forma" type="tns:tipoForma" minOccurs="1" maxOccurs="unbounded"/>
 	</xsd:sequence>
 </xsd:complexType>
@@ -56,12 +57,18 @@
 </xsd:complexType>
 <xsd:complexType name="tipoCentro">
 	<xsd:sequence>
-		<xsd:element name="longitud" type="xsd:double"/>
-		<xsd:element name="latitud" type="xsd:double"/>
+		<xsd:element name="longitud" type="xsd:float"/>
+		<xsd:element name="latitud" type="xsd:float"/>
 	</xsd:sequence>
 </xsd:complexType>
 <xsd:simpleType name="tipoProfundidad">
-	<xsd:list itemType="xsd:double"/>
+	<xsd:list itemType="xsd:float"/>
+</xsd:simpleType>
+<xsd:simpleType name="tipoProfundidad2">
+	<xsd:restriction base="tns:tipoProfundidad">
+		<xsd:minLength value="2"/>
+		<xsd:maxLength value="2"/>
+	</xsd:restriction>
 </xsd:simpleType>
 <xsd:simpleType name="tipoForma">
 	<xsd:restriction base="xsd:string">

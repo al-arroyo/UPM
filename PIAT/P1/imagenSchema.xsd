@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Álvaro Miguel Arroyo González -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 			targetNamespace="http://www.piat.upm.es/imagenSchemaXSD" 
 			xmlns:tns="http://www.piat.upm.es/imagenSchemaXSD" 
@@ -42,7 +43,7 @@
 		<xsd:enumeration value="tns:png"/>    
 	</xsd:restriction>
 </xsd:simpleType>
-<xsd:notation name="gif" public="image/gif" system="paint.exe"></xsd:notation>
-<xsd:notation name="jpeg" public="image/jpeg" system="paint.exe"></xsd:notation>
-<xsd:notation name="png" public="image/png" system="paint.exe"></xsd:notation>
+<xsd:notation name="gif" public="image/gif" system="paint.exe"/>
+<xsd:notation name="jpeg" public="image/jpeg" system="paint.exe"/>
+<xsd:notation name="png" public="image/png" system="paint.exe"/>
 </xsd:schema>

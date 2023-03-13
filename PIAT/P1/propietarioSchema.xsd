@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Álvaro Miguel Arroyo González -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 			targetNamespace="http://www.piat.upm.es/propietarioSchemaXSD" 
 			xmlns:tns="http://www.piat.upm.es/propietarioSchemaXSD" 
@@ -18,8 +19,8 @@
 </xsd:complexType>
 <xsd:complexType name="tipoContacto">
     <xsd:sequence>
-        <xsd:element name="email" minOccurs="0" maxOccurs="unbounded" type="xsd:anyURI"/>
-        <xsd:element name="url" minOccurs="0" type="xsd:anyURI"/>
+			<xsd:element name="email" minOccurs="0" maxOccurs="unbounded" type="xsd:anyURI"/>
+			<xsd:element name="url" type="xsd:anyURI"/>
     </xsd:sequence>
 </xsd:complexType>
 <xsd:simpleType name="tipoIdFiscal">
