@@ -69,7 +69,34 @@ public class CA {
 		//	4. Guardar el certificado en formato PEM como un fichero con extensión crt (NOMBRE_FICHERO_CRT)
 		//COMPLETAR POR EL ESTUDIANTE
 
-	
+	// Generate a key pair and save the keys in PEM format
+    GestionClaves gc = new GestionClaves();
+    KeyPair keyPair = gc.generarParClaves();
+    String keyFileNamePrefix = "NOMBRE_FICHERO_CLAVES";
+    guardarClaveEnFormatoPEM(keyPair.getPublic(), keyFileNamePrefix + "_pu.txt");
+    guardarClaveEnFormatoPEM(keyPair.getPrivate(), keyFileNamePrefix + "_pri.txt");
+
+    // Generate a self-signed X.509 certificate
+    X500Name issuer = new X500Name("CN=Self-Signed Certificate");
+    X500Name subject = issuer; // Self-signed
+    BigInteger serial = new BigInteger(64, new SecureRandom());
+    Date notBefore = new Date(System.currentTimeMillis() - 1000L * 60 * 60 * 24 * 30); // 30 days before now
+    Date notAfter = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 365); // 1 year after now
+    X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(
+            issuer,
+            serial,
+            notBefore,
+            notAfter,
+            subject,
+            SubjectPublicKeyInfo.getInstance(keyPair.getPublic().getEncoded())
+    );
+    AlgorithmIdentifier sigAlgId = new DefaultSignatureAlgorithmIdentifierFinder().find("SHA256withRSA");
+    AlgorithmIdentifier digAlgId = new DefaultDigestAlgorithmIdentifierFinder().find(sigAlgId);
+    ContentSigner signer = new JcaContentSignerBuilder("SHA256withRSA").build(keyPair.getPrivate());
+    X509CertificateHolder certHolder = certBuilder.build(signer);
+    X509Certificate cert = new JcaX509CertificateConverter().getCertificate(certHolder);
+
+    // Save the certificate in PEM format
 	}
 
 
