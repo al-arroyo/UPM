@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.KeyPair;
 
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -54,24 +55,24 @@ public class CA {
 	}
 	
 	/**
-	* M�todo que genera la parejas de claves y el certificado autofirmado de la CA.
+	* Método que genera la parejas de claves y el certificado autofirmado de la CA.
 	* @throws OperatorCreationException
 	* @throws IOException 
 	*/
 	public void generarClavesyCertificado()throws OperatorCreationException, IOException {
 		// Generar una pareja de claves (clase GestionClaves) y guardarlas EN FORMATO PEM en los ficheros 
-                // indicados por NOMBRE_FICHERO_CLAVES (a�adiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
+                // indicados por NOMBRE_FICHERO_CLAVES (añadiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
 		// 
 		// Generar un certificado autofirmado: 
-		// 	1. Configurar par�metros para el certificado e instanciar objeto X509v3CertificateBuilder
+		// 	1. Configurar parámetros para el certificado e instanciar objeto X509v3CertificateBuilder
 		// 	2. Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS DE APOYO EN MOODLE)
 		//	3. Generar certificado
-		//	4. Guardar el certificado en formato PEM como un fichero con extensi�n crt (NOMBRE_FICHERO_CRT)
+		//	4. Guardar el certificado en formato PEM como un fichero con extensión crt (NOMBRE_FICHERO_CRT)
 		//COMPLETAR POR EL ESTUDIANTE
 
 	// Generate a key pair and save the keys in PEM format
     GestionClaves gc = new GestionClaves();
-    KeyPair keyPair = gc.generarParClaves();
+    KeyPair keyPair = gc.generarClaves();
     String keyFileNamePrefix = "NOMBRE_FICHERO_CLAVES";
     guardarClaveEnFormatoPEM(keyPair.getPublic(), keyFileNamePrefix + "_pu.txt");
     guardarClaveEnFormatoPEM(keyPair.getPrivate(), keyFileNamePrefix + "_pri.txt");
@@ -108,10 +109,10 @@ public class CA {
 	 */
 	public void cargarClaves (throws IOException{
                 // Carga la pareja de claves de los ficheros indicados por NOMBRE_FICHERO_CLAVES 
-                // (a�adiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
+                // (añadiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
 		// No carga el certificado porque se lee de fichero cuando se necesita.
 		
-		GestionClaves gc = new GestionClaves(); // Clase con m�todos para manejar las claves
+		GestionClaves gc = new GestionClaves(); // Clase con métodos para manejar las claves
 		//COMPLETAR POR EL ESTUDIANTE
 
 
@@ -121,9 +122,9 @@ public class CA {
 
 	
 	/**
-	 * Método que genera el certificado de un usuario a partir de una petici�n de certificaci�n
-	 * @param ficheroPeticion:String. Par�metro con la petici�n de certificaci�n
-	 * @param ficheroCertUsu:String. Par�metro con el nombre del fichero en el que se guardar� el certificado del usuario
+	 * Método que genera el certificado de un usuario a partir de una petición de certificación
+	 * @param ficheroPeticion:String. Parámetro con la petición de certificación
+	 * @param ficheroCertUsu:String. Parámetro con el nombre del fichero en el que se guardará el certificado del usuario
 	 * @throws IOException 
 	 * @throws PKCSException 
 	 * @throws OperatorCreationException
@@ -131,10 +132,10 @@ public class CA {
 	public boolean certificarPeticion(String ficheroPeticion, String ficheroCertUsu) throws IOException, 
 	OperatorCreationException, PKCSException{
 		
-		//  Verificar que est�n generadas las clave privada y p�blica de la CA
-		//  Verificar firma del solicitante (KPSolicitante en fichero de petici�n) 
-		//  Si la verificaci�n es ok, se genera el certificado firmado con la clave privada de la CA
-		//  Se guarda el certificado en formato PEM como un fichero con extensi�n crt
+		//  Verificar que están generadas las clave privada y pública de la CA
+		//  Verificar firma del solicitante (KPSolicitante en fichero de petición) 
+		//  Si la verificación es ok, se genera el certificado firmado con la clave privada de la CA
+		//  Se guarda el certificado en formato PEM como un fichero con extensión crt
 
 		//  COMPLETAR POR EL ESTUDIANTE
 
@@ -144,4 +145,4 @@ public class CA {
 	}
 	
 }
-	// EL ESTUDIANTE PODR� CODIFICAR TANTOS M�TODOS PRIVADOS COMO CONSIDERE INTERESANTE PARA UNA MEJOR ORGANIZACI�N DEL C�DIGO
+	// EL ESTUDIANTE PODRÁ CODIFICAR TANTOS MÉTODOS PRIVADOS COMO CONSIDERE INTERESANTE PARA UNA MEJOR ORGANIZACIÓN DEL CÓDIGO

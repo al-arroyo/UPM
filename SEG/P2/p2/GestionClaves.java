@@ -25,11 +25,11 @@ public class GestionClaves {
 		/**
 		 * Genera pareja de claves empleando el algoritmo RSA
 		 * @param e: BigInteger con el valor para el exponente
-		 * @param tamClave: entero con valor para el tamaÒo en bits de la clave
+		 * @param tamClave: entero con valor para el tama√±o en bits de la clave
 		 * @return AsymmetricCipherKeyPair: con el par de claves.
 		 */
 
-		// Es lo mismo que tenemos en el AsimÈtrico de la Pr·ctica 1 pero sin escribir en fichero
+		// Es lo mismo que tenemos en el Asim√©trico de la Pr√°ctica 1 pero sin escribir en fichero
 		public AsymmetricCipherKeyPair generarClaves (BigInteger e, int tamClave) {
 			
 			AsymmetricCipherKeyPair claves = null;
