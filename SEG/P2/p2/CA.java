@@ -43,6 +43,8 @@ public class CA {
 	private RSAKeyParameters clavePrivadaCA = null;
 	private RSAKeyParameters clavePublicaCA = null;
 	
+	private GestionClaves gc;
+
 	/**
 	 * Constructor de la CA. 
 	 * Inicializa atributos de la CA a valores por defecto
@@ -70,6 +72,28 @@ public class CA {
 		//	4. Guardar el certificado en formato PEM como un fichero con extensión crt (NOMBRE_FICHERO_CRT)
 		//COMPLETAR POR EL ESTUDIANTE
 
+
+	// 	1. Configurar parámetros para el certificado e instanciar objeto X509v3CertificateBuilder
+	Calendar endCertificate = GregorianCalendar.getInstance();
+	endCertificate.add(Calendar.Year, añosValidez);
+	Date endDateC = endCertificate.getTime();
+
+	X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(
+		issuer,
+		serial,
+		notBefore,
+		notAfter,
+		subject,
+		SubjectPublicKeyInfo.getInstance(keyPair.getPublic().getEncoded()));
+	// 	2. Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS DE APOYO EN MOODLE)
+	BcContentSignerBuilder csBuilder = builderFirma();
+	//	3. Generar certificado
+	X509CertificateHolder holder = certBldr.build(csBuilder.build(this.clavePrivadaCA));
+	// 4. Guardar el certificado en formato PEM como un fichero con extensión crt
+	// (NOMBRE_FICHERO_CRT)
+	GestionObjetosPEM.escribirObjetoPEM("CERTIFICADO", holder.getEncoded(), NOMBRE_FICHERO_CRT);
+	
+	//Cosas de chatgpt
 	// Generate a key pair and save the keys in PEM format
     GestionClaves gc = new GestionClaves();
     KeyPair keyPair = gc.generarClaves();
@@ -104,7 +128,7 @@ public class CA {
 
 
 	/**
-	 * M�todo que carga la parejas de claves
+	 * Método que carga la parejas de claves
 	 * @throws IOException 
 	 */
 	public void cargarClaves (throws IOException{
@@ -144,5 +168,118 @@ public class CA {
 	
 	}
 	
-}
 	// EL ESTUDIANTE PODRÁ CODIFICAR TANTOS MÉTODOS PRIVADOS COMO CONSIDERE INTERESANTE PARA UNA MEJOR ORGANIZACIÓN DEL CÓDIGO
+	
+	/**
+	 * Método privado que comprueba la validez de la firma de una petición de
+	 * certificación.
+	 * 
+	 * @param peticion.     Parámetro con la petición de certificación en formato
+	 *                      PKCS10
+	 * @param clavePublica. Parámetro con la clave pública
+	 * @return boolean. true si verificación firma, false en caso contrario.
+	 */
+	private boolean verificaFirmaDePeticion(PKCS10CertificationRequest peticion, RSAKeyParameters clavePublica)
+	throws OperatorCreationException, PKCSException {
+		
+		boolean verificado = false;
+		DefaultDigestAlgorithmIdentifierFinder digAF = new DefaultDigestAlgorithmIdentifierFinder();
+		if (peticion.isSignatureValid(new BcRSAContentVerifierProviderBuilder(digAF).build(clavePublica)))
+		verificado = true;
+		
+		return verificado;
+	}
+	
+	/**
+	 * Método privado que genera el certificado de un usuario a partir de una
+	 * petición de certificación Este método es necesario emplearlo para Certificar
+	 * una Petición
+	 * 
+	 * @param pet:PKCS10CertificationRequest. Parámetro con la petición de
+	 *                                        certificación en formato PKCS10
+	 * @throws PKCSException
+	 * @throws OperatorCreationException
+	 * @throws IOException
+	 * @result X509CertificateHolder: certificado X.509
+	 */
+	private X509CertificateHolder crearCertificado(PKCS10CertificationRequest peticion)
+	throws OperatorCreationException, PKCSException, IOException {
+		
+		X509CertificateHolder crtHolder = null;
+		
+		SubjectPublicKeyInfo clavePublicaES = peticion.getSubjectPublicKeyInfo();
+		RSAKeyParameters clavePublicaEntidad = gc.getClavePublicaMotor(clavePublicaES);
+		
+		if (this.verificaFirmaDePeticion(peticion, clavePublicaEntidad)) {
+			
+			X500Name nombreSolicitante = peticion.getSubject();
+			
+			Calendar finCer = GregorianCalendar.getInstance();
+			finCer.add(Calendar.YEAR, añosValidez);
+			Date fFCer = finCer.getTime();
+			
+			X509v3CertificateBuilder certBldr = new X509v3CertificateBuilder(nombreEmisor, numSerie,
+			new Date(System.currentTimeMillis()), fFCer, nombreSolicitante, clavePublicaES);
+			
+			DefaultSignatureAlgorithmIdentifierFinder sigAF = new DefaultSignatureAlgorithmIdentifierFinder();
+			DefaultDigestAlgorithmIdentifierFinder digAF = new DefaultDigestAlgorithmIdentifierFinder();
+			
+			AlgorithmIdentifier sigAI = sigAF.find("SHA256withRSA");
+			AlgorithmIdentifier digAI = digAF.find(sigAI);
+			
+			BcContentSignerBuilder csBuilder = new BcRSAContentSignerBuilder(sigAI, digAI);
+			
+			crtHolder = certBldr.build(csBuilder.build(this.clavePrivadaCA));
+		}
+		
+		return crtHolder;
+	}
+	
+	/**
+	 * Método que comprueba si ya se han generado las claves.
+	 * 
+	 * @return boolean. true si ya se habían generado, false en otro caso.
+	 */
+	private boolean clavesGeneradas() {
+		
+		boolean generadas = false;
+		if ((clavePrivadaCA != null) && (clavePublicaCA != null))
+		
+		generadas = true;
+		
+		return generadas;
+	}
+	/**
+	 * Método para guardar las claves.
+	 * 
+	 * @throws IOException
+	 */
+			
+	private void guardarClaves() throws IOException {
+			
+		AsymmetricCipherKeyPair claves = gc.generarClaves(BigInteger.valueOf(3), 2048);
+				
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER,
+		gc.getClavePublicaSPKI(claves.getPublic()).getEncoded(), NOMBRE_FICHERO_CLAVES + "-public");
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS8KEY_PEM_HEADER,
+		gc.getClavePrivadaPKCS8(claves.getPrivate()).getEncoded(), NOMBRE_FICHERO_CLAVES + "-private");
+			
+		clavePrivadaCA = (RSAKeyParameters) claves.getPrivate();
+		clavePublicaCA = (RSAKeyParameters) claves.getPublic();
+	}
+			
+	/**
+	 * Método que configura e instancia un builder para la firma.
+	 * 
+	 * @return csBuilder
+	 */
+		
+	private BcContentSignerBuilder builderFirma() {
+		DefaultSignatureAlgorithmIdentifierFinder sigAlgFinder = new DefaultSignatureAlgorithmIdentifierFinder();
+		DefaultDigestAlgorithmIdentifierFinder digAlgFinder = new DefaultDigestAlgorithmIdentifierFinder();
+		AlgorithmIdentifier sigAlgId = sigAlgFinder.find("SHA256withRSA");
+		AlgorithmIdentifier digAlgId = digAlgFinder.find(sigAlgId);
+		BcContentSignerBuilder csBuilder = new BcRSAContentSignerBuilder(sigAlgId, digAlgId);
+		return csBuilder;
+	}		
+}
