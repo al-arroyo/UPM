@@ -50,7 +50,7 @@ public class CA {
 		// Distinguished Name DN. C Country, O Organization name, CN Common Name. 
 		this.nombreEmisor = new X500Name ("C=ES, O=DTE, CN=CA");
 		this.numSerie = BigInteger.valueOf(1);
-		this.añosValidez = 1; // Son los a�os de validez del certificado de usuario, para la CA el valor es 4
+		this.añosValidez = 1; // Son los años de validez del certificado de usuario, para la CA el valor es 4
 	}
 	
 	/**

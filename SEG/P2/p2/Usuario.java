@@ -26,7 +26,7 @@ import org.bouncycastle.pkcs.bc.BcPKCS10CertificationRequestBuilder;
 
 
 /**
-* Esta clase implementa el comportamiento de un usuario en una Infraestructura de CertificaciÛn
+* Esta clase implementa el comportamiento de un usuario en una Infraestructura de Certificaci√≥n
 * @author Seg Red Ser
 * @version 1.0
 */
@@ -37,9 +37,9 @@ public class Usuario {
 
 
 	/**
-	 * MÈtodo que genera las claves del usuario.
-	 * @param fichClavePrivada: String con el nombre del fichero donde se guardar· la clave privada en formato PEM
-	 * @param fichClavePublica: String con el nombre del fichero donde se guardar· la clave publica en formato PEM
+	 * M√©todo que genera las claves del usuario.
+	 * @param fichClavePrivada: String con el nombre del fichero donde se guardar√° la clave privada en formato PEM
+	 * @param fichClavePublica: String con el nombre del fichero donde se guardar√° la clave publica en formato PEM
      * @throws IOException 	
 	
 	 */
@@ -61,15 +61,15 @@ public class Usuario {
 
 	
 	/**
-	 * MÈtodo que genera una peticiÛn de certificado en formato PEM, almacenando esta peticiÛn en un fichero.
-	 * @param fichPeticion: String con el nombre del fichero donde se guardar· la peticiÛn de certificado
+	 * M√©todo que genera una petici√≥n de certificado en formato PEM, almacenando esta petici√≥n en un fichero.
+	 * @param fichPeticion: String con el nombre del fichero donde se guardar√° la petici√≥n de certificado
 	 * @throws IOException 
 	 * @throws OperatorCreationException 
 	 */
 	public void crearPetCertificado(String fichPeticion) throws OperatorCreationException, IOException {
 		// IMPLEMENTAR POR EL ESTUDIANTE
  
-	   	// Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS PRESENTACI”N PR¡CTICA)
+	   	// Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS PRESENTACI√ìN PR√ÅCTICA)
 		// La solicitud se firma con la clave privada del usuario y se escribe en fichPeticion en formato PEM
 		
 
@@ -80,26 +80,26 @@ public class Usuario {
 	
 	
 	/**
-	 * MÈtodo que verifica un certificado de una entidad.
+	 * M√©todo que verifica un certificado de una entidad.
 	 * @param fichCertificadoCA: String con el nombre del fichero donde se encuentra el certificado de la CA
 	 * @param fichCertificadoUsu: String con el nombre del fichero donde se encuentra el certificado de la entidad
      	 * @throws CertException 
 	 * @throws OperatorCreationException 
 	 * @throws IOException 
 	 * @throws FileNotFoundException 	
-	 * @return boolean: true si verificaciÛn OK, false en caso contrario.
+	 * @return boolean: true si verificaci√≥n OK, false en caso contrario.
 	 */
     public boolean verificarCertificadoExterno(String fichCertificadoCA, String fichCertificadoUsu)throws OperatorCreationException, CertException, FileNotFoundException, IOException {
 
     // IMPLEMENTAR POR EL ESTUDIANTE
 	// Comprobar fecha validez del certificado
-	// Si la fecha es v·lida, se comprueba la firma
-	// Generar un contenedor para la verificaciÛn con la clave p˙blica de CA,
-	// el certificado del usuario tiene el resto de informaciÛn
+	// Si la fecha es v√°lida, se comprueba la firma
+	// Generar un contenedor para la verificaci√≥n con la clave p√∫blica de CA,
+	// el certificado del usuario tiene el resto de informaci√≥n
     	
    	// IMPLEMENTAR POR EL ESTUDIANTE
-  		
+  		return false;
 	}	
 }
 
-	// EL ESTUDIANTE PODR¡ CODIFICAR TANTOS M…TODOS PRIVADOS COMO CONSIDERE INTERESANTE PARA UNA MEJOR ORGANIZACI”N DEL C”DIGO
+	// EL ESTUDIANTE PODR√Å CODIFICAR TANTOS M√âTODOS PRIVADOS COMO CONSIDERE INTERESANTE PARA UNA MEJOR ORGANIZACI√ìN DEL C√ìDIGO

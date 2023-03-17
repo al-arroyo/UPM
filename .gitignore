@@ -1,2 +1,4 @@
 # libreries
 *.jar
+# vscode
+*.vscode
