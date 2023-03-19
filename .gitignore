@@ -3,4 +3,5 @@
 # vscode
 *.vscode
 # logs
-FicherosDeLog/*.logs
+*.logs
+
