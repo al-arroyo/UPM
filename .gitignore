@@ -3,5 +3,5 @@
 # vscode
 *.vscode
 # logs
-*.logs
+PIAT/P2/FicherosDeLog/*.logs
 
