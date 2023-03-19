@@ -2,3 +2,5 @@
 *.jar
 # vscode
 *.vscode
+# logs
+*.logs
