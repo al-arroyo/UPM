@@ -40,7 +40,7 @@ public class EstadisticasLog {
 	private final static String msgINFECTED = "(security-in[0-9]+).*(SEC-BLOCKED).*(INFECTED).*";
 	private final static String msgSPAM="(security-in[0-9]+).*(SEC-PASSED).*(SPAM)";
 	private final static String code432 = "(smtp-in[0-9]+).*(4.3.2)\\s(\\(overload\\))";
-	private final static String code511 ="(smtp-in[0-9]+|security-in[0-9]+).*";
+	private final static String code511 ="((smtp-in|security-in)[0-9]+).*(5.1.1)";
 
 	public static void main(String[] args) throws InterruptedException {
 		Thread.currentThread().setName("Principal");
