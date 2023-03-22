@@ -32,10 +32,15 @@ public class EstadisticasLog {
 	private final static String patronTraza = "^"+FECHA+"\\s+" + HORA + "\\s+(" + TIPO_SERVIDOR  + NUMERO_SERVIDOR+")+\\s+\\[\\w+\\]:.*";	
 	
 	/* Patrones que se usan en las estadísticas agregadas */
-	private final static String msgBLOQUEADOS = ".*SEC-BLOCKED.*"; 	// Los mensajes bloqueados son los que tienen la palabra SEC-BLOCKED en la traza	
-	private final static String msgPASADOS = ".*SEC-PASSED.*";		// Los mensajes que pasan al siguiente servidor son los que tienen la palabra SEC-PASSED en la traza
+	//private final static String msgBLOQUEADOS = ".*SEC-BLOCKED.*"; 	// Los mensajes bloqueados son los que tienen la palabra SEC-BLOCKED en la traza	
+	//private final static String msgPASADOS = ".*SEC-PASSED.*";		// Los mensajes que pasan al siguiente servidor son los que tienen la palabra SEC-PASSED en la traza
 	//TODO: Cambiar estos patrones por los que se piden en la práctica
-	
+	private final static String msgIn="(smtp-in[0-9]+).*(status=2.0.0 \\(accepted\\)).*";
+	private final static String msgOut ="(smtp-out[0-9]+).*(delivered, dsn: 2.0.0).*";
+	private final static String msgINFECTED = "(security-in[0-9]+).*(SEC-BLOCKED).*(INFECTED).*";
+	private final static String msgSPAM="(security-in[0-9]+).*(SEC-PASSED).*(SPAM)";
+	private final static String code432 = "(smtp-in[0-9]+).*(4.3.2)\\s(\\(overload\\))";
+	private final static String code511 ="(smtp-in[0-9]+|security-in[0-9]+).*";
 
 	public static void main(String[] args) throws InterruptedException {
 		Thread.currentThread().setName("Principal");
@@ -45,8 +50,14 @@ public class EstadisticasLog {
 		// En este array bidimensional se almacenan los nombres de los estadísticos a obtener y el patrón para que luego sea mas fácil recorrerlo 
 		// y meter sus valores en el mapa hmPatronesEstadisticasAgregadas 
 		final String[][] patronesEstadisticasAgregadas= {
-							{"msgBLOQUEADOS",msgBLOQUEADOS},
-							{"msgPASADOS",msgPASADOS}							
+						/* 	{"msgBLOQUEADOS",msgBLOQUEADOS},
+							{"msgPASADOS",msgPASADOS}	*/
+							{"msgIn",msgIn},
+							{"msgOut",msgOut},
+							{"msgINFECTED",msgINFECTED},
+							{"msgSPAM",msgSPAM},
+							{"code432",code432},
+							{"code511",code511}						
 						};
 		//TODO: Cambiar estos patrones por los que se piden en la práctica
 		
