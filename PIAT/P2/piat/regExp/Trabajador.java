@@ -13,8 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Ponga aquí su nombre, apellidos y DNI
- *
+ * @author Álvaro Miguel Arroyo Gonzalez 51549946T
  */
 public class Trabajador implements Runnable {
 
@@ -107,7 +106,9 @@ public class Trabajador implements Runnable {
 	private void estadisticasServidor(Matcher matcherLinea) {
 		// Extraer de matcherLinea el nombre del servidor y el tipo
 		// TODO
-		//hmServidores.put (nombreServidor, tipoServidor);	// Meter los valores obtenidos en el mapa
+		String tipoServidor=matcherLinea.group(3);
+		String nombreServidor=matcherLinea.group(3)+ matcherLinea.group(4);
+		hmServidores.put (nombreServidor, tipoServidor);	// Meter los valores obtenidos en el mapa
 	}
 	
 	/**
@@ -120,7 +121,8 @@ public class Trabajador implements Runnable {
 	private void estadisticasAgregadas(Matcher matcherLinea) {
 		// Extraer de matcherLinea los valores que se necesitan a partir de los grupos disponibles
 		final String traza=matcherLinea.group(0);				// Traza completa
-		final String tipoServidor =   matcherLinea.group(1);	// Tipo de servidor
+		final String tipoServidor =   matcherLinea.group(3);	// Tipo de servidor
+		final String fecha= matcherLinea.group(1);				// Tipo fecha
 		
 		Matcher comparador;
 		String clave, estadistico;
@@ -133,8 +135,8 @@ public class Trabajador implements Runnable {
 			patron=entrada.getValue();		// Patrón asociado al estadístico
 			comparador=patron.matcher(traza);	// Aplicar el patrón a la traza a analizar
 			if (comparador.matches()) {			// Si casa, entonces actualizar el mapa hmEstadisticasAgregadas
-				clave = tipoServidor + " " + estadistico;	// La clave del mapa hmEstadisticasAgregadas está formada por el tipo del servidor y el nombre del estadístico
-				// TODO En la aplicación de la práctica la clave del mapa hmEstadisticasAgregadas estará formada por el tipo del servidor, la fecha de la traza y el nombre del estadístico. Por ejemplo "security-in 2020-02-21 - msgBLOCKED" 
+				clave = tipoServidor + " " + fecha + " " + estadistico;	// La clave del mapa hmEstadisticasAgregadas está formada por el tipo del servidor, fecha y el nombre del estadístico
+				// TODO #HECHO!# En la aplicación de la práctica la clave del mapa hmEstadisticasAgregadas estará formada por el tipo del servidor, la fecha de la traza y el nombre del estadístico. Por ejemplo "security-in 2020-02-21 - msgBLOCKED" 
 				// Añadir el estadístico al mapa. Si no existe el valor del contador es 1, pero si existe, se recupera el valor y se incrementa
 				contadorAnterior=hmEstadisticasAgregadas.putIfAbsent(clave, new AtomicInteger(1));
 				if (contadorAnterior!=null) contadorAnterior.incrementAndGet();
@@ -154,6 +156,17 @@ public class Trabajador implements Runnable {
 		//	Ver si la traza se corresponde a una traza que indica que se ha enviado un mensaje
 		//	En ese caso, guardar en el mapa hmUsuarios el nombre del usuario como clave y como valor el nº 1 si no existía esa clave, pues en el caso de que existiera hay que incrementar el valor
 
+		String traza=matcherLinea.group(0);
+		String patron = "(message from:) <(\\w+.\\w+)";
+		Pattern p = Pattern.compile(patron);
+		Matcher m = p.matcher(traza);
+		AtomicInteger a = new AtomicInteger();
+		String clave = m.group(2);
+		if(m.find())
+		{
+			a.incrementAndGet();
+			hmUsuarios.put(clave, a);
+		}
 	}	
 	
 }
