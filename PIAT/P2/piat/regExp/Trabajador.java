@@ -134,7 +134,7 @@ public class Trabajador implements Runnable {
 			estadistico=entrada.getKey();	// String con el nombre del estadístico
 			patron=entrada.getValue();		// Patrón asociado al estadístico
 			comparador=patron.matcher(traza);	// Aplicar el patrón a la traza a analizar
-			if (comparador.matches()) {			// Si casa, entonces actualizar el mapa hmEstadisticasAgregadas
+			if (comparador.find()) {			// Si casa, entonces actualizar el mapa hmEstadisticasAgregadas
 				clave = tipoServidor + " " + fecha + " " + estadistico;	// La clave del mapa hmEstadisticasAgregadas está formada por el tipo del servidor, fecha y el nombre del estadístico
 				// TODO #HECHO!# En la aplicación de la práctica la clave del mapa hmEstadisticasAgregadas estará formada por el tipo del servidor, la fecha de la traza y el nombre del estadístico. Por ejemplo "security-in 2020-02-21 - msgBLOCKED" 
 				// Añadir el estadístico al mapa. Si no existe el valor del contador es 1, pero si existe, se recupera el valor y se incrementa
@@ -156,16 +156,20 @@ public class Trabajador implements Runnable {
 		//	Ver si la traza se corresponde a una traza que indica que se ha enviado un mensaje
 		//	En ese caso, guardar en el mapa hmUsuarios el nombre del usuario como clave y como valor el nº 1 si no existía esa clave, pues en el caso de que existiera hay que incrementar el valor
 
-		String traza=matcherLinea.group(0);
+		String traza = matcherLinea.group(6);
 		String patron = "(message from:) <(\\w+.\\w+)";
 		Pattern p = Pattern.compile(patron);
 		Matcher m = p.matcher(traza);
-		AtomicInteger a = new AtomicInteger();
-		String clave = m.group(2);
-		if(m.find())
+		if(m.find() && matcherLinea.group(3).equals("msa"))
 		{
-			a.incrementAndGet();
-			hmUsuarios.put(clave, a);
+			String clave = m.group(2);
+			if(!hmUsuarios.containsKey(clave))
+				hmUsuarios.put(clave, new AtomicInteger(0));
+			else {
+				AtomicInteger a = hmUsuarios.get(clave);
+				a.incrementAndGet();
+				hmUsuarios.put(clave, a);
+			}
 		}
 	}	
 	

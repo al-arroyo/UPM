@@ -29,7 +29,8 @@ public class EstadisticasLog {
     
     // Patrón de una traza cualquiera correcta de la que podemos extraer, en el grupo 1, el nombre del servidor
     //TODO: #HECHO!# Modificar este patrón para que tenga más grupos y así se pueda extraer más información y no solo el nombre del servidor
-    private final static String patronTraza = "^"+FECHA+"\\s+" + HORA + "\\s+(" + TIPO_SERVIDOR  + NUMERO_SERVIDOR+")+\\s+\\[\\w+\\]:.*";	
+	
+	private final static String patronTraza = "^("+FECHA+")\\s+(" + HORA + ")\\s+(" + TIPO_SERVIDOR +")("+ NUMERO_SERVIDOR+")+\\s+(\\[\\w+\\]:)\\s(.*)";
     
     /* Patrones que se usan en las estadísticas agregadas */
     //private final static String msgBLOQUEADOS = ".*SEC-BLOCKED.*"; 	// Los mensajes bloqueados son los que tienen la palabra SEC-BLOCKED en la traza	
@@ -42,6 +43,10 @@ public class EstadisticasLog {
     private final static String code432 = "(smtp-in[0-9]+).*(4.3.2)\\s(\\(overload\\))";
     private final static String code511 ="((smtp-in|security-in)[0-9]+).*(5.1.1)";
 
+    /**
+     * @param args
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws InterruptedException {
         Thread.currentThread().setName("Principal");
         // Verificar que se pasa como argumento el directorio con los logs y obtenerlo
