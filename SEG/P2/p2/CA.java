@@ -62,7 +62,7 @@ public class CA {
 	* @throws OperatorCreationException
 	* @throws IOException 
 	*/
-	public void generarClavesyCertificado(boolean loadKeys)throws OperatorCreationException, IOException {
+	public void generarClavesyCertificado() throws OperatorCreationException, IOException {
 		// Generar una pareja de claves (clase GestionClaves) y guardarlas EN FORMATO PEM en los ficheros 
 		// indicados por NOMBRE_FICHERO_CLAVES (añadiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
 		// 
@@ -148,7 +148,17 @@ public class CA {
 		//  Se guarda el certificado en formato PEM como un fichero con extensión crt
 
 		//  COMPLETAR POR EL ESTUDIANTE
-
+		boolean certificate = false;
+		PKCS10CertificationRequest request = (PKCS10CertificationRequestGestionObjetosPEM.leerObjetoPEM(ficheroPeticion));
+		X509CertificateHolder holder = this.crearCertificado(request, false);
+		if (holder.isValidOn(new Date(System.currentTimeMillis()))) {
+			//Guardar certificado
+			GestionObjetosPEM.escribirObjetoPEM("CERTIFICATE", holder.getEncoded(), ficheroCertUsu);
+			GestionObjetosPEM.escribirObjetoPEM("CERTIFICATE", holder.getEncoded(), NOMBRE_FICHERO_CRTUSU);
+			certificate = true;
+		}
+		
+		return certificate;
 
 
 	

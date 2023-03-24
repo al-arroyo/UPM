@@ -72,9 +72,6 @@ public class Usuario {
 		
 		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS8KEY_PEM_HEADER, privateKey.getEncoded(), fichClavePrivada);
 		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, bytePublic, fichClavePublica);
-		
-		return pairKeys;
-		
 	}
 
 
