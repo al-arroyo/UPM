@@ -32,8 +32,8 @@ import org.bouncycastle.pkcs.bc.BcPKCS10CertificationRequestBuilder;
 */
 public class Usuario {
 	
-	private RSAKeyParameters clavePrivada = null;
-	private RSAKeyParameters clavePublica = null;
+	private RSAKeyParameters keyPrivate = null;
+	private RSAKeyParameters keyPublic = null;
 
 
 	/**
@@ -53,9 +53,29 @@ public class Usuario {
 		// Escribir las claves en un fichero en formato PEM 
 
 		//IMPLEMENTAR POR EL ESTUDIANTE ESTUDIANTE
+		AsymmetricCipherKeyPair pairKeys = gc.generarClaves(BigInteger.valueOf(17), 2048);
+
+		keyPrivate = (RSAKeyParameters) pairKeys.getPrivate();
+		keyPublic = (RSAKeyParameters) pairKeys.getPublic();
 		
+		PrivateKeyInfo privateKey = gc.getClavePrivadaPKCS8(this.keyPrivate);
+
+		/*
+		 * byte[] privada = gc.getClavePrivadaPKCS8(this.clavePrivada).getEncoded();
+		 */
 		
-    }
+		byte[] bytePublic = gc.getClavePublicaSPKI(this.keyPublic).getEncoded();
+		
+		/*
+		 * SubjectPublicKeyInfo publicKey = gc.getClavePublicaSPKI(this.clavePublica);
+		 */
+		
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS8KEY_PEM_HEADER, privateKey.getEncoded(), fichClavePrivada);
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, bytePublic, fichClavePublica);
+		
+		return pairKeys;
+		
+	}
 
 
 
@@ -66,12 +86,19 @@ public class Usuario {
 	 * @throws IOException 
 	 * @throws OperatorCreationException 
 	 */
-	public void crearPetCertificado(String fichPeticion) throws OperatorCreationException, IOException {
+	public void crearPetCertificado(String fichPeticion, boolean loadKeys) throws OperatorCreationException, IOException {
 		// IMPLEMENTAR POR EL ESTUDIANTE
  
 	   	// Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS PRESENTACIÓN PRÁCTICA)
 		// La solicitud se firma con la clave privada del usuario y se escribe en fichPeticion en formato PEM
-		
+		if(loadKeys)
+			cargarClaves(); //Cargar claves del fichero NOMBRE_FICHERO_CLAVES
+		else
+			guardarClaves(); //Genera par de claves y las guardae en el fichero NOMBRE_FICHERO_CLAVES
+
+		if(!clavesGeneradas())
+			System.exit(0); //Si no se ha podido generar las claves cerramos el programa
+
 
 
 		// IMPLEMENTAR POR EL ESTUDIANTE

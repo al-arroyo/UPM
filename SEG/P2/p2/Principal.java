@@ -23,7 +23,9 @@ public class Principal {
 		//Para trabajo como CA
 		String ficheroCA=null;
 		String ficheroCertUsu=null;
-		
+
+		//Par de claves
+		AsymmetricCipherKeyPair pairKeys;
 		do {
 			// Ejemplo de uso de calendario, clases Date y Calendar
 			// Sólo para ver tiempo actual, cuál sería la fecha inicio certificado 
@@ -65,16 +67,16 @@ public class Principal {
 								System.out.println("Escriba el nombre del fichero que contendrá la clave publica:");
 								ficheroClavePublica = sc.next();
 								// COMPLETAR POR EL ESTUDIANTE
-								
+								pairKeys = u.generarClavesUsuario(ficheroClavePrivada, ficheroClavePublica);
 								
 							break;
 							case 2://Crear petición de certificado.
 								System.out.println("Escriba nombre fichero para la petición de certificación:");
 								fichero= sc.next();
 								//COMPLETAR POR EL ESTUDIANTE
-								
-
-							    	
+								try{
+									u.crearPetCertificado(ficheroCertUsu, false);
+								}
 								
 							break;
 							case 3://Verificar certificado externo.

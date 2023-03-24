@@ -54,6 +54,7 @@ public class CA {
 		this.nombreEmisor = new X500Name ("C=ES, O=DTE, CN=CA");
 		this.numSerie = BigInteger.valueOf(1);
 		this.añosValidez = 1; // Son los años de validez del certificado de usuario, para la CA el valor es 4
+		gc = new GestionClaves();
 	}
 	
 	/**
@@ -61,9 +62,9 @@ public class CA {
 	* @throws OperatorCreationException
 	* @throws IOException 
 	*/
-	public void generarClavesyCertificado()throws OperatorCreationException, IOException {
+	public void generarClavesyCertificado(boolean loadKeys)throws OperatorCreationException, IOException {
 		// Generar una pareja de claves (clase GestionClaves) y guardarlas EN FORMATO PEM en los ficheros 
-                // indicados por NOMBRE_FICHERO_CLAVES (añadiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
+		// indicados por NOMBRE_FICHERO_CLAVES (añadiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
 		// 
 		// Generar un certificado autofirmado: 
 		// 	1. Configurar parámetros para el certificado e instanciar objeto X509v3CertificateBuilder
@@ -72,74 +73,59 @@ public class CA {
 		//	4. Guardar el certificado en formato PEM como un fichero con extensión crt (NOMBRE_FICHERO_CRT)
 		//COMPLETAR POR EL ESTUDIANTE
 
+		if(loadKeys)
+			cargarClaves(); //Cargar claves del fichero NOMBRE_FICHERO_CLAVES
+		else
+			guardarClaves(); //Genera par de claves y las guardae en el fichero NOMBRE_FICHERO_CLAVES
 
+		if(!clavesGeneradas())
+			System.exit(0); //Si no se ha podido generar las claves cerramos el programa
+
+	//	3. Generar un certificado autofirmado //
 	// 	1. Configurar parámetros para el certificado e instanciar objeto X509v3CertificateBuilder
 	Calendar endCertificate = GregorianCalendar.getInstance();
 	endCertificate.add(Calendar.Year, añosValidez);
 	Date endDateC = endCertificate.getTime();
 
 	X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(
-		issuer,
-		serial,
-		notBefore,
-		notAfter,
-		subject,
-		SubjectPublicKeyInfo.getInstance(keyPair.getPublic().getEncoded()));
+		nombreEmisor,
+		numSerie,
+		new Date(System.currentTimeMillis()),
+		endDateC,
+		nombreEmisor,
+		gc.getClavePublicaSPKI(clavePublicaCA));
 	// 	2. Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS DE APOYO EN MOODLE)
-	BcContentSignerBuilder csBuilder = builderFirma();
+	//BcContentSignerBuilder csBuilder = builderFirma();
+	DefaultSignatureAlgorithmIdentifierFinder firmaFinder = new DefaultSignatureAlgorithmIdentifierFinder();//Firma
+	DefaultDigestAlgorithmIdentifierFinder resumenFinder = new DefaultDigestAlgorithmIdentifierFinder();//Resumen
+	
+	AlgorithmIdentifier firmaId = firmaFinder.find("SHA256withRSA");
+	AlgorithmIdentifier resumenId = resumenFinder.find(firmaId);
+
+	BcContentSignerBuilder csBuilder = new BcRSAContentSignerBuilder(firmaId, resumenId);
+		
 	//	3. Generar certificado
 	X509CertificateHolder holder = certBldr.build(csBuilder.build(this.clavePrivadaCA));
 	// 4. Guardar el certificado en formato PEM como un fichero con extensión crt
 	// (NOMBRE_FICHERO_CRT)
 	GestionObjetosPEM.escribirObjetoPEM("CERTIFICADO", holder.getEncoded(), NOMBRE_FICHERO_CRT);
-	
-	//Cosas de chatgpt
-	// Generate a key pair and save the keys in PEM format
-    GestionClaves gc = new GestionClaves();
-    KeyPair keyPair = gc.generarClaves();
-    String keyFileNamePrefix = "NOMBRE_FICHERO_CLAVES";
-    guardarClaveEnFormatoPEM(keyPair.getPublic(), keyFileNamePrefix + "_pu.txt");
-    guardarClaveEnFormatoPEM(keyPair.getPrivate(), keyFileNamePrefix + "_pri.txt");
-
-    // Generate a self-signed X.509 certificate
-    X500Name issuer = new X500Name("CN=Self-Signed Certificate");
-    X500Name subject = issuer; // Self-signed
-    BigInteger serial = new BigInteger(64, new SecureRandom());
-    Date notBefore = new Date(System.currentTimeMillis(- 1000L * 60 * 60 * 24 * 30); // 30 days before now
-    Date notAfter = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 365); // 1 year after now
-    X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(
-            issuer,
-            serial,
-            notBefore,
-            notAfter,
-            subject,
-            SubjectPublicKeyInfo.getInstance(keyPair.getPublic().getEncoded())
-    );
-    AlgorithmIdentifier sigAlgId = new DefaultSignatureAlgorithmIdentifierFinder().find("SHA256withRSA");
-    AlgorithmIdentifier digAlgId = new DefaultDigestAlgorithmIdentifierFinder().find(sigAlgId);
-    ContentSigner signer = new JcaContentSignerBuilder("SHA256withRSA").build(keyPair.getPrivate());
-    X509CertificateHolder certHolder = certBuilder.build(signer);
-    X509Certificate cert = new JcaX509CertificateConverter().getCertificate(certHolder);
-
-    // Save the certificate in PEM format
+	//Guardar el certificado en formato PEM en formato archivo de nombre certCA
+	GestionObjetosPEM.escribirObjetoPEM("CERTIFICATE", holder.getEncoded(), "certificadoCA");
 	}
-
-
-
 
 	/**
 	 * Método que carga la parejas de claves
 	 * @throws IOException 
 	 */
-	public void cargarClaves (throws IOException{
-                // Carga la pareja de claves de los ficheros indicados por NOMBRE_FICHERO_CLAVES 
-                // (añadiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
+	public void cargarClaves ()throws IOException{
+				// Carga la pareja de claves de los ficheros indicados por NOMBRE_FICHERO_CLAVES 
+				// (añadiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
 		// No carga el certificado porque se lee de fichero cuando se necesita.
 		
 		GestionClaves gc = new GestionClaves(); // Clase con métodos para manejar las claves
 		//COMPLETAR POR EL ESTUDIANTE
-
-
+		clavePublicaCA = gc.getClavePublicaMotor((SubjectPublicKeyInfo) GestionObjetosPEM.leerObjetoPEM(NOMBRE_FICHERO_CLAVES + "-public"));
+		clavePrivadaCA = gc.getClavePrivadaMotor((PrivateKeyInfo) GestionObjetosPEM.leerObjetoPEM(NOMBRE_FICHERO_CLAVES + "-private"));
 
 	}
 
