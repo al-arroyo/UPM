@@ -164,7 +164,7 @@ public class Trabajador implements Runnable {
 		{
 			String clave = m.group(2);
 			if(!hmUsuarios.containsKey(clave))
-				hmUsuarios.put(clave, new AtomicInteger(0));
+				hmUsuarios.put(clave, new AtomicInteger(1));
 			else {
 				AtomicInteger a = hmUsuarios.get(clave);
 				a.incrementAndGet();

@@ -36,12 +36,12 @@ public class EstadisticasLog {
     //private final static String msgBLOQUEADOS = ".*SEC-BLOCKED.*"; 	// Los mensajes bloqueados son los que tienen la palabra SEC-BLOCKED en la traza	
     //private final static String msgPASADOS = ".*SEC-PASSED.*";		// Los mensajes que pasan al siguiente servidor son los que tienen la palabra SEC-PASSED en la traza
     //TODO: #HECHO!# Cambiar estos patrones por los que se piden en la práctica
-    private final static String msgIn="(smtp-in[0-9]+).*(status=2.0.0 \\(accepted\\)).*";
-    private final static String msgOut ="(smtp-out[0-9]+).*(delivered, dsn: 2.0.0).*";
-    private final static String msgINFECTED = "(security-in[0-9]+).*(SEC-BLOCKED).*(INFECTED).*";
-    private final static String msgSPAM="(security-in[0-9]+).*(SEC-PASSED).*(SPAM)";
-    private final static String code432 = "(smtp-in[0-9]+).*(4.3.2)\\s(\\(overload\\))";
-    private final static String code511 ="((smtp-in|security-in)[0-9]+).*(5.1.1)";
+	private final static String msgIn="(smtp-in[0-9]+).*(status=2.0.0 \\(accepted\\)).*";
+	private final static String msgOut ="(smtp-out[0-9]+).*(delivered, dsn: 2.0.0).*";
+	private final static String msgINFECTED = "(security-in[0-9]+).*(SEC-BLOCKED).*(INFECTED).*";
+	private final static String msgSPAM="(security-in|security-out)[0-9]+.*(SEC-PASSED).*(SPAM)";
+	private final static String code432 = "(4.3.2)\\s(\\(overload\\))";
+	private final static String code511 = "(smtp-in|security-in)[0-9]+.*(status|dsn).*(5.1.1).*(bad destination mailbox address)";
 
     /**
      * @param args
@@ -166,9 +166,22 @@ public class EstadisticasLog {
         
         // Para mostrar el contenido del mapa hmEstadisticasAgregadas de forma ordenado, se copia a un TreeMap y se muestra el contenido de este, pues un TreeMap almacena la información ordenada por la clave
         Map <String, AtomicInteger> mapaOrdenado = new TreeMap<String ,AtomicInteger>(hmEstadisticasAgregadas);
+		String servidorAnterior = null;			
+		String servidorActual = null;
+
         for (Map.Entry<String, AtomicInteger> entrada : mapaOrdenado.entrySet()) {
             //TODO: La siguiente instrucción es correcta, pero se puede cambiar para que salga mejor formateada
-            System.out.println("\t"+entrada.getKey()+" = " +entrada.getValue().get());
+			servidorActual = entrada.getKey().split(" ")[0];
+
+						if (!servidorActual.equals(servidorAnterior)) {
+							System.out.println("\n\t " + servidorActual + " :\n");
+						}
+
+						System.out.println("\t\t" + entrada.getKey().split(" ")[1] + " " + entrada.getKey().split(" ")[2] + ":\t"
+								+ entrada.getValue().get());
+						servidorAnterior = servidorActual;
+					
+	        
             }
 
         /* Estadísticas de usuarios */
