@@ -3,14 +3,17 @@ package p2;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.cert.X509Certificate;
 import java.util.Date;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.cert.CertException;
 import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.params.RSAKeyParameters;
+import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.ContentVerifierProvider;
 import org.bouncycastle.operator.DefaultDigestAlgorithmIdentifierFinder;
 import org.bouncycastle.operator.bc.BcRSAContentVerifierProviderBuilder;
@@ -53,25 +56,11 @@ public class Usuario {
 		// Escribir las claves en un fichero en formato PEM 
 
 		//IMPLEMENTAR POR EL ESTUDIANTE ESTUDIANTE
-		AsymmetricCipherKeyPair pairKeys = gc.generarClaves(BigInteger.valueOf(17), 2048);
-
-		keyPrivate = (RSAKeyParameters) pairKeys.getPrivate();
-		keyPublic = (RSAKeyParameters) pairKeys.getPublic();
-		
-		PrivateKeyInfo privateKey = gc.getClavePrivadaPKCS8(this.keyPrivate);
-
-		/*
-		 * byte[] privada = gc.getClavePrivadaPKCS8(this.clavePrivada).getEncoded();
-		 */
-		
-		byte[] bytePublic = gc.getClavePublicaSPKI(this.keyPublic).getEncoded();
-		
-		/*
-		 * SubjectPublicKeyInfo publicKey = gc.getClavePublicaSPKI(this.clavePublica);
-		 */
-		
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS8KEY_PEM_HEADER, privateKey.getEncoded(), fichClavePrivada);
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, bytePublic, fichClavePublica);
+		AsymmetricCipherKeyPair keyPair = gc.generarClaves(BigInteger.valueOf(0x10001), 2048);
+		keyPrivate = (RSAKeyParameters) keyPair.getPrivate();
+		keyPublic = (RSAKeyParameters) keyPair.getPublic();
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS10_PEM_HEADER, gc.getClavePrivadaPKCS8(keyPrivate).getEncoded(), fichClavePrivada);
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, gc.getClavePrivadaPKCS8(keyPublic).getEncoded(), fichClavePublica);		
 	}
 
 
@@ -83,31 +72,27 @@ public class Usuario {
 	 * @throws IOException 
 	 * @throws OperatorCreationException 
 	 */
-	public void crearPetCertificado(String fichPeticion, boolean loadKeys) throws OperatorCreationException, IOException {
-		// IMPLEMENTAR POR EL ESTUDIANTE
- 
-	   	// Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS PRESENTACIÓN PRÁCTICA)
-		// La solicitud se firma con la clave privada del usuario y se escribe en fichPeticion en formato PEM
-		if(loadKeys)
-			cargarClaves(); //Cargar claves del fichero NOMBRE_FICHERO_CLAVES
-		else
-			guardarClaves(); //Genera par de claves y las guardae en el fichero NOMBRE_FICHERO_CLAVES
-
-		if(!clavesGeneradas())
-			System.exit(0); //Si no se ha podido generar las claves cerramos el programa
-
-
-
+	public void crearPetCertificado(String fichPeticion) throws OperatorCreationException, IOException {
 		// IMPLEMENTAR POR EL ESTUDIANTE
 		
+	   	// Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS PRESENTACIÓN PRÁCTICA)
+		// La solicitud se firma con la clave privada del usuario y se escribe en fichPeticion en formato PEM
+
+		// IMPLEMENTAR POR EL ESTUDIANTE
+
+		X500Name subject = new X500Name("CN=Álvaro Miguel Arroyo Gonzalez, OU=Seguridad, O=ETSII, C=ES");
+		PKCS10CertificationRequestBuilder p10Builder = new BcPKCS10CertificationRequestBuilder(subject, keyPublic);
+		BcContentSignerBuilder csBuilder = buildContentSignerBuilder();
+		PKCS10CertificationRequest p10Request = p10Builder.build(csBuilder.build(keyPrivate));
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS10_PEM_HEADER, p10Request.getEncoded(), fichPeticion);
 	}
-	
+
 	
 	/**
 	 * Método que verifica un certificado de una entidad.
 	 * @param fichCertificadoCA: String con el nombre del fichero donde se encuentra el certificado de la CA
 	 * @param fichCertificadoUsu: String con el nombre del fichero donde se encuentra el certificado de la entidad
-     	 * @throws CertException 
+     * @throws CertException 
 	 * @throws OperatorCreationException 
 	 * @throws IOException 
 	 * @throws FileNotFoundException 	
@@ -122,8 +107,29 @@ public class Usuario {
 	// el certificado del usuario tiene el resto de información
     	
    	// IMPLEMENTAR POR EL ESTUDIANTE
-		return false;
+		GestionClaves gc = new GestionClaves();
+		X509CertificateHolder certCA = (X509CertificateHolder) GestionObjetosPEM.leerObjetoPEM(fichCertificadoCA);
+		X509CertificateHolder certUsu = (X509CertificateHolder) GestionObjetosPEM.leerObjetoPEM(fichCertificadoUsu);
+		if (certUsu.getNotAfter().before(new Date())) {
+			return false;
+		}
+		SubjectPublicKeyInfo keyInfo = certCA.getSubjectPublicKeyInfo();
+		RSAKeyParameters keyPublic = gc.getClavePublicaMotor(keyInfo);
+		ContentVerifierProvider verifierProvider = new BcRSAContentVerifierProviderBuilder(new DefaultDigestAlgorithmIdentifierFinder()).build(keyPublic);
+		return certUsu.isSignatureValid(verifierProvider);
 	}	
-}
-
+	
 	// EL ESTUDIANTE PODRÁ CODIFICAR TANTOS MÉTODOS PRIVADOS COMO CONSIDERE INTERESANTE PARA UNA MEJOR ORGANIZACIÓN DEL CÓDIGO
+	
+	/*
+	* Método para crear el objeto BcContentSignerBuilder que se utilizará para firmar el certificado de usuario
+	* @return BcContentSignerBuilder. Objeto BcContentSignerBuilder
+	*/
+	private BcContentSignerBuilder buildContentSignerBuilder() { 
+		DefaultDigestAlgorithmIdentifierFinder digestAlgorithmIdentifierFinder = new DefaultDigestAlgorithmIdentifierFinder();
+		DefaultSignatureAlgorithmIdentifierFinder signatureAlgorithmIdentifierFinder = new DefaultSignatureAlgorithmIdentifierFinder();
+		AlgorithmIdentifier sigAlgId = signatureAlgorithmIdentifierFinder.find("SHA256withRSA");
+		AlgorithmIdentifier digAlgId = digestAlgorithmIdentifierFinder.find(sigAlgId);
+		return new BcRSAContentSignerBuilder(sigAlgId, digAlgId);
+	}
+}

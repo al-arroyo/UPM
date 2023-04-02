@@ -24,8 +24,6 @@ public class Principal {
 		String ficheroCA=null;
 		String ficheroCertUsu=null;
 
-		//Par de claves
-		AsymmetricCipherKeyPair pairKeys;
 		do {
 			// Ejemplo de uso de calendario, clases Date y Calendar
 			// Sólo para ver tiempo actual, cuál sería la fecha inicio certificado 
@@ -67,15 +65,26 @@ public class Principal {
 								System.out.println("Escriba el nombre del fichero que contendrá la clave publica:");
 								ficheroClavePublica = sc.next();
 								// COMPLETAR POR EL ESTUDIANTE
-								pairKeys = u.generarClavesUsuario(ficheroClavePrivada, ficheroClavePublica);
-								
+								try{
+									u.generarClavesUsuario(ficheroClavePrivada, ficheroClavePublica);
+								}
+								catch(Exception e){
+									System.out.println("Error al generar las claves");
+								}
+															
 							break;
 							case 2://Crear petición de certificado.
 								System.out.println("Escriba nombre fichero para la petición de certificación:");
 								fichero= sc.next();
 								//COMPLETAR POR EL ESTUDIANTE
+								if(fichero == null){
+									System.out.println("Error al crear la petición de certificación");
+								}
 								try{
-									u.crearPetCertificado(ficheroCertUsu, false);
+									u.crearPetCertificado(fichero);
+								}
+								catch(Exception e){
+									System.out.println("Error al crear la petición de certificación");
 								}
 								
 							break;
@@ -85,6 +94,12 @@ public class Principal {
 							    	System.out.println("Escriba el nombre del fichero que contiene el certificado de la CA:");
 								ficheroCA = sc.next();
 								//COMPLETAR POR EL ESTUDIANTE   
+								try{
+									u.verificarCertificadoExterno(fichero, ficheroCA);
+								}
+								catch(Exception e){
+									System.out.println("Error al verificar el certificado");
+								}
 
 				        
 							break;
@@ -101,16 +116,26 @@ public class Principal {
 						menu2 = sc.nextInt();
 						switch(menu2){
 							case 1:	//Generar pareja de claves, el certificado X509 y guardar en ficheros.
-								//COMPLETAR POR EL ESTUDIANTE   
-								
-								System.out.println("Claves y certificados X509 GENERADOS");
-								System.out.println("Se han guardado en " + CA.NOMBRE_FICHERO_CRT + ", " + CA.NOMBRE_FICHERO_CLAVES + "-*.txt");									
+								//COMPLETAR POR EL ESTUDIANTE  
+								try{
+									ca.generarClavesyCertificado();
+									System.out.println("Claves y certificados X509 GENERADOS");
+									System.out.println("Se han guardado en " + CA.NOMBRE_FICHERO_CRT + ", " + CA.NOMBRE_FICHERO_CLAVES + "-*.txt");									
+								}
+								catch(Exception e){
+									System.out.println("Error al generar las claves");
+								} 
 							break;
 							case 2: //Cargar de fichero pareja de claves
 								//COMPLETAR POR EL ESTUDIANTE  
-
-								System.out.println("Claves CARGADAS");
-								System.out.println("Se han cargado de " + CA.NOMBRE_FICHERO_CLAVES + "-*.txt");		
+								try{
+									ca.cargarClaves();
+									System.out.println("Claves CARGADAS");
+									System.out.println("Se han cargado de " + CA.NOMBRE_FICHERO_CLAVES + "-*.txt");									
+								}
+								catch(Exception e){
+									System.out.println("Error al cargar las claves");
+								}
 							break;
 							case 3:// Generar certificado a partir de una petición
 								    System.out.println("Escriba el nombre del fichero que contiene la petición de certificación del usuario:");
@@ -118,6 +143,13 @@ public class Principal {
 								    System.out.println("Escriba el nombre del fichero que contendrá el certificado emitido por la CA para el usuario:");
 								    ficheroCertUsu = sc.next();
 								    // A COMPLETAR ESTUDIANTE
+									try{
+										ca.certificarPeticion(fichero, ficheroCertUsu);
+										System.out.println("Certificado generado");
+									}
+									catch(Exception e){
+										System.out.println("Error al generar el certificado");
+									}
 								    
 								    
 							break;							

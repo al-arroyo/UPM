@@ -24,6 +24,8 @@ import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.bc.BcContentSignerBuilder;
 import org.bouncycastle.operator.bc.BcRSAContentSignerBuilder;
 import org.bouncycastle.operator.bc.BcRSAContentVerifierProviderBuilder;
+import org.bouncycastle.operator.ContentSigner;
+
 
 
 /**
@@ -42,9 +44,9 @@ public class CA {
 	
 	private RSAKeyParameters clavePrivadaCA = null;
 	private RSAKeyParameters clavePublicaCA = null;
-	
-	private GestionClaves gc;
 
+	private GestionClaves gestorClaves = null;
+	private AsymmetricCipherKeyPair asymmetricCipherKeyPair = null;
 	/**
 	 * Constructor de la CA. 
 	 * Inicializa atributos de la CA a valores por defecto
@@ -54,7 +56,7 @@ public class CA {
 		this.nombreEmisor = new X500Name ("C=ES, O=DTE, CN=CA");
 		this.numSerie = BigInteger.valueOf(1);
 		this.añosValidez = 1; // Son los años de validez del certificado de usuario, para la CA el valor es 4
-		gc = new GestionClaves();
+		gestorClaves = new GestionClaves();
 	}
 	
 	/**
@@ -62,7 +64,7 @@ public class CA {
 	* @throws OperatorCreationException
 	* @throws IOException 
 	*/
-	public void generarClavesyCertificado() throws OperatorCreationException, IOException {
+	public void generarClavesyCertificado() throws OperatorCreationException, IOException { 
 		// Generar una pareja de claves (clase GestionClaves) y guardarlas EN FORMATO PEM en los ficheros 
 		// indicados por NOMBRE_FICHERO_CLAVES (añadiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
 		// 
@@ -71,48 +73,28 @@ public class CA {
 		// 	2. Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS DE APOYO EN MOODLE)
 		//	3. Generar certificado
 		//	4. Guardar el certificado en formato PEM como un fichero con extensión crt (NOMBRE_FICHERO_CRT)
-		//COMPLETAR POR EL ESTUDIANTE
-
-		if(loadKeys)
-			cargarClaves(); //Cargar claves del fichero NOMBRE_FICHERO_CLAVES
-		else
-			guardarClaves(); //Genera par de claves y las guardae en el fichero NOMBRE_FICHERO_CLAVES
-
-		if(!clavesGeneradas())
-			System.exit(0); //Si no se ha podido generar las claves cerramos el programa
-
-	//	3. Generar un certificado autofirmado //
-	// 	1. Configurar parámetros para el certificado e instanciar objeto X509v3CertificateBuilder
-	Calendar endCertificate = GregorianCalendar.getInstance();
-	endCertificate.add(Calendar.Year, añosValidez);
-	Date endDateC = endCertificate.getTime();
-
-	X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(
-		nombreEmisor,
-		numSerie,
-		new Date(System.currentTimeMillis()),
-		endDateC,
-		nombreEmisor,
-		gc.getClavePublicaSPKI(clavePublicaCA));
-	// 	2. Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS DE APOYO EN MOODLE)
-	//BcContentSignerBuilder csBuilder = builderFirma();
-	DefaultSignatureAlgorithmIdentifierFinder firmaFinder = new DefaultSignatureAlgorithmIdentifierFinder();//Firma
-	DefaultDigestAlgorithmIdentifierFinder resumenFinder = new DefaultDigestAlgorithmIdentifierFinder();//Resumen
-	
-	AlgorithmIdentifier firmaId = firmaFinder.find("SHA256withRSA");
-	AlgorithmIdentifier resumenId = resumenFinder.find(firmaId);
-
-	BcContentSignerBuilder csBuilder = new BcRSAContentSignerBuilder(firmaId, resumenId);
 		
-	//	3. Generar certificado
-	X509CertificateHolder holder = certBldr.build(csBuilder.build(this.clavePrivadaCA));
-	// 4. Guardar el certificado en formato PEM como un fichero con extensión crt
-	// (NOMBRE_FICHERO_CRT)
-	GestionObjetosPEM.escribirObjetoPEM("CERTIFICADO", holder.getEncoded(), NOMBRE_FICHERO_CRT);
-	//Guardar el certificado en formato PEM en formato archivo de nombre certCA
-	GestionObjetosPEM.escribirObjetoPEM("CERTIFICATE", holder.getEncoded(), "certificadoCA");
-	}
-
+		//COMPLETAR POR EL ESTUDIANTE
+		// 1. Configurar parámetros para el certificado e instanciar objeto X509v3CertificateBuilder
+		Calendar calendar = new GregorianCalendar();
+		Date fechaInicio = calendar.getTime();
+		calendar.add(Calendar.YEAR, añosValidez);
+		Date fechaFin = calendar.getTime();
+		X509v3CertificateBuilder certificado = new X509v3CertificateBuilder(nombreEmisor, numSerie, fechaInicio, fechaFin, nombreEmisor, gestorClaves.getClavePublicaSPKI(clavePublicaCA));
+		// 2. Configurar hash para resumen y algoritmo firma (MIRAR DIAPOSITIVAS DE APOYO EN MOODLE)
+		BcContentSignerBuilder contentSignerBuilder = buildContentSignerBuilder();
+		// 3. Generar certificado
+		X509CertificateHolder certificadoHolder = certificado.build(contentSignerBuilder.build(asymmetricCipherKeyPair.getPrivate()));
+		// 4. Guardar el certificado en formato PEM como un fichero con extensión crt (NOMBRE_FICHERO_CRT)
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.CERTIFICATE_PEM_HEADER, certificadoHolder.getEncoded(), NOMBRE_FICHERO_CRT);
+		//Generar la pareja de claves
+		asymmetricCipherKeyPair = gestorClaves.generarClaves(numSerie, 2048);
+		clavePrivadaCA = (RSAKeyParameters)asymmetricCipherKeyPair.getPrivate();
+		clavePublicaCA = (RSAKeyParameters)asymmetricCipherKeyPair.getPublic();
+		// Guardar las claves en ficheros
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, gestorClaves.getClavePrivadaPKCS8(clavePrivadaCA).getEncoded(), NOMBRE_FICHERO_CLAVES + "_pri.txt");
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, gestorClaves.getClavePublicaSPKI(clavePublicaCA).getEncoded(), NOMBRE_FICHERO_CLAVES + "_pri.txt");	}
+		
 	/**
 	 * Método que carga la parejas de claves
 	 * @throws IOException 
@@ -121,12 +103,9 @@ public class CA {
 				// Carga la pareja de claves de los ficheros indicados por NOMBRE_FICHERO_CLAVES 
 				// (añadiendo al nombre las cadenas "_pri.txt" y "_pu.txt")
 		// No carga el certificado porque se lee de fichero cuando se necesita.
-		
-		GestionClaves gc = new GestionClaves(); // Clase con métodos para manejar las claves
 		//COMPLETAR POR EL ESTUDIANTE
-		clavePublicaCA = gc.getClavePublicaMotor((SubjectPublicKeyInfo) GestionObjetosPEM.leerObjetoPEM(NOMBRE_FICHERO_CLAVES + "-public"));
-		clavePrivadaCA = gc.getClavePrivadaMotor((PrivateKeyInfo) GestionObjetosPEM.leerObjetoPEM(NOMBRE_FICHERO_CLAVES + "-private"));
-
+		clavePrivadaCA = gestorClaves.getClavePrivadaMotor((PrivateKeyInfo)GestionObjetosPEM.leerObjetoPEM(NOMBRE_FICHERO_CLAVES + "_pri.txt"));
+		clavePublicaCA = gestorClaves.getClavePublicaMotor((SubjectPublicKeyInfo)GestionObjetosPEM.leerObjetoPEM(NOMBRE_FICHERO_CLAVES + "_pu.txt"));
 	}
 
 
@@ -148,134 +127,41 @@ public class CA {
 		//  Se guarda el certificado en formato PEM como un fichero con extensión crt
 
 		//  COMPLETAR POR EL ESTUDIANTE
-		boolean certificate = false;
-		PKCS10CertificationRequest request = (PKCS10CertificationRequestGestionObjetosPEM.leerObjetoPEM(ficheroPeticion));
-		X509CertificateHolder holder = this.crearCertificado(request, false);
-		if (holder.isValidOn(new Date(System.currentTimeMillis()))) {
-			//Guardar certificado
-			GestionObjetosPEM.escribirObjetoPEM("CERTIFICATE", holder.getEncoded(), ficheroCertUsu);
-			GestionObjetosPEM.escribirObjetoPEM("CERTIFICATE", holder.getEncoded(), NOMBRE_FICHERO_CRTUSU);
-			certificate = true;
+		PKCS10CertificationRequest peticion = (PKCS10CertificationRequest) GestionObjetosPEM
+				.leerObjetoPEM(ficheroPeticion);
+
+		X509CertificateHolder certificado = this.certificateHolder(peticion);
+		if (certificado.isValidOn(new Date(System.currentTimeMillis()))) {
+
+			GestionObjetosPEM.escribirObjetoPEM("CERTIFICATE", certificado.getEncoded(), ficheroCertUsu);
+			return true;
 		}
-		
-		return certificate;
+		return false;
 
-
-	
 	}
 	
 	// EL ESTUDIANTE PODRÁ CODIFICAR TANTOS MÉTODOS PRIVADOS COMO CONSIDERE INTERESANTE PARA UNA MEJOR ORGANIZACIÓN DEL CÓDIGO
-	
-	/**
-	 * Método privado que comprueba la validez de la firma de una petición de
-	 * certificación.
-	 * 
-	 * @param peticion.     Parámetro con la petición de certificación en formato
-	 *                      PKCS10
-	 * @param clavePublica. Parámetro con la clave pública
-	 * @return boolean. true si verificación firma, false en caso contrario.
+
+	/*
+	 * Método para crear el objeto BcContentSignerBuilder que se utilizará para firmar el certificado de usuario
+	 * @return BcContentSignerBuilder. Objeto BcContentSignerBuilder
 	 */
-	private boolean verificaFirmaDePeticion(PKCS10CertificationRequest peticion, RSAKeyParameters clavePublica)
-	throws OperatorCreationException, PKCSException {
-		
-		boolean verificado = false;
-		DefaultDigestAlgorithmIdentifierFinder digAF = new DefaultDigestAlgorithmIdentifierFinder();
-		if (peticion.isSignatureValid(new BcRSAContentVerifierProviderBuilder(digAF).build(clavePublica)))
-		verificado = true;
-		
-		return verificado;
+	private BcContentSignerBuilder buildContentSignerBuilder() { 
+		DefaultDigestAlgorithmIdentifierFinder digestAlgorithmIdentifierFinder = new DefaultDigestAlgorithmIdentifierFinder();
+		DefaultSignatureAlgorithmIdentifierFinder signatureAlgorithmIdentifierFinder = new DefaultSignatureAlgorithmIdentifierFinder();
+		AlgorithmIdentifier sigAlgId = signatureAlgorithmIdentifierFinder.find("SHA256withRSA");
+		AlgorithmIdentifier digAlgId = digestAlgorithmIdentifierFinder.find(sigAlgId);
+		return new BcRSAContentSignerBuilder(sigAlgId, digAlgId);
 	}
-	
-	/**
-	 * Método privado que genera el certificado de un usuario a partir de una
-	 * petición de certificación Este método es necesario emplearlo para Certificar
-	 * una Petición
-	 * 
-	 * @param pet:PKCS10CertificationRequest. Parámetro con la petición de
-	 *                                        certificación en formato PKCS10
-	 * @throws PKCSException
-	 * @throws OperatorCreationException
-	 * @throws IOException
-	 * @result X509CertificateHolder: certificado X.509
+	/*
+	 * Método para crear el certificado de usuario a partir de la petición de certificación
+	 * @param peticion: PKCS10CertificationRequest. Parámetro con la petición de certificación
+	 * @return certificado: X509CertificateHolder. Certificado de usuario
 	 */
-	private X509CertificateHolder crearCertificado(PKCS10CertificationRequest peticion)
-	throws OperatorCreationException, PKCSException, IOException {
-		
-		X509CertificateHolder crtHolder = null;
-		
-		SubjectPublicKeyInfo clavePublicaES = peticion.getSubjectPublicKeyInfo();
-		RSAKeyParameters clavePublicaEntidad = gc.getClavePublicaMotor(clavePublicaES);
-		
-		if (this.verificaFirmaDePeticion(peticion, clavePublicaEntidad)) {
-			
-			X500Name nombreSolicitante = peticion.getSubject();
-			
-			Calendar finCer = GregorianCalendar.getInstance();
-			finCer.add(Calendar.YEAR, añosValidez);
-			Date fFCer = finCer.getTime();
-			
-			X509v3CertificateBuilder certBldr = new X509v3CertificateBuilder(nombreEmisor, numSerie,
-			new Date(System.currentTimeMillis()), fFCer, nombreSolicitante, clavePublicaES);
-			
-			DefaultSignatureAlgorithmIdentifierFinder sigAF = new DefaultSignatureAlgorithmIdentifierFinder();
-			DefaultDigestAlgorithmIdentifierFinder digAF = new DefaultDigestAlgorithmIdentifierFinder();
-			
-			AlgorithmIdentifier sigAI = sigAF.find("SHA256withRSA");
-			AlgorithmIdentifier digAI = digAF.find(sigAI);
-			
-			BcContentSignerBuilder csBuilder = new BcRSAContentSignerBuilder(sigAI, digAI);
-			
-			crtHolder = certBldr.build(csBuilder.build(this.clavePrivadaCA));
-		}
-		
-		return crtHolder;
+	private X509CertificateHolder certificateHolder(PKCS10CertificationRequest peticion) throws OperatorCreationException, PKCSException, IOException {
+		BcContentSignerBuilder signerBuilder = buildContentSignerBuilder();
+		ContentSigner signer = signerBuilder.build(clavePrivadaCA);
+		X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(nombreEmisor, numSerie, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 365), peticion.getSubject(), peticion.getSubjectPublicKeyInfo());
+		return certBuilder.build(signer);
 	}
-	
-	/**
-	 * Método que comprueba si ya se han generado las claves.
-	 * 
-	 * @return boolean. true si ya se habían generado, false en otro caso.
-	 */
-	private boolean clavesGeneradas() {
-		
-		boolean generadas = false;
-		if ((clavePrivadaCA != null) && (clavePublicaCA != null))
-		
-		generadas = true;
-		
-		return generadas;
-	}
-	/**
-	 * Método para guardar las claves.
-	 * 
-	 * @throws IOException
-	 */
-			
-	private void guardarClaves() throws IOException {
-			
-		AsymmetricCipherKeyPair claves = gc.generarClaves(BigInteger.valueOf(3), 2048);
-				
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER,
-		gc.getClavePublicaSPKI(claves.getPublic()).getEncoded(), NOMBRE_FICHERO_CLAVES + "-public");
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS8KEY_PEM_HEADER,
-		gc.getClavePrivadaPKCS8(claves.getPrivate()).getEncoded(), NOMBRE_FICHERO_CLAVES + "-private");
-			
-		clavePrivadaCA = (RSAKeyParameters) claves.getPrivate();
-		clavePublicaCA = (RSAKeyParameters) claves.getPublic();
-	}
-			
-	/**
-	 * Método que configura e instancia un builder para la firma.
-	 * 
-	 * @return csBuilder
-	 */
-		
-	private BcContentSignerBuilder builderFirma() {
-		DefaultSignatureAlgorithmIdentifierFinder sigAlgFinder = new DefaultSignatureAlgorithmIdentifierFinder();
-		DefaultDigestAlgorithmIdentifierFinder digAlgFinder = new DefaultDigestAlgorithmIdentifierFinder();
-		AlgorithmIdentifier sigAlgId = sigAlgFinder.find("SHA256withRSA");
-		AlgorithmIdentifier digAlgId = digAlgFinder.find(sigAlgId);
-		BcContentSignerBuilder csBuilder = new BcRSAContentSignerBuilder(sigAlgId, digAlgId);
-		return csBuilder;
-	}		
 }
