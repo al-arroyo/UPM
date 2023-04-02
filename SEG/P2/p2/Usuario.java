@@ -56,7 +56,7 @@ public class Usuario {
 		// Escribir las claves en un fichero en formato PEM 
 
 		//IMPLEMENTAR POR EL ESTUDIANTE ESTUDIANTE
-		AsymmetricCipherKeyPair keyPair = gc.generarClaves(BigInteger.valueOf(0x10001), 2048);
+		AsymmetricCipherKeyPair keyPair = gc.generarClaves(BigInteger.valueOf(1), 2048);
 		keyPrivate = (RSAKeyParameters) keyPair.getPrivate();
 		keyPublic = (RSAKeyParameters) keyPair.getPublic();
 		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS10_PEM_HEADER, gc.getClavePrivadaPKCS8(keyPrivate).getEncoded(), fichClavePrivada);
