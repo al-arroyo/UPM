@@ -2,6 +2,9 @@ package p2;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import javax.lang.model.element.Element;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.Identity;
@@ -137,29 +140,34 @@ public class CA {
 
 		//  COMPLETAR POR EL ESTUDIANTE
 		if (clavePrivadaCA == null || clavePublicaCA == null) {
-			throw new IOException("No se han cargado las claves");
+			System.out.println("No se han cargado las claves");
 		}
-		PKCS10CertificationRequest peticion = (PKCS10CertificationRequest) GestionObjetosPEM
-				.leerObjetoPEM(ficheroPeticion);
-		GestionClaves gestorClaves = new GestionClaves();
-		RSAKeyParameters clavePublicaSolicitante = gestorClaves.getClavePublicaMotor(peticion.getSubjectPublicKeyInfo());
-		DefaultDigestAlgorithmIdentifierFinder dIdFinder = new DefaultDigestAlgorithmIdentifierFinder();
-		ContentVerifierProvider contentVerifierProvider = new BcRSAContentVerifierProviderBuilder(dIdFinder)
-				.build(clavePublicaSolicitante);
-		if (!peticion.isSignatureValid(contentVerifierProvider)) {
-			throw new PKCSException("Firma de la petición inválida");
+		else{
+			PKCS10CertificationRequest peticion = (PKCS10CertificationRequest) GestionObjetosPEM
+					.leerObjetoPEM(ficheroPeticion);
+			GestionClaves gestorClaves = new GestionClaves();
+			RSAKeyParameters clavePublicaSolicitante = gestorClaves.getClavePublicaMotor(peticion.getSubjectPublicKeyInfo());
+			DefaultDigestAlgorithmIdentifierFinder dIdFinder = new DefaultDigestAlgorithmIdentifierFinder();
+			ContentVerifierProvider contentVerifierProvider = new BcRSAContentVerifierProviderBuilder(dIdFinder)
+					.build(clavePublicaSolicitante);
+			if (!peticion.isSignatureValid(contentVerifierProvider)) {
+				System.out.println("Firma de la petición inválida");
+			}
+			else{
+				Date dateStart = new Date(System.currentTimeMillis());
+				Calendar calendar = GregorianCalendar.getInstance();
+				calendar.add(Calendar.YEAR, añosValidez);
+				Date dateEnd = calendar.getTime();
+				X500Name name = new X500Name("C=ES, O=DTE, CN=Alvaro");
+				X509v3CertificateBuilder certificado = new X509v3CertificateBuilder(nombreEmisor, numSerie, dateStart, dateEnd, name,
+						gestorClaves.getClavePublicaSPKI(clavePublicaCA));
+				BcContentSignerBuilder contentSignerBuilder = bcContentSignerBuilder();
+				X509CertificateHolder certificadoFirmado = certificado.build(contentSignerBuilder.build(clavePrivadaCA));
+				GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.CERTIFICATE_PEM_HEADER, certificadoFirmado.getEncoded(), ficheroCertUsu);
+				return true;
+			}
 		}
-		Date dateStart = new Date(System.currentTimeMillis());
-		Calendar calendar = GregorianCalendar.getInstance();
-		calendar.add(Calendar.YEAR, añosValidez);
-		Date dateEnd = calendar.getTime();
-		X500Name name = new X500Name("C=ES, O=DTE, CN=Alvaro");
-		X509v3CertificateBuilder certificado = new X509v3CertificateBuilder(nombreEmisor, numSerie, dateStart, dateEnd, name,
-				gestorClaves.getClavePublicaSPKI(clavePublicaCA));
-		BcContentSignerBuilder contentSignerBuilder = bcContentSignerBuilder();
-		X509CertificateHolder certificadoFirmado = certificado.build(contentSignerBuilder.build(clavePrivadaCA));
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.CERTIFICATE_PEM_HEADER, certificadoFirmado.getEncoded(), ficheroCertUsu);
-		return true;
+		return false;
 	}
 	
 	// EL ESTUDIANTE PODRÁ CODIFICAR TANTOS MÉTODOS PRIVADOS COMO CONSIDERE INTERESANTE PARA UNA MEJOR ORGANIZACIÓN DEL CÓDIGO

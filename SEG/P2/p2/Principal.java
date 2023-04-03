@@ -1,6 +1,13 @@
 package p2;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
+
+import org.bouncycastle.cert.CertException;
+import org.bouncycastle.operator.OperatorCreationException;
+import org.bouncycastle.pkcs.PKCSException;
+
 
 
 public class Principal {
@@ -68,8 +75,8 @@ public class Principal {
 								try{
 									u.generarClavesUsuario(ficheroClavePrivada, ficheroClavePublica);
 								}
-								catch(Exception e){
-									System.out.println("Error al generar las claves");
+								catch(IOException e){
+									System.out.println("ErrorIO: al generar las claves");
 								}
 															
 							break;
@@ -77,14 +84,14 @@ public class Principal {
 								System.out.println("Escriba nombre fichero para la petición de certificación:");
 								fichero= sc.next();
 								//COMPLETAR POR EL ESTUDIANTE
-								if(fichero == null){
-									System.out.println("Error al crear la petición de certificación");
-								}
 								try{
 									u.crearPetCertificado(fichero);
 								}
-								catch(Exception e){
-									System.out.println("Error al crear la petición de certificación");
+								catch(IOException e){
+									System.out.println("ErrorIO: al crear la petición de certificación");
+								}
+								catch(OperatorCreationException o){
+									System.out.println("ErrorOp: al crear la petición de certificación");
 								}
 								
 							break;
@@ -97,11 +104,18 @@ public class Principal {
 								try{
 									u.verificarCertificadoExterno(fichero, ficheroCA);
 								}
-								catch(Exception e){
-									System.out.println("Error al verificar el certificado");
+								catch(CertException c){
+									System.out.println("ErrorC: al verificar el certificado");
 								}
-
-				        
+								catch(FileNotFoundException f){
+									System.out.println("ErrorF: al verificar el certificado");
+								}
+								catch(IOException e){
+									System.out.println("ErrorIO: al verificar el certificado");
+								}
+								catch(OperatorCreationException o){
+									System.out.println("ErrorOp: al verificar el certificado");
+								}
 							break;
 						}
 					} while(menu2 != 0);
@@ -122,9 +136,15 @@ public class Principal {
 									System.out.println("Claves y certificados X509 GENERADOS");
 									System.out.println("Se han guardado en " + CA.NOMBRE_FICHERO_CRT + ", " + CA.NOMBRE_FICHERO_CLAVES + "-*.txt");									
 								}
+								catch(IOException e){
+									System.out.println("ErrorIO: al generar las claves");
+								}
+								catch(OperatorCreationException o){
+									System.out.println("ErrorOp: al generar las claves");
+								}
 								catch(Exception e){
-									System.out.println("Error al generar las claves");
-								} 
+									System.out.println("ErrorEx: al generar las claves");
+								}
 							break;
 							case 2: //Cargar de fichero pareja de claves
 								//COMPLETAR POR EL ESTUDIANTE  
@@ -133,8 +153,8 @@ public class Principal {
 									System.out.println("Claves CARGADAS");
 									System.out.println("Se han cargado de " + CA.NOMBRE_FICHERO_CLAVES + "-*.txt");									
 								}
-								catch(Exception e){
-									System.out.println("Error al cargar las claves");
+								catch(IOException e){
+									System.out.println("ErrorIO: al cargar las claves");
 								}
 							break;
 							case 3:// Generar certificado a partir de una petición
@@ -147,11 +167,15 @@ public class Principal {
 										ca.certificarPeticion(fichero, ficheroCertUsu);
 										System.out.println("Certificado generado");
 									}
-									catch(Exception e){
-										System.out.println("Error al generar el certificado");
+									catch(IOException e){
+										System.out.println("ErrorIO: al generar el certificado");
 									}
-								    
-								    
+								    catch(OperatorCreationException o){
+										System.out.println("ErrorOp: al generar el certificado");
+									}
+									catch(Exception e){
+										System.out.println("ErrorEx: al generar el certificado");
+									}
 							break;							
 						}
 					} while(menu2 != 0);
