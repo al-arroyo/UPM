@@ -59,8 +59,10 @@ public class Usuario {
 		AsymmetricCipherKeyPair keyPair = gc.generarClaves(BigInteger.valueOf(3), 2048);
 		keyPrivate = (RSAKeyParameters) keyPair.getPrivate();
 		keyPublic = (RSAKeyParameters) keyPair.getPublic();
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS8KEY_PEM_HEADER, gc.getClavePrivadaPKCS8(keyPrivate).getEncoded(), fichClavePrivada);
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, gc.getClavePublicaSPKI(keyPublic).getEncoded(), fichClavePublica);		
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS8KEY_PEM_HEADER, 
+								gc.getClavePrivadaPKCS8(keyPrivate).getEncoded(), fichClavePrivada);
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, 
+								gc.getClavePublicaSPKI(keyPublic).getEncoded(), fichClavePublica);		
 	}
 
 
@@ -100,7 +102,8 @@ public class Usuario {
 	 * @throws FileNotFoundException 	
 	 * @return boolean: true si verificación OK, false en caso contrario.
 	 */
-    public boolean verificarCertificadoExterno(String fichCertificadoCA, String fichCertificadoUsu)throws OperatorCreationException, CertException, FileNotFoundException, IOException {
+    public boolean verificarCertificadoExterno(String fichCertificadoCA, String fichCertificadoUsu)
+			throws OperatorCreationException, CertException, FileNotFoundException, IOException {
 
     // IMPLEMENTAR POR EL ESTUDIANTE
 	// Comprobar fecha validez del certificado
@@ -110,14 +113,17 @@ public class Usuario {
     	
    	// IMPLEMENTAR POR EL ESTUDIANTE
 		GestionClaves gc = new GestionClaves();
-		X509CertificateHolder certCA = (X509CertificateHolder) GestionObjetosPEM.leerObjetoPEM(fichCertificadoCA);
-		X509CertificateHolder certUsu = (X509CertificateHolder) GestionObjetosPEM.leerObjetoPEM(fichCertificadoUsu);
+		X509CertificateHolder certCA = (X509CertificateHolder) GestionObjetosPEM
+										.leerObjetoPEM(fichCertificadoCA);
+		X509CertificateHolder certUsu = (X509CertificateHolder) GestionObjetosPEM
+										.leerObjetoPEM(fichCertificadoUsu);
 		if (certUsu.getNotAfter().before(new Date())) {
 			return false;
 		}
 		SubjectPublicKeyInfo keyInfo = certCA.getSubjectPublicKeyInfo();
 		RSAKeyParameters keyPublic = gc.getClavePublicaMotor(keyInfo);
-		ContentVerifierProvider verifierProvider = new BcRSAContentVerifierProviderBuilder(new DefaultDigestAlgorithmIdentifierFinder()).build(keyPublic);
+		ContentVerifierProvider verifierProvider = new BcRSAContentVerifierProviderBuilder(
+									new DefaultDigestAlgorithmIdentifierFinder()).build(keyPublic);
 		return certUsu.isSignatureValid(verifierProvider);
 	}	
 	
@@ -128,10 +134,10 @@ public class Usuario {
 	* @return BcContentSignerBuilder. Objeto BcContentSignerBuilder
 	*/
 	private BcContentSignerBuilder buildContentSignerBuilder() { 
-		DefaultDigestAlgorithmIdentifierFinder digestAlgorithmIdentifierFinder = new DefaultDigestAlgorithmIdentifierFinder();
-		DefaultSignatureAlgorithmIdentifierFinder signatureAlgorithmIdentifierFinder = new DefaultSignatureAlgorithmIdentifierFinder();
-		AlgorithmIdentifier sigAlgId = signatureAlgorithmIdentifierFinder.find("SHA256withRSA");
-		AlgorithmIdentifier digAlgId = digestAlgorithmIdentifierFinder.find(sigAlgId);
+		DefaultDigestAlgorithmIdentifierFinder dIdFinder = new DefaultDigestAlgorithmIdentifierFinder();
+		DefaultSignatureAlgorithmIdentifierFinder sIdFinder = new DefaultSignatureAlgorithmIdentifierFinder();
+		AlgorithmIdentifier sigAlgId = sIdFinder.find("SHA256withRSA");
+		AlgorithmIdentifier digAlgId = dIdFinder.find(sigAlgId);
 		return new BcRSAContentSignerBuilder(sigAlgId, digAlgId);
 	}
 }

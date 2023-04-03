@@ -7,8 +7,8 @@ public class PrincipalExamen2 {
 		  CA ca=new CA();
 		  System.out.println("\nPrueba FUNCIONAMIENTO Practica 2, curso 2022.");	
 		  System.out.println("\nFUNCIONAMIENTO INCORRECTO-CORRECTO \n1. Trabajar como USUARIO.");		
-		  System.out.println("\tOPCIoN: Crear peticion de certificacion.");		   
-		  u.crearPetCertificado("pet.txt");
+		  //System.out.println("\tOPCIoN: Crear peticion de certificacion.");		   
+		  //u.crearPetCertificado("pet.txt");
 		  System.out.println("\tOPCIoN: GENERAR PAREJA DE CLAVES");			
 		  u.generarClavesUsuario("pri.txt", "pu.txt");
 		  System.out.println("\tOPCIoN: Crear peticion de certificacion.");		   
