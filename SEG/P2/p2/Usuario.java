@@ -56,11 +56,11 @@ public class Usuario {
 		// Escribir las claves en un fichero en formato PEM 
 
 		//IMPLEMENTAR POR EL ESTUDIANTE ESTUDIANTE
-		AsymmetricCipherKeyPair keyPair = gc.generarClaves(BigInteger.valueOf(1), 2048);
+		AsymmetricCipherKeyPair keyPair = gc.generarClaves(BigInteger.valueOf(3), 2048);
 		keyPrivate = (RSAKeyParameters) keyPair.getPrivate();
 		keyPublic = (RSAKeyParameters) keyPair.getPublic();
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS10_PEM_HEADER, gc.getClavePrivadaPKCS8(keyPrivate).getEncoded(), fichClavePrivada);
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, gc.getClavePrivadaPKCS8(keyPublic).getEncoded(), fichClavePublica);		
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS8KEY_PEM_HEADER, gc.getClavePrivadaPKCS8(keyPrivate).getEncoded(), fichClavePrivada);
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, gc.getClavePublicaSPKI(keyPublic).getEncoded(), fichClavePublica);		
 	}
 
 
@@ -79,8 +79,10 @@ public class Usuario {
 		// La solicitud se firma con la clave privada del usuario y se escribe en fichPeticion en formato PEM
 
 		// IMPLEMENTAR POR EL ESTUDIANTE
-
-		X500Name subject = new X500Name("CN=Álvaro Miguel Arroyo Gonzalez, OU=Seguridad, O=ETSII, C=ES");
+		if (keyPrivate == null || keyPublic == null) {
+			throw new IOException("No se han generado las claves");
+		}
+		X500Name subject = new X500Name("C=ES, O=DTE, CN=Álvaro");
 		PKCS10CertificationRequestBuilder p10Builder = new BcPKCS10CertificationRequestBuilder(subject, keyPublic);
 		BcContentSignerBuilder csBuilder = buildContentSignerBuilder();
 		PKCS10CertificationRequest p10Request = p10Builder.build(csBuilder.build(keyPrivate));
