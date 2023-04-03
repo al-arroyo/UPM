@@ -83,7 +83,7 @@ public class CA {
 		clavePublicaCA = (RSAKeyParameters)asymmetricCipherKeyPair.getPublic();
 		// Guardar las claves en ficheros
 		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PKCS8KEY_PEM_HEADER, gestorClaves.getClavePrivadaPKCS8(clavePrivadaCA).getEncoded(), NOMBRE_FICHERO_CLAVES + "_pri.txt");
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, gestorClaves.getClavePublicaSPKI(clavePublicaCA).getEncoded(), NOMBRE_FICHERO_CLAVES + "_pri.txt");	
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.PUBLICKEY_PEM_HEADER, gestorClaves.getClavePublicaSPKI(clavePublicaCA).getEncoded(), NOMBRE_FICHERO_CLAVES + "_pu.txt");	
 		// 1. Configurar parámetros para el certificado e instanciar objeto X509v3CertificateBuilder
 		Date dateStart = new Date(System.currentTimeMillis());
 		Calendar calendar = GregorianCalendar.getInstance();
@@ -151,7 +151,7 @@ public class CA {
 		X509v3CertificateBuilder certificado = new X509v3CertificateBuilder(nombreEmisor, numSerie, dateStart, dateEnd, name, gestorClaves.getClavePublicaSPKI(clavePublicaCA));
 		BcContentSignerBuilder contentSignerBuilder = bcContentSignerBuilder();
 		X509CertificateHolder certificadoFirmado = certificado.build(contentSignerBuilder.build(clavePrivadaCA));
-		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.CERTIFICATE_PEM_HEADER, certificadoFirmado.getEncoded(), NOMBRE_FICHERO_CRT);
+		GestionObjetosPEM.escribirObjetoPEM(GestionObjetosPEM.CERTIFICATE_PEM_HEADER, certificadoFirmado.getEncoded(), ficheroCertUsu);
 		return true;
 	}
 	
@@ -165,16 +165,5 @@ public class CA {
 		AlgorithmIdentifier sigAlgId = new DefaultSignatureAlgorithmIdentifierFinder().find("SHA256withRSA");
 		AlgorithmIdentifier digAlgId = new DefaultDigestAlgorithmIdentifierFinder().find(sigAlgId);
 		return new BcRSAContentSignerBuilder(sigAlgId, digAlgId);
-	}
-	/*
-	 * Método para crear el certificado de usuario a partir de la petición de certificación
-	 * @param peticion: PKCS10CertificationRequest. Parámetro con la petición de certificación
-	 * @return certificado: X509CertificateHolder. Certificado de usuario
-	 */
-	private X509CertificateHolder certificateHolder(PKCS10CertificationRequest peticion) throws OperatorCreationException, PKCSException, IOException {
-		BcContentSignerBuilder signerBuilder = bcRSABcContentSignerBuilder();
-		ContentSigner signer = signerBuilder.build(clavePrivadaCA);
-		X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(nombreEmisor, numSerie, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 365), peticion.getSubject(), peticion.getSubjectPublicKeyInfo());
-		return certBuilder.build(signer);
 	}
 }
