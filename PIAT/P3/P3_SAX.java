@@ -3,7 +3,7 @@ package piat.opendatasearch;
 import java.util.Arrays;
 
 /**
- * @author Ponga aquí su nombre, apellidos y DNI
+ * @author Alvaro Miguel Arroyo Gonzalez
  *
  */
 
@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class P3_SAX {
 
 
-	public static void main(String[] args) {
+		public static void main(String[] args) {
 		
 		// Verificar nº de argumentos correcto
 		if (args.length!=4){
@@ -37,6 +37,10 @@ public class P3_SAX {
 		 * Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
 		 * Validar el fichero generado con el esquema recibido en el tercer argumento de main()
 		 */
+		 ManejadorXML handler = new ManejadorXML(args[0]);
+		 SAXParser parser = new SAXParser(args[0], handler);
+		 List<String> list = handler.getConcepts();
+		   
 		
 
 		System.exit(0);
