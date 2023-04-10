@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * @author Ponga aquí su nombre, apellidos y DNI
+ * @author Alvaro Miguel Arroyo Gonzalez
  *
  */
 
@@ -31,7 +31,8 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */
 	public ManejadorXML (String sCodigoConcepto) throws SAXException, ParserConfigurationException {
 		// TODO
-	
+		super();
+		hDatasets = new HashMap<sCodigoConcepto, sNombreCategoria>;
 		
 	}
 
@@ -56,9 +57,12 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override	
 	public List<String> getConcepts() {
 		// TODO 
+		List<String>list = new ArrayList<String>();
+		for(int s = 0 ; !hDatasets.key() ; s++){
+			list.add( hDatasets.key() );
+		}
 		
-		
-		return null;
+		return list;
 	}
 
 	/**
@@ -80,7 +84,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		// TODO 
 		
 		
-		return null;
+		return new HashMap<String, hDataSets>();
 	}
 	
 

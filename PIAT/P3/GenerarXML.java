@@ -1,7 +1,7 @@
 package piat.opendatasearch;
 
 /**
- * @author Ponga aquí su nombre, apellidos y DNI
+ * @author Alvaro Miguel Arroyo Gonzalez
  *
  */
 
