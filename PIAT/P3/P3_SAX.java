@@ -40,6 +40,13 @@ public class P3_SAX {
 		 ManejadorXML handler = new ManejadorXML(args[0]);
 		 SAXParser parser = new SAXParser(args[0], handler);
 		 List<String> list = handler.getConcepts();
+		 
+		 try {
+				SAXParserFactory factory = SAXParserFactory.newInstance(); 								factory.setNamespaceAware(true);
+				SAXParser saxParser = factory.newSAXParser();
+				ManejadorXML manejadorXML = new ManejadorXML();
+				saxParser.parse( new File(args[0]), manejadorXML);
+		} catch (SAXException | ParserConfigurationException | IOException e) { e.printStackTrace(); }
 		   
 		
 
