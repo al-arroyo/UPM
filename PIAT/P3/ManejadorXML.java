@@ -113,24 +113,30 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, qName, attributes);
-		// TODO 
-		
+		// TODO #Copiado de las transparencias
+		System.out.println( "SAX Event: START ELEMENT[ " + localName + " ]" ); 
+		for ( int i = 0; i < atts.getLength(); i++ ){
+			System.out.println( " ATTRIBUTE: " + atts.getLocalName(i) + " VALUE: " + atts.getValue(i) ); 
+			}
 				
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		super.endElement(uri, localName, qName);
-		// TODO 
-		
-				
+		// TODO #Copiado de las trasparencias
+		System.out.println( "SAX Event: END ELEMENT[ " + localName + " ]" );
+		contenidoElemento.setLength(0);
 	}
 	
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		super.characters(ch, start, length);
-		// TODO 
-		
+		// TODO #Copiado de las transparencias
+		System.out.print( "SAX Event: CHARACTERS[ ");
+		contenidoElemento.append(ch,start,lenght);
+		System.out.print(contenidoElemento.toString());
+		System.out.println( " ]");
 				
 	}
 
