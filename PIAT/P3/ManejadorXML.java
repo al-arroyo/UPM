@@ -22,7 +22,11 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private String sNombreCategoria;	// Nombre de la categoría
 	private List<String> lConcepts; 	// Lista con los uris de los elementos <concept> que pertenecen a la categoría
+	private Map <String, String> hData;
 	private Map <String, Map<String,String>> hDatasets;	// Mapa con información de los dataset que pertenecen a la categoría
+	private String sCodigoConcepto;
+	private StringBuilder contenidoElemento;
+	
 
 
 	/**  
@@ -30,10 +34,13 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 * @throws SAXException, ParserConfigurationException 
 	 */
 	public ManejadorXML (String sCodigoConcepto) throws SAXException, ParserConfigurationException {
-		// TODO
+		// TODO #HECHO#
 		super();
-		hDatasets = new HashMap<sCodigoConcepto, sNombreCategoria>;
-		
+		this.sCodigoConcepto = sCodigoConcepto;
+		lConcepts = new ArrayList<String>();
+		hData = new HashMap<String, String>;
+		hDatasets = new HashMap<sCodigoConcepto, hData>;
+		contenidoElemento.setLength(0);
 	}
 
 	 //===========================================================
@@ -56,13 +63,8 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */
 	@Override	
 	public List<String> getConcepts() {
-		// TODO 
-		List<String>list = new ArrayList<String>();
-		for(int s = 0 ; !hDatasets.key() ; s++){
-			list.add( hDatasets.key() );
-		}
-		
-		return list;
+		// TODO #HECHO#
+		return lConcepts;
 	}
 
 	/**
@@ -81,10 +83,8 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */	
 	@Override
 	public Map<String, Map<String, String>> getDatasets() {
-		// TODO 
-		
-		
-		return new HashMap<String, hDataSets>();
+		// TODO #HECHO#
+		return hDatasets;
 	}
 	
 
