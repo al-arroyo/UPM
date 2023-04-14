@@ -37,16 +37,15 @@ public class P3_SAX {
 		 * Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
 		 * Validar el fichero generado con el esquema recibido en el tercer argumento de main()
 		 */
-		 ManejadorXML handler = new ManejadorXML(args[0]);
-		 SAXParser parser = new SAXParser(args[0], handler);
-		 List<String> list = handler.getConcepts();
-		 
+		 		 
 		 try {
 				SAXParserFactory factory = SAXParserFactory.newInstance(); 								factory.setNamespaceAware(true);
 				SAXParser saxParser = factory.newSAXParser();
 				ManejadorXML manejadorXML = new ManejadorXML();
 				saxParser.parse( new File(args[0]), manejadorXML);
-		} catch (SAXException | ParserConfigurationException | IOException e) { e.printStackTrace(); }
+		} catch (SAXException | ParserConfigurationException | IOException e){
+		 e.printStackTrace();
+		}
 		   
 		
 
