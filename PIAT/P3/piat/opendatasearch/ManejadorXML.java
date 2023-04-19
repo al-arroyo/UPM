@@ -114,10 +114,10 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		// TODO 
 
 		contenidoElemento.setLength(0);
+		/*
 		System.out.println("Uri:" + uri);
 		System.out.println("Nombre local:" + localName);
 		System.out.println( " Nombre completo:" + qName);
-		/*
 		if(attributes.getLocalName(0))
 			System.out.println("    ATRIB. id: " + attributes.getLocalName(0) );
 */

@@ -49,8 +49,8 @@ public class P3_SAX {
 		 try {
 				SAXParserFactory factory = SAXParserFactory.newInstance(); 								factory.setNamespaceAware(true);
 				SAXParser saxParser = factory.newSAXParser();
-				ManejadorXML manejadorXML = new ManejadorXML(args[1]);
-				saxParser.parse( new File(args[0]), manejadorXML);
+				ManejadorXML manejadorXML = new ManejadorXML(args[0]);
+				saxParser.parse( new File(args[1]), manejadorXML);
 		} catch (SAXException | ParserConfigurationException | IOException e){
 		 e.printStackTrace();
 		}
