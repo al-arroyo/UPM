@@ -45,8 +45,8 @@ public class P3_SAX {
 		 * Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
 		 * Validar el fichero generado con el esquema recibido en el tercer argumento de main()
 		 */
-		 		 
-		 try {
+		validArgs(args);	 
+		try {
 				SAXParserFactory factory = SAXParserFactory.newInstance(); 								factory.setNamespaceAware(true);
 				SAXParser saxParser = factory.newSAXParser();
 				ManejadorXML manejadorXML = new ManejadorXML(args[0]);
@@ -81,6 +81,17 @@ public class P3_SAX {
 				"\t ficheroXSDsalida:\t nombre del fichero que contiene el esquema contra el que se tiene que validar el documento XML de salida\n"	+
 				"\t ficheroXMLSalida:\t nombre del fichero XML de salida\n"
 				);				
-	}		
-
+	}
+	private static void validArgs(String[] args) {
+		String regex[] = {"^[0-9]{3,4}(-[0-9A-Z]{3,8})*$",
+					 "^[0-9]{3,4}(-[0-9A-Z]{3,8})*$",
+					 "^[0-9]{3,4}(-[0-9A-Z]{3,8})*$",
+					 "^[0-9]{3,4}(-[0-9A-Z]{3,8})*$"};
+		for (int i = 0; i < args.length; i++) {
+			if (!args[i].matches(regex[i])) {
+				// Código para manejar el caso en que args[i] no coincide con regex[j]
+				throw new IllegalArgumentException("Argumento incorrecto: " + args[i]);
+			}
+		}		
+	}	
 }
