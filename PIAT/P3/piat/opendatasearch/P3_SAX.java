@@ -1,6 +1,14 @@
 package piat.opendatasearch;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
 
 /**
  * @author Alvaro Miguel Arroyo Gonzalez
@@ -41,7 +49,7 @@ public class P3_SAX {
 		 try {
 				SAXParserFactory factory = SAXParserFactory.newInstance(); 								factory.setNamespaceAware(true);
 				SAXParser saxParser = factory.newSAXParser();
-				ManejadorXML manejadorXML = new ManejadorXML();
+				ManejadorXML manejadorXML = new ManejadorXML(args[1]);
 				saxParser.parse( new File(args[0]), manejadorXML);
 		} catch (SAXException | ParserConfigurationException | IOException e){
 		 e.printStackTrace();

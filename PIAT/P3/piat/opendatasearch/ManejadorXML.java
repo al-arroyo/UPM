@@ -1,5 +1,6 @@
 package piat.opendatasearch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * @author Alvaro Miguel Arroyo Gonzalez
+ * @author Nerea Calderón Gonzalo 50356369P
  *
  */
 
@@ -22,25 +23,23 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private String sNombreCategoria;	// Nombre de la categoría
 	private List<String> lConcepts; 	// Lista con los uris de los elementos <concept> que pertenecen a la categoría
-	private Map <String, String> hData;
 	private Map <String, Map<String,String>> hDatasets;	// Mapa con información de los dataset que pertenecen a la categoría
 	private String sCodigoConcepto;
 	private StringBuilder contenidoElemento;
-	
-
+	private Map <String, String> hData;
+	private String atr;
 
 	/**  
 	 * @param sCodigoConcepto código de la categoría a procesar
 	 * @throws SAXException, ParserConfigurationException 
 	 */
 	public ManejadorXML (String sCodigoConcepto) throws SAXException, ParserConfigurationException {
-		// TODO #HECHO#
-		super();
 		this.sCodigoConcepto = sCodigoConcepto;
-		lConcepts = new ArrayList<String>();
-		hData = new HashMap<String, String>;
-		hDatasets = new HashMap<sCodigoConcepto, hData>;
-		contenidoElemento.setLength(0);
+		hData = new HashMap <String, String>();
+		lConcepts= new ArrayList<String>();
+		hDatasets = new HashMap <String,Map<String, String>>();
+		contenidoElemento = new StringBuilder(0);
+		atr = null;
 	}
 
 	 //===========================================================
@@ -63,7 +62,6 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */
 	@Override	
 	public List<String> getConcepts() {
-		// TODO #HECHO#
 		return lConcepts;
 	}
 
@@ -83,7 +81,6 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */	
 	@Override
 	public Map<String, Map<String, String>> getDatasets() {
-		// TODO #HECHO#
 		return hDatasets;
 	}
 	
@@ -96,7 +93,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	public void startDocument() throws SAXException {
 		super.startDocument();
 		// TODO 
-		
+		System.out.println("Empieza el documento");
 		
 	}
 
@@ -105,6 +102,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	public void endDocument() throws SAXException {
 		super.endDocument();
 		// TODO 
+		System.out.println("Termina el documento");
 		
 				
 	}
@@ -113,30 +111,55 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, qName, attributes);
-		// TODO #Copiado de las transparencias
-		System.out.println( "SAX Event: START ELEMENT[ " + localName + " ]" ); 
-		for ( int i = 0; i < atts.getLength(); i++ ){
-			System.out.println( " ATTRIBUTE: " + atts.getLocalName(i) + " VALUE: " + atts.getValue(i) ); 
-			}
+		// TODO 
+
+		contenidoElemento.setLength(0);
+		System.out.println("Uri:" + uri);
+		System.out.println("Nombre local:" + localName);
+		System.out.println( " Nombre completo:" + qName);
+		/*
+		if(attributes.getLocalName(0))
+			System.out.println("    ATRIB. id: " + attributes.getLocalName(0) );
+*/
+		switch(localName) {
+			case "concept":
+				atr = attributes.getLocalName(0);
+				/*
+				if(code.isTrue)
+					lConcepts.add(atr);
+					*/
+				break;
+			case "code":
+				//contenidoElemento.append(true);
+				break;
+			default:
+				// Acción a realizar en caso de que nomLocal no coincida con ninguno de los casos anteriores
+				break;
+		}
+				
 				
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		super.endElement(uri, localName, qName);
-		// TODO #Copiado de las trasparencias
-		System.out.println( "SAX Event: END ELEMENT[ " + localName + " ]" );
+		// TODO 
+		
+		switch(localName) {
+		case "code":
+			if(contenidoElemento.equals(sCodigoConcepto))
+				lConcepts.add(atr);
+		case "dataset":
+			
+		}
 		contenidoElemento.setLength(0);
 	}
 	
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		super.characters(ch, start, length);
-		// TODO #Copiado de las transparencias
-		System.out.print( "SAX Event: CHARACTERS[ ");
-		contenidoElemento.append(ch,start,lenght);
-		System.out.print(contenidoElemento.toString());
-		System.out.println( " ]");
+		// TODO 
+		contenidoElemento.append(ch,start,length);
 				
 	}
 
