@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.Attributes;
@@ -27,7 +28,10 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	private String sCodigoConcepto;
 	private StringBuilder contenidoElemento;
 	private Map <String, String> hData;
-	private String atr;
+	private String idConcept;
+	private String idData;
+	private AtomicInteger nivel;
+	private AtomicInteger nivelEncontrado;
 
 	/**  
 	 * @param sCodigoConcepto código de la categoría a procesar
@@ -39,7 +43,10 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		lConcepts= new ArrayList<String>();
 		hDatasets = new HashMap <String,Map<String, String>>();
 		contenidoElemento = new StringBuilder(0);
-		atr = null;
+		idConcept = null;
+		idData = null;
+		nivel = new AtomicInteger(0);
+		nivelEncontrado = new AtomicInteger(0);
 	}
 
 	 //===========================================================
@@ -121,23 +128,37 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		if(attributes.getLocalName(0))
 			System.out.println("    ATRIB. id: " + attributes.getLocalName(0) );
 */
-		switch(localName) {
+		switch(qName) {
+			case "concepts":
+				nivel.incrementAndGet();
+				if(lConcepts.size() != 0){
+					nivelEncontrado = nivel;
+				}
+			break;
 			case "concept":
-				atr = attributes.getLocalName(0);
-				/*
-				if(code.isTrue)
-					lConcepts.add(atr);
-					*/
+				idConcept = attributes.getValue("id");
+				//si idData no es nulo , recorremos la lista de conceptos y 
+				//si un concepto concuerda con el idConcept entonces el hData es valido
+				//y se añade al mapa gordo
+				if(idData != null) {
+					for (String aux : lConcepts)
+						if(aux.equals(idConcept))
+							hDatasets.put(idData, hData);
+				}
+				//limpiar mapa
+				hData.clear();
 				break;
-			case "code":
+			case "dataset":
 				//contenidoElemento.append(true);
+				idData = attributes.getValue("id");
 				break;
+
 			default:
 				// Acción a realizar en caso de que nomLocal no coincida con ninguno de los casos anteriores
 				break;
 		}
 				
-				
+	// PREGUNTAR COMO DEBUGGEAR SI SE VE EL MAPA O NO	
 	}
 
 	@Override
@@ -145,12 +166,27 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		super.endElement(uri, localName, qName);
 		// TODO 
 		
-		switch(localName) {
+		switch(qName) {
+		case "concepts":
+			nivel.decrementAndGet();	
+		break;
 		case "code":
-			if(contenidoElemento.equals(sCodigoConcepto))
-				lConcepts.add(atr);
-		case "dataset":
-			
+			//Cuando el codigo que le pasamos de argumento al manejador coincide con el code leido del xml , añadimos el concepto id a la lista de concepts
+			if(nivelEncontrado.get() != 0)
+				sCodigoConcepto = contenidoElemento.toString();
+			if(contenidoElemento.toString().equals(sCodigoConcepto)
+			&& nivelEncontrado.get() <= nivel.get())
+				lConcepts.add(idConcept);
+			break;
+		case "title":
+			hData.put("title", contenidoElemento.toString());
+			break;
+		case "description":
+			hData.put("description", contenidoElemento.toString());
+			break;
+		case "theme":
+			hData.put("theme", contenidoElemento.toString());
+			break;
 		}
 		contenidoElemento.setLength(0);
 	}
