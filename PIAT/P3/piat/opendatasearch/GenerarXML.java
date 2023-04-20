@@ -42,27 +42,20 @@ public class GenerarXML {
 		salidaXML.append("\n\t\t</concepts>");
 
 		salidaXML.append("\n\t\t<datasets>");
+
 		for (Map.Entry<String, Map<String, String>> entry : hDatasets.entrySet()) {
 			salidaXML.append(pDataset.replace("#ID#", entry.getKey()));
-			for (Map.Entry<String, String> entry2 : entry.getValue().entrySet()) {
-				switch (entry2.getKey()) {
-				case "title":
-					salidaXML.append(pTitle.replace("#valor#", entry2.getValue()));
-					break;
-				case "description":
-					salidaXML.append(pDescription.replace("#valor#", entry2.getValue()));
-					break;
-				case "theme":
-					salidaXML.append(pTheme.replace("#valor#", entry2.getValue()));
-					break;
-				default:
-					break;
-				}
-			}
+		
+			Map<String, String> mapaValor = entry.getValue();
+			salidaXML.append(pTitle.replace("#valor#", mapaValor.get("title")));
+			salidaXML.append(pDescription.replace("#valor#", mapaValor.get("description")));
+			salidaXML.append(pTheme.replace("#valor#", mapaValor.get("theme")));
+		
 			salidaXML.append("\n\t\t\t</dataset>");
 		}
+		
 		salidaXML.append("\n\t\t</datasets>");
-		return salidaXML.toString();
+				return salidaXML.toString();
 	}
 
 	
