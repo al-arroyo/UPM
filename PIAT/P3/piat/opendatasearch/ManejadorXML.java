@@ -125,7 +125,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 			case "concepts":
 				nivel.incrementAndGet();
 				if(lConcepts.size() != 0){
-					nivelEncontrado = nivel;
+					nivelEncontrado.addAndGet(nivel.get());
 				}
 			break;
 			case "concept":
@@ -166,15 +166,15 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 			break;
 		case "concept":
 			nivel.decrementAndGet();
-			//Si el nivel encontrado es menor o igual que el nivel actual y el codigo del concepto es valido , añadimos el concepto id a la lista de concepts
-			if(nivelEncontrado.get() < nivel.get() &&
-				nivelEncontrado.get() != 0 )
-				lConcepts.add(idConcept);
 			break;
 		case "code":
-			//Cuando el codigo que le pasamos de argumento al manejador coincide con el code leido del xml , añadimos el concepto id a la lista de concepts
-			if(contenidoElemento.toString().equals(sCodigoConcepto))
-				lConcepts.add(idConcept);
+		//Cuando el codigo que le pasamos de argumento al manejador coincide con el code leido del xml , añadimos el concepto id a la lista de concepts
+		if(contenidoElemento.toString().equals(sCodigoConcepto))
+			lConcepts.add(idConcept);
+		//Si el nivel encontrado es menor o igual que el nivel actual y el codigo del concepto es valido , añadimos el concepto id a la lista de concepts
+		if(nivelEncontrado.get() < nivel.get() &&
+			nivelEncontrado.get() != 0 )
+			lConcepts.add(idConcept);
 			break;
 		case "title":
 			hData.put("title", contenidoElemento.toString());
