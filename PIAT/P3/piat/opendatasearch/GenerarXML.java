@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Ponga aquí su nombre, apellidos y DNI
+ * @author Alvaro Miguel Arroyo Gonzalez 51549946T
  *
  */
 
@@ -28,12 +28,12 @@ public class GenerarXML {
 	public static String generar (List<String> lConcepts, Map<String, Map<String, String>> hDatasets){
 		StringBuilder salidaXML= new StringBuilder();
 		salidaXML.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"); 
+		// TODO
+		//PREGUNTAR A JAVIER
 		for (String aux : lConcepts) {
 			salidaXML.append(aux + "\n");
 		}
 		//salidaXML.append(lConcepts.toString());
-		// TODO
-		//PREGUNTAR A JAVIER
 		return salidaXML.toString();
 
 	}

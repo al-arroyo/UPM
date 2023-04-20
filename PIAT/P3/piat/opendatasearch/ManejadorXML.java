@@ -12,7 +12,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * @author Nerea Calderón Gonzalo 50356369P
+ * @author Alvaro Miguel Arroyo Gonzalez 51549946T
  *
  */
 
@@ -45,7 +45,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		contenidoElemento = new StringBuilder(0);
 		idConcept = null;
 		idData = null;
-		nivel = new AtomicInteger(0);
+		nivel = new AtomicInteger(1);
 		nivelEncontrado = new AtomicInteger(0);
 	}
 
@@ -121,13 +121,6 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		// TODO 
 
 		contenidoElemento.setLength(0);
-		/*
-		System.out.println("Uri:" + uri);
-		System.out.println("Nombre local:" + localName);
-		System.out.println( " Nombre completo:" + qName);
-		if(attributes.getLocalName(0))
-			System.out.println("    ATRIB. id: " + attributes.getLocalName(0) );
-*/
 		switch(qName) {
 			case "concepts":
 				nivel.incrementAndGet();
@@ -136,6 +129,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 				}
 			break;
 			case "concept":
+				nivel.incrementAndGet();
 				idConcept = attributes.getValue("id");
 				//si idData no es nulo , recorremos la lista de conceptos y 
 				//si un concepto concuerda con el idConcept entonces el hData es valido
@@ -169,13 +163,17 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		switch(qName) {
 		case "concepts":
 			nivel.decrementAndGet();	
-		break;
+			break;
+		case "concept":
+			nivel.decrementAndGet();
+			//Si el nivel encontrado es menor o igual que el nivel actual y el codigo del concepto es valido , añadimos el concepto id a la lista de concepts
+			if(nivelEncontrado.get() < nivel.get() &&
+				nivelEncontrado.get() != 0 )
+				lConcepts.add(idConcept);
+			break;
 		case "code":
 			//Cuando el codigo que le pasamos de argumento al manejador coincide con el code leido del xml , añadimos el concepto id a la lista de concepts
-			if(nivelEncontrado.get() != 0)
-				sCodigoConcepto = contenidoElemento.toString();
-			if(contenidoElemento.toString().equals(sCodigoConcepto)
-			&& nivelEncontrado.get() <= nivel.get())
+			if(contenidoElemento.toString().equals(sCodigoConcepto))
 				lConcepts.add(idConcept);
 			break;
 		case "title":

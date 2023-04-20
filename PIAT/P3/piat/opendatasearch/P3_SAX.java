@@ -12,7 +12,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 /**
- * @author Ponga aquí su nombre, apellidos y DNI
+ * @author Alvaro Miguel Arroyo Gonzalez 51549946T
  *
  */
 
