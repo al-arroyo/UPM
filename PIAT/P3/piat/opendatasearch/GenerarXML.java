@@ -15,7 +15,12 @@ import java.util.Map;
  *
  */	
 public class GenerarXML {
-	
+	private static final String pConcept		= "\n\t\t\t<concept id=\"#ID#\"/>" ;
+	private static final String pDataset		= "\n\t\t\t<dataset id=\"#ID#\">";
+	private static final String pTitle			= "\n\t\t\t\t<title>#valor#</title>";
+	private static final String pDescription	= "\n\t\t\t\t<description>#valor#</description>";
+	private static final String pTheme			= "\n\t\t\t\t<theme>#valor#</theme>";
+
 
 	/**  
 	 * Método que deberá ser invocado desde el programa principal
@@ -30,12 +35,34 @@ public class GenerarXML {
 		salidaXML.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"); 
 		// TODO
 		//PREGUNTAR A JAVIER
+		salidaXML.append("\n\t\t<concepts>");
 		for (String aux : lConcepts) {
-			salidaXML.append(aux + "\n");
+			salidaXML.append(pConcept.replace("#ID#", aux));
 		}
-		//salidaXML.append(lConcepts.toString());
-		return salidaXML.toString();
+		salidaXML.append("\n\t\t</concepts>");
 
+		salidaXML.append("\n\t\t<datasets>");
+		for (Map.Entry<String, Map<String, String>> entry : hDatasets.entrySet()) {
+			salidaXML.append(pDataset.replace("#ID#", entry.getKey()));
+			for (Map.Entry<String, String> entry2 : entry.getValue().entrySet()) {
+				switch (entry2.getKey()) {
+				case "title":
+					salidaXML.append(pTitle.replace("#valor#", entry2.getValue()));
+					break;
+				case "description":
+					salidaXML.append(pDescription.replace("#valor#", entry2.getValue()));
+					break;
+				case "theme":
+					salidaXML.append(pTheme.replace("#valor#", entry2.getValue()));
+					break;
+				default:
+					break;
+				}
+			}
+			salidaXML.append("\n\t\t\t</dataset>");
+		}
+		salidaXML.append("\n\t\t</datasets>");
+		return salidaXML.toString();
 	}
 
 	

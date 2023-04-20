@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Ajedrez
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Atletismo
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Automovilismo
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Baloncesto
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Balonmano
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/CarrerasMaratones
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Ciclismo
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Futbol
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Gimnasia
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Golf
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Hipica
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Hockey
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Motociclismo
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Natacion
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Padel
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Patinaje
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Tenis
-https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Triatlon
+
+		<concepts>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Ajedrez"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Atletismo"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Automovilismo"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Baloncesto"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Balonmano"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/CarrerasMaratones"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Ciclismo"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Futbol"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Gimnasia"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Golf"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Hipica"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Hockey"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Motociclismo"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Natacion"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Padel"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Patinaje"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Tenis"/>
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Triatlon"/>
+		</concepts>
+		<datasets>
+			<dataset id="https://datos.madrid.es/egob/catalogo/206974-0-agenda-eventos-culturales-100.json">
+			</dataset>
+			<dataset id="https://datos.madrid.es/egob/catalogo/212504-0-agenda-actividades-deportes.json">
+			</dataset>
+			<dataset id="https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json">
+			</dataset>
+			<dataset id="https://datos.madrid.es/egob/catalogo/300261-0-agenda-proximas-carreras.json">
+			</dataset>
+		</datasets>
