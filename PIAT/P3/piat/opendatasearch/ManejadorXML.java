@@ -22,12 +22,12 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  */
 public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
-	private String sNombreCategoria;	// Nombre de la categoría
 	private List<String> lConcepts; 	// Lista con los uris de los elementos <concept> que pertenecen a la categoría
 	private Map <String, Map<String,String>> hDatasets;	// Mapa con información de los dataset que pertenecen a la categoría
 	private String sCodigoConcepto;
 	private StringBuilder contenidoElemento;
 	private Map <String, String> hData;
+	private Map<String , String> hDataAux;
 	private String idConcept;
 	private String idData;
 	private AtomicInteger nivel;
@@ -39,8 +39,9 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 	 */
 	public ManejadorXML (String sCodigoConcepto) throws SAXException, ParserConfigurationException {
 		this.sCodigoConcepto = sCodigoConcepto;
-		hData = new HashMap <String, String>();
 		lConcepts= new ArrayList<String>();
+		hData = new HashMap <String, String>();
+		hDataAux = new HashMap<String, String>();
 		hDatasets = new HashMap <String,Map<String, String>>();
 		contenidoElemento = new StringBuilder(0);
 		idConcept = null;
@@ -91,10 +92,10 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		return hDatasets;
 	}
 	
-
-	 //===========================================================
-	 // Métodos a implementar de SAX DocumentHandler
-	 //===========================================================
+	
+	//===========================================================
+	// Métodos a implementar de SAX DocumentHandler
+	//===========================================================
 	
 	@Override
 	public void startDocument() throws SAXException {
@@ -103,12 +104,12 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		System.out.println("Empieza el documento");
 		
 	}
-
+	
 	
 	@Override
 	public void endDocument() throws SAXException {
 		super.endDocument();
-		// TODO 
+		// TODO ;
 		System.out.println("Termina el documento");
 		
 				
@@ -136,8 +137,15 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 				//y se añade al mapa gordo
 				if(idData != null) {
 					for (String aux : lConcepts)
-						if(aux.equals(idConcept))
-							hDatasets.put(idData, hData);
+						if(aux.equals(idConcept)) {
+							if(hData.containsKey("title") && hData.containsKey("description") && hData.containsKey("theme")
+							   && !hDatasets.containsKey(idData) && !hData.isEmpty()) {
+								//Necesito un mapa auxiliar para que no me elimine los datos del mapa gordo
+								hDataAux.putAll(hData);
+								hDatasets.putIfAbsent(idData, hDataAux);
+							}
+							break;
+						}
 				}
 				//limpiar mapa
 				hData.clear();
@@ -177,13 +185,20 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 			lConcepts.add(idConcept);
 			break;
 		case "title":
-			hData.put("title", contenidoElemento.toString());
+			if(hData.size() == 0 && !hData.containsKey(null) && !hData.containsValue(null))
+				hData.put("title", contenidoElemento.toString());
 			break;
 		case "description":
-			hData.put("description", contenidoElemento.toString());
+			if(hData.size() == 1 && !hData.containsKey(null) && !hData.containsValue(null))
+				hData.put("description", contenidoElemento.toString());
+			//hData.put("description", contenidoElemento.toString());
 			break;
 		case "theme":
-			hData.put("theme", contenidoElemento.toString());
+			if(hData.size() == 2 && !hData.containsKey(null) && !hData.containsValue(null))
+				hData.put("theme", contenidoElemento.toString());
+			break;
+		case "dataset":
+			hData.clear();
 			break;
 		}
 		contenidoElemento.setLength(0);
@@ -196,5 +211,4 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		contenidoElemento.append(ch,start,length);
 				
 	}
-
 }

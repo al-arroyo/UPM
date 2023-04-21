@@ -1,6 +1,5 @@
 package piat.opendatasearch;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -44,15 +43,16 @@ public class GenerarXML {
 		salidaXML.append("\n\t\t<datasets>");
 
 		for (Map.Entry<String, Map<String, String>> entry : hDatasets.entrySet()) {
-			salidaXML.append(pDataset.replace("#ID#", entry.getKey()));
-		
 			Map<String, String> mapaValor = entry.getValue();
-			salidaXML.append(pTitle.replace("#valor#", mapaValor.get("title")));
-			salidaXML.append(pDescription.replace("#valor#", mapaValor.get("description")));
-			salidaXML.append(pTheme.replace("#valor#", mapaValor.get("theme")));
-		
-			salidaXML.append("\n\t\t\t</dataset>");
+			if (mapaValor.containsKey("title") && mapaValor.containsKey("description") && mapaValor.containsKey("theme")) {
+				salidaXML.append(pDataset.replace("#ID#", entry.getKey()));
+				salidaXML.append(pTitle.replace("#valor#", mapaValor.get("title")));
+				salidaXML.append(pDescription.replace("#valor#", mapaValor.get("description")));
+				salidaXML.append(pTheme.replace("#valor#", mapaValor.get("theme")));
+				salidaXML.append("\n\t\t\t</dataset>");
+			}
 		}
+		
 		
 		salidaXML.append("\n\t\t</datasets>");
 				return salidaXML.toString();

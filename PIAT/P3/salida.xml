@@ -22,12 +22,14 @@
 			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/Triatlon"/>
 		</concepts>
 		<datasets>
-			<dataset id="https://datos.madrid.es/egob/catalogo/206974-0-agenda-eventos-culturales-100.json">
-			</dataset>
 			<dataset id="https://datos.madrid.es/egob/catalogo/212504-0-agenda-actividades-deportes.json">
-			</dataset>
-			<dataset id="https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json">
+				<title>Agenda de actividades deportivas</title>
+				<description>A continuación se refleja las actividades deportivas que se celebran en la ciudad de Madrid. Es importante destacar que no se trata de una relación exhaustiva de las actividades que se celebran en la vía publica o en recintos deportivos, sino solamente aquellas actividades que el Ayuntamiento de Madrid conoce y ha incluido en su web municipal: www.madrid.es</description>
+				<theme>http://datos.gob.es/kos/sector-publico/sector/deporte</theme>
 			</dataset>
 			<dataset id="https://datos.madrid.es/egob/catalogo/300261-0-agenda-proximas-carreras.json">
+				<title>Agenda de actividades deportivas</title>
+				<description>A continuación se refleja las actividades deportivas que se celebran en la ciudad de Madrid. Es importante destacar que no se trata de una relación exhaustiva de las actividades que se celebran en la vía publica o en recintos deportivos, sino solamente aquellas actividades que el Ayuntamiento de Madrid conoce y ha incluido en su web municipal: www.madrid.es</description>
+				<theme>http://datos.gob.es/kos/sector-publico/sector/deporte</theme>
 			</dataset>
 		</datasets>
