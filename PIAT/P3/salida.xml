@@ -3,7 +3,7 @@
 				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				xsi:schemaLocation="http://www.piat.dte.upm.es/practica3 C:\Users\alvar\Desktop\UPM\PIAT\P3\piat\opendatasearch\ResultadosBusquedaP3.xsd">
 	<summary>
-		<query>./PIAT/P3/catalogo/catalogo.xml</query>
+		<query>0016-018</query>
 		<numConcepts>6</numConcepts>
 		<numDatasets>2</numDatasets>
 	</summary>
