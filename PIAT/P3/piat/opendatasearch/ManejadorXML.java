@@ -48,6 +48,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		idData = null;
 		nivel = new AtomicInteger(1);
 		nivelEncontrado = new AtomicInteger(0);
+
 	}
 
 	 //===========================================================
@@ -141,6 +142,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 							if(hData.containsKey("title") && hData.containsKey("description") && hData.containsKey("theme")
 							   && !hDatasets.containsKey(idData) && idConcept.contains(lConcepts.get(0))) {
 								//Necesito un mapa auxiliar para que no me elimine los datos del mapa gordo
+								hDataAux = new HashMap<>();
 								hDataAux.putAll(hData);
 								hDatasets.putIfAbsent(idData, hDataAux);
 							}
@@ -152,7 +154,6 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 				//contenidoElemento.append(true);
 				idData = attributes.getValue("id");
 				break;
-
 			default:
 				// Acción a realizar en caso de que nomLocal no coincida con ninguno de los casos anteriores
 				break;
