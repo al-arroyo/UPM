@@ -29,11 +29,21 @@ public class GenerarXML {
 	 * @param Colecciones con la información obtenida del documento XML de entrada
 	 * @return String con el documento XML de salida
 	 */	
-	public static String generar (List<String> lConcepts, Map<String, Map<String, String>> hDatasets){
+	public static String generar (List<String> lConcepts, Map<String, Map<String, String>> hDatasets, String [] args){
 		StringBuilder salidaXML= new StringBuilder();
 		salidaXML.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"); 
 		// TODO
 		//PREGUNTAR A JAVIER
+		salidaXML.append("<searchResults \txmlns=\"http://www.piat.dte.upm.es/practica3\"");
+		salidaXML.append("\n\t\t\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+		salidaXML.append("\n\t\t\t\txsi:schemaLocation=\"http://www.piat.dte.upm.es/practica3 ResultadosBusquedaP3.xsd\">");
+		salidaXML.append("\n\t<summary>");
+		salidaXML.append("\n\t\t<query>"+args[1]+"</query>");
+		salidaXML.append("\n\t\t<numConcepts>"+lConcepts.size()+"</numConcepts>");
+		salidaXML.append("\n\t\t<numDatasets>"+hDatasets.size()+"</numDatasets>");
+		salidaXML.append("\n\t</summary>");
+		salidaXML.append("\n\t<results>");
+
 		salidaXML.append("\n\t\t<concepts>");
 		for (String aux : lConcepts) {
 			salidaXML.append(pConcept.replace("#ID#", aux));
@@ -55,7 +65,9 @@ public class GenerarXML {
 			}
 			salidaXML.append("\n\t\t</datasets>");
 		}
-				return salidaXML.toString();
+		salidaXML.append("\n\t</results>");
+		salidaXML.append("\n</searchResults>");
+		return salidaXML.toString();
 	}
 
 	

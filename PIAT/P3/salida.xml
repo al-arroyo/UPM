@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<searchResults 	xmlns="http://www.piat.dte.upm.es/practica3"
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xsi:schemaLocation="http://www.piat.dte.upm.es/practica3 ResultadosBusquedaP3.xsd">
+	<summary>
+		<query>./PIAT/P3/catalogo/catalogo.xml</query>
+		<numConcepts>6</numConcepts>
+		<numDatasets>2</numDatasets>
+	</summary>
+	<results>
 		<concepts>
 			<concept id="https://datos.madrid.es/egob/kos/actividades/DanzaBaile"/>
 			<concept id="https://datos.madrid.es/egob/kos/actividades/DanzaBaile/ClasicaEspanola"/>
@@ -20,3 +28,5 @@
 				<theme>http://datos.gob.es/kos/sector-publico/sector/cultura-ocio</theme>
 			</dataset>
 		</datasets>
+	</results>
+</searchResults>

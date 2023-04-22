@@ -55,7 +55,7 @@ public class P3_SAX {
 			//Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado
 			//Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada
 			//Crear el fichero de salida con el nombre recibido en el cuarto argumento de main()
-			String contenido = new GenerarXML().generar(manejadorXML.getConcepts(), manejadorXML.getDatasets());
+			String contenido = new GenerarXML().generar(manejadorXML.getConcepts(), manejadorXML.getDatasets(), args);
 			File salida = new File(args[3]);
 			salida.delete();
 			FileWriter writer = new FileWriter(salida, true);
