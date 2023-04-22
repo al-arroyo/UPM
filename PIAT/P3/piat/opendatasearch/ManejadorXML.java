@@ -125,7 +125,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 		switch(qName) {
 			case "concepts":
 				nivel.incrementAndGet();
-				if(lConcepts.size() != 0){
+				if(lConcepts.size() != 0 && nivelEncontrado.get()==0){
 					nivelEncontrado.addAndGet(nivel.get());
 				}
 			break;
@@ -139,7 +139,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 					for (String aux : lConcepts)
 						if(aux.equals(idConcept)) {
 							if(hData.containsKey("title") && hData.containsKey("description") && hData.containsKey("theme")
-							   && !hDatasets.containsKey(idData) && !hData.isEmpty()) {
+							   && !hDatasets.containsKey(idData) && idConcept.contains(lConcepts.get(0))) {
 								//Necesito un mapa auxiliar para que no me elimine los datos del mapa gordo
 								hDataAux.putAll(hData);
 								hDatasets.putIfAbsent(idData, hDataAux);
@@ -147,8 +147,6 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 							break;
 						}
 				}
-				//limpiar mapa
-				hData.clear();
 				break;
 			case "dataset":
 				//contenidoElemento.append(true);
@@ -181,7 +179,7 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 			lConcepts.add(idConcept);
 		//Si el nivel encontrado es menor o igual que el nivel actual y el codigo del concepto es valido , añadimos el concepto id a la lista de concepts
 		if(nivelEncontrado.get() < nivel.get() &&
-			nivelEncontrado.get() != 0 )
+			nivelEncontrado.get() != 0 && idConcept.contains(lConcepts.get(0)))
 			lConcepts.add(idConcept);
 			break;
 		case "title":

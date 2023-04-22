@@ -39,22 +39,22 @@ public class GenerarXML {
 			salidaXML.append(pConcept.replace("#ID#", aux));
 		}
 		salidaXML.append("\n\t\t</concepts>");
+		if(hDatasets.size() != 0){
 
-		salidaXML.append("\n\t\t<datasets>");
-
-		for (Map.Entry<String, Map<String, String>> entry : hDatasets.entrySet()) {
-			Map<String, String> mapaValor = entry.getValue();
-			if (mapaValor.containsKey("title") && mapaValor.containsKey("description") && mapaValor.containsKey("theme")) {
-				salidaXML.append(pDataset.replace("#ID#", entry.getKey()));
-				salidaXML.append(pTitle.replace("#valor#", mapaValor.get("title")));
-				salidaXML.append(pDescription.replace("#valor#", mapaValor.get("description")));
-				salidaXML.append(pTheme.replace("#valor#", mapaValor.get("theme")));
-				salidaXML.append("\n\t\t\t</dataset>");
+			salidaXML.append("\n\t\t<datasets>");
+			
+			for (Map.Entry<String, Map<String, String>> entry : hDatasets.entrySet()) {
+				Map<String, String> mapaValor = entry.getValue();
+				if (mapaValor.containsKey("title") && mapaValor.containsKey("description") && mapaValor.containsKey("theme")) {
+					salidaXML.append(pDataset.replace("#ID#", entry.getKey()));
+					salidaXML.append(pTitle.replace("#valor#", mapaValor.get("title")));
+					salidaXML.append(pDescription.replace("#valor#", mapaValor.get("description")));
+					salidaXML.append(pTheme.replace("#valor#", mapaValor.get("theme")));
+					salidaXML.append("\n\t\t\t</dataset>");
+				}
 			}
+			salidaXML.append("\n\t\t</datasets>");
 		}
-		
-		
-		salidaXML.append("\n\t\t</datasets>");
 				return salidaXML.toString();
 	}
 
