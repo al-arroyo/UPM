@@ -34,9 +34,9 @@ public class GenerarXML {
 		salidaXML.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"); 
 		// TODO
 		//PREGUNTAR A JAVIER
-		salidaXML.append("<searchResults \txmlns=\"http://www.piat.dte.upm.es/practica3\"");
+		salidaXML.append("<searchResults \txmlns=\"http://piat.dte.upm.es/practica3\"");
 		salidaXML.append("\n\t\t\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-		salidaXML.append("\n\t\t\t\txsi:schemaLocation=\"http://www.piat.dte.upm.es/practica3 ResultadosBusquedaP3.xsd\">");
+		salidaXML.append("\n\t\t\t\txsi:schemaLocation=\"http://www.piat.dte.upm.es/practica3 C:\\Users\\alvar\\Desktop\\UPM\\PIAT\\P3\\piat\\opendatasearch\\ResultadosBusquedaP3.xsd\">");
 		salidaXML.append("\n\t<summary>");
 		salidaXML.append("\n\t\t<query>"+args[1]+"</query>");
 		salidaXML.append("\n\t\t<numConcepts>"+lConcepts.size()+"</numConcepts>");
