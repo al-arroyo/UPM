@@ -116,20 +116,22 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 				
 	}
 
-
+	/*
+	 * Método que se ejecuta al encontrar un elemento de apertura
+	 */
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, qName, attributes);
-		// TODO 
-
 		contenidoElemento.setLength(0);
 		switch(qName) {
+			//si el elemento es concepts incrementamos el nivel
 			case "concepts":
 				nivel.incrementAndGet();
 				if(lConcepts.size() != 0 && nivelEncontrado.get()==0){
 					nivelEncontrado.addAndGet(nivel.get());
 				}
 			break;
+			//si el elemento es concept incrementamos el nivel
 			case "concept":
 				nivel.incrementAndGet();
 				idConcept = attributes.getValue("id");
@@ -151,26 +153,27 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 				}
 				break;
 			case "dataset":
-				//contenidoElemento.append(true);
 				idData = attributes.getValue("id");
 				break;
 			default:
 				// Acción a realizar en caso de que nomLocal no coincida con ninguno de los casos anteriores
 				break;
 		}
-				
-	// PREGUNTAR COMO DEBUGGEAR SI SE VE EL MAPA O NO	
 	}
-
+	/*
+	 * Método que se ejecuta al encontrar un elemento de cierre
+	 */
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		super.endElement(uri, localName, qName);
 		// TODO 
 		
 		switch(qName) {
+		//si el elemento es concepts decrementamos el nivel
 		case "concepts":
 			nivel.decrementAndGet();	
 			break;
+		//si el elemento es concept decrementamos el nivel
 		case "concept":
 			nivel.decrementAndGet();
 			break;
@@ -183,6 +186,8 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 			nivelEncontrado.get() != 0 && idConcept.contains(lConcepts.get(0)))
 			lConcepts.add(idConcept);
 			break;
+		//Si el elemento es title , description o theme y el mapa hData no contiene ningun elemento nulo ,
+		//añadimos el elemento al mapa
 		case "title":
 			if(hData.size() == 0 && !hData.containsKey(null) && !hData.containsValue(null))
 				hData.put("title", contenidoElemento.toString());
@@ -196,17 +201,17 @@ public class ManejadorXML extends DefaultHandler implements ParserCatalogo {
 			if(hData.size() == 2 && !hData.containsKey(null) && !hData.containsValue(null))
 				hData.put("theme", contenidoElemento.toString());
 			break;
+		//Si el elemento es dataset , limpiamos el mapa hData
 		case "dataset":
 			hData.clear();
 			break;
 		}
 		contenidoElemento.setLength(0);
 	}
-	
+	//Método que se ejecuta al encontrar el contenido de un elemento
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		super.characters(ch, start, length);
-		// TODO 
 		contenidoElemento.append(ch,start,length);
 				
 	}

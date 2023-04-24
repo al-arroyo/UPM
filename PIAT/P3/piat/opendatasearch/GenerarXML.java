@@ -14,7 +14,7 @@ import java.util.Map;
  *
  */	
 public class GenerarXML {
-	private static final String pConcept		= "\n\t\t\t<concept id=\"#ID#\"/>" ;
+	private static final String pConcept		= "\n\t\t\t<concept>#ID#</concept>" ;
 	private static final String pDataset		= "\n\t\t\t<dataset id=\"#ID#\">";
 	private static final String pTitle			= "\n\t\t\t\t<title>#valor#</title>";
 	private static final String pDescription	= "\n\t\t\t\t<description>#valor#</description>";
@@ -31,12 +31,10 @@ public class GenerarXML {
 	 */	
 	public static String generar (List<String> lConcepts, Map<String, Map<String, String>> hDatasets, String [] args){
 		StringBuilder salidaXML= new StringBuilder();
-		salidaXML.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"); 
-		// TODO
-		//PREGUNTAR A JAVIER
+		salidaXML.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		salidaXML.append("<searchResults \txmlns=\"http://piat.dte.upm.es/practica3\"");
 		salidaXML.append("\n\t\t\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-		salidaXML.append("\n\t\t\t\txsi:schemaLocation=\"http://www.piat.dte.upm.es/practica3 C:\\Users\\alvar\\Desktop\\UPM\\PIAT\\P3\\piat\\opendatasearch\\ResultadosBusquedaP3.xsd\">");
+		salidaXML.append("\n\t\t\t\txsi:schemaLocation=\"http://piat.dte.upm.es/practica3 ResultadosBusquedaP3.xsd\">");
 		salidaXML.append("\n\t<summary>");
 		salidaXML.append("\n\t\t<query>"+args[0]+"</query>");
 		salidaXML.append("\n\t\t<numConcepts>"+lConcepts.size()+"</numConcepts>");
@@ -52,7 +50,6 @@ public class GenerarXML {
 		if(hDatasets.size() != 0){
 
 			salidaXML.append("\n\t\t<datasets>");
-			
 			for (Map.Entry<String, Map<String, String>> entry : hDatasets.entrySet()) {
 				Map<String, String> mapaValor = entry.getValue();
 				if (mapaValor.containsKey("title") && mapaValor.containsKey("description") && mapaValor.containsKey("theme")) {
@@ -69,6 +66,4 @@ public class GenerarXML {
 		salidaXML.append("\n</searchResults>");
 		return salidaXML.toString();
 	}
-
-	
 }

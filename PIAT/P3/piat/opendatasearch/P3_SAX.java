@@ -34,13 +34,6 @@ public class P3_SAX {
 			mostrarUso(mensaje);
 			System.exit(1);
 		}		
-		
-		// TODO
-		/* 
-		* Volcar al fichero de salida los datos en el formato XML especificado por ResultadosBusquedaP3.xsd
-		* Validar el fichero generado con el esquema recibido en el tercer argumento de main()
-		*/
-
 		//Validar los argumentos recibidos en main()
 		validArgs(args);
 
@@ -58,6 +51,7 @@ public class P3_SAX {
 			String contenido = new GenerarXML().generar(manejadorXML.getConcepts(), manejadorXML.getDatasets(), args);
 			File salida = new File(args[3]);
 			salida.delete();
+			//Escribir en el fichero de salida el contenido del List<String> obtenido en el paso anterior
 			FileWriter writer = new FileWriter(salida, true);
 			writer.write(contenido);
 			writer.close();			
@@ -89,17 +83,45 @@ public class P3_SAX {
 				"\t ficheroXMLSalida:\t nombre del fichero XML de salida\n"
 				);				
 	}
-	
+	/*
+	 * Validar los argumentos recibidos en main()
+	 * 1. El primer argumento es un código de categoría válido, es decir, 
+	 * 		una cadena de caracteres alfanuméricos de 3 a 4 caracteres, seguida de un guión 
+	 * 		y de una cadena de caracteres alfanuméricos de 3 a 8 caracteres, que puede repetirse 0 o más veces.
+	 * 2. El segundo argumento es un path a un fichero XML válido.
+	 * 3. El tercer argumento es un path a un fichero XSD válido.
+	 * 4. El cuarto argumento es un path a un fichero XML válido.
+	 * 
+	 */
 	private static void validArgs(String[] args) {
 		String regex[] = {"^[0-9]{3,4}(-[0-9A-Z]{3,8})*$",
-					".*(catalogo.xml)$",
-					".*(ResultadosBusquedaP3.xsd)$",
-					"(.*xml)$"}; //PREGUNTAR VALE CONQUE SEA SOLO XML O TIENE QUE VERIFICAR ALGO MAS ???
+					"(.*xml)$",
+					"(.*xsd)$",
+					"(.*xml)$"};
 		for (int i = 0; i < args.length; i++) {
 			if (!args[i].matches(regex[i])) {
 				// Código para manejar el caso en que args[i] no coincide con regex[j]
 				throw new IllegalArgumentException("Argumento incorrecto: " + args[i]);
 			}
-		}		
-	}	
+		}
+		try {
+			validArg1_2(args[1]);
+			validArg1_2(args[2]);
+			validArg3(args[3]);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	//Comprobar que se puede leer el fichero de entrada
+	private static void validArg1_2(String arg){
+		if(new File(arg).canRead())
+			System.out.println("Se pude leer el fichero "+arg);
+	}
+	//Comprobar que se puede crear y escribir en el fichero de salida
+	private static void validArg3(String arg) throws IOException{
+		File file = new File(arg);
+		file.delete();
+		if(file.createNewFile() && file.canWrite())
+			System.out.println("Se pude crear y escribir en el fichero "+arg);
+	}
 }
