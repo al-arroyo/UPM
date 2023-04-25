@@ -1,13 +1,22 @@
 package piat.opendatasearch;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 
 import org.xml.sax.SAXException;
 
@@ -52,9 +61,12 @@ public class P3_SAX {
 			File salida = new File(args[3]);
 			salida.delete();
 			//Escribir en el fichero de salida el contenido del List<String> obtenido en el paso anterior
-			FileWriter writer = new FileWriter(salida, true);
-			writer.write(contenido);
-			writer.close();			
+			//FileWriter writer = new FileWriter(salida, true);
+			//BufferedWriter para escribir en UTF-8 y evitar problemas con caracteres especiales
+			BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(salida), StandardCharsets.UTF_8));
+			bufferedWriter.write(contenido);
+			bufferedWriter.close();
+			validXsd(args);
 		} catch(SAXException | ParserConfigurationException | IOException e){
 			e.printStackTrace();
 		}
@@ -123,5 +135,14 @@ public class P3_SAX {
 		file.delete();
 		if(file.createNewFile() && file.canWrite())
 			System.out.println("Se pude crear y escribir en el fichero "+arg);
+	}
+	//Comprobar que el fichero de salida es válido frente al esquema
+	private static void validXsd(String [] args) throws SAXException, IOException{
+		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		File schemaFile = new File(args[2]);
+		Schema schema = schemaFactory.newSchema(schemaFile);
+		Validator validator = schema.newValidator();
+		File xmlFile = new File(args[3]);
+		validator.validate(new StreamSource(xmlFile));
 	}
 }
