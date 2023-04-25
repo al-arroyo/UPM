@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
@@ -46,6 +47,26 @@ public class JSONDatasetParser implements Runnable {
 			//		Descartar el resto de objetos
 			//	- Si se ha llegado al fin del fichero, consumir el último "}" del fichero
 			//  - Cerrar el objeto JsonReader
+			JsonReader jsonReader = new JsonReader(inputStream);
+			jsonReader.setLenient(true);  // Para poder saltarse valores con skipValue()
+
+			// inicio del consumo de los evantos del fichero json
+
+			jsonReader.beginArray(); // Consumo el "[" de apertura del array
+			while (jsonReader.hasNext()){
+				jsonReader.beginObject(); // Consumo el "{" de apertura del objeto
+				while (jsonReader.hasNext()){
+					String name = jsonReader.nextName();
+					if (name.equals("@graph")){
+						finProcesar=procesar_graph(jsonReader, graphs, lConcepts);
+						if (finProcesar) break;
+					}
+					else jsonReader.skipValue();
+				}
+				jsonReader.endObject(); // Consumo el "}" de cierre del objeto
+				if (finProcesar) break;
+			}
+			jsonReader.endArray(); // Consumo el "]" de cierre del array
 			inputStream.close();
 		} catch (FileNotFoundException e) {
 			System.out.println(nombreHilo+"El fichero no existe. Ignorándolo");
@@ -70,7 +91,25 @@ public class JSONDatasetParser implements Runnable {
 		//  	- Consumir el último "}" del objeto
 		// 		- Ver si se han añadido 5 graph a la lista, para en ese caso poner la variable finProcesar a true
 		//	- Si se ha llegado al fin del array, consumir el último "]" del array
-	
+		while (jsonReader.hasNext()){
+			switch(jsonReader.nextName()){
+				case "@graph":
+					jsonReader.beginArray();
+					while (jsonReader.hasNext()){
+						jsonReader.beginObject();
+						procesar_un_graph(jsonReader, graphs, lConcepts);
+						jsonReader.endObject();
+						if (graphs.size() == 5){
+							finProcesar = true;
+							break;
+						}
+					}
+					jsonReader.endArray();
+					break;
+				default:
+					jsonReader.skipValue();
+			}
+		}
 	    return finProcesar;
 		
 	}
@@ -84,8 +123,33 @@ public class JSONDatasetParser implements Runnable {
 		//	- Procesar todas las propiedades de un objeto del array @graph, guardándolas en variables temporales
 		//	- Una vez procesadas todas las propiedades, ver si la clave @type tiene un valor igual a alguno de los concept de la lista lConcepts. Si es así
 		//	  guardar en un mapa Map<String,String> todos los valores de las variables temporales recogidas en el paso anterior y añadir este mapa al mapa graphs
+		Map<String, String> map = new HashMap<String, String>();
+		while (jsonReader.hasNext()){
+			switch(jsonReader.nextName()){
+				case "@type":
+					String type = jsonReader.nextString();
+					if (lConcepts.contains(type)){
+						map.put("@type", type);
+					}
+					break;
+				case "@id":
+					map.put("@id", jsonReader.nextString());
+					break;
+				case "name":
+					map.put("name", jsonReader.nextString());
+					break;
+				case "description":
+					map.put("description", jsonReader.nextString());
+					break;
+				case "url":
+					map.put("url", jsonReader.nextString());
+					break;
+				default:
+					jsonReader.skipValue();
+			}
+		}
+		if (map.containsKey("@type")){
+			graphs.add(map);
+		}
 	}
-
-	
-	
 }

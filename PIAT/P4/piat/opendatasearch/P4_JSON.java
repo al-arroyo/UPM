@@ -172,6 +172,9 @@ public class P4_JSON {
 		mDatasetConcepts);
 		 Esperar a que terminen todos los hilos
 		*/
+		/****** Mapa que contendra la lista generada por los hilos ******/
+		//Mapa concurrente, solo lo puede tocar un hilo a la vez, si hay un hilo modificandolo los demas esperan a que este acaba
+		ConcurrentHashMap<String, List<Map<String, String>>> mapa = new ConcurrentHashMap<>();
 		//Obtener el nº de núcleos del procesador del ordenador
 		int numDeNucleos = Runtime.getRuntime().availableProcessors();
 		System.out.println ("Se va a crear un pool de hilos para que como máximo haya " + numDeNucleos + " hilos en ejecución simultaneamente.");
@@ -187,7 +190,7 @@ public class P4_JSON {
 		System.out.print ("Lanzando hilos al pool ");
 		for (String json: lConcepts){
 			System.out.print (".");
-			ejecutor.execute(new Trabajador(json));
+			ejecutor.execute(new Trabajador(json, mapa));
 			numTrabajadores++;
 			//break; // Descomentando este break, solo se ejecuta el primer trabajador
 		}
@@ -202,9 +205,6 @@ public class P4_JSON {
 		// Mostrar todos los trabajadores que se han ejecutado. Debe coincidir con los creados
 		System.out.println("\nYa han terminado los "+numTrabajadoresTerminados.get()+" trabajadores");
 		
-		/****** Mapa que contendra la lista generada por los hilos ******/
-		//Mapa concurrente, solo lo puede tocar un hilo a la vez, si hay un hilo modificandolo los demas esperan a que este acaba
-		ConcurrentHashMap<String, List<Map<String, String>>> mapa = new ConcurrentHashMap<>();
 
 		return mapa;
 	}
