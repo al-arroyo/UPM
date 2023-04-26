@@ -2,7 +2,6 @@ package piat.opendatasearch;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Alvaro Miguel Arroyo Gonzalez 51549946T
@@ -21,6 +20,9 @@ public class GenerarXML {
 	private static final String pDescription	= "\n\t\t\t\t<description>#valor#</description>";
 	private static final String pTheme			= "\n\t\t\t\t<theme>#valor#</theme>";
 
+	/* Practica 4 */
+	private static final String pResource		= "\n\t\t\t<resource id=\"#ID#\">";
+
 
 	/**  
 	 * Método que deberá ser invocado desde el programa principal
@@ -31,7 +33,7 @@ public class GenerarXML {
 	 * @return String con el documento XML de salida
 	 */	
 	public static String generar (List<String> lConcepts, Map<String, Map<String, String>> hDatasets,
-					String [] args, ConcurrentHashMap<String, List<Map<String, String>>> mapa){
+					String [] args, Map<String, List<Map<String, String>>> map){
 		StringBuilder salidaXML= new StringBuilder();
 		salidaXML.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		salidaXML.append("<searchResults \txmlns=\"http://piat.dte.upm.es/practica3\"");
@@ -63,6 +65,7 @@ public class GenerarXML {
 				}
 			}
 			salidaXML.append("\n\t\t</datasets>");
+			generarResources(salidaXML, map);
 		}
 		salidaXML.append("\n\t</results>");
 		salidaXML.append("\n</searchResults>");
@@ -71,7 +74,18 @@ public class GenerarXML {
 
 	/*********** Practica 4 *********************/
 
-	private static void generarResources(ConcurrentHashMap<String, List<Map<String, String>>> mapa){
-
+	private static void generarResources(StringBuilder salidaXML, Map<String, List<Map<String, String>>> map){
+		salidaXML.append("\n\t\t<resources>");
+		for (Map.Entry<String, List<Map<String, String>>> entry : map.entrySet()) {
+			List<Map<String, String>> lista = entry.getValue();
+			for (Map<String, String> mapa : lista) {
+				salidaXML.append(pResource.replace("#ID#", entry.getKey()));
+				for (Map.Entry<String, String> entry2 : mapa.entrySet()) {
+					salidaXML.append("\n\t\t\t<"+entry2.getKey()+">"+entry2.getValue()+"</"+entry2.getKey()+">");
+				}
+				salidaXML.append("\n\t\t\t</resource>");
+			}
+		}
+		salidaXML.append("\n\t\t</resources>");
 	}
 }

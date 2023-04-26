@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,7 +40,7 @@ import org.xml.sax.SAXException;
 public class P4_JSON {
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		// Verificar nº de argumentos correcto
 		if (args.length!=4){
@@ -65,8 +64,8 @@ public class P4_JSON {
 			//Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado
 			//Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada
 			//Crear el fichero de salida con el nombre recibido en el cuarto argumento de main()
-			String contenido = new GenerarXML().generar(manejadorXML.getConcepts(), manejadorXML.getDatasets(),
-								args, getDatasetConcepts(manejadorXML.getConcepts(), manejadorXML.getDatasets()));
+			Map<String, List<Map<String, String>>> mapa = getDatasetConcepts(manejadorXML.getConcepts(), manejadorXML.getDatasets());
+			String contenido = GenerarXML.generar(manejadorXML.getConcepts(), manejadorXML.getDatasets(), args, mapa);
 			File salida = new File(args[3]);
 			salida.delete();
 			//Escribir en el fichero de salida el contenido del List<String> obtenido en el paso anterior
@@ -158,7 +157,8 @@ public class P4_JSON {
 	/*************************************************************  EMPIEZA PRACTICA 4  *************************************************************************/
 
 	private static Map<String, List<Map<String,String>>>getDatasetConcepts(List<String>
-					lConcepts, Map<String, Map<String, String>> mDatasets) throws SAXException,ParserConfigurationException,IOException, InterruptedException, InterruptedException {
+					lConcepts, Map<String, Map<String, String>> mDatasets) 
+					throws SAXException,ParserConfigurationException,IOException, InterruptedException, InterruptedException {
 		/*Devuelve un mapa donde la clave es el id del dataset y los valores son todos los graphs encontrados
 		en el json que son pertinentes*/
 		/* Código a completar:
@@ -184,7 +184,6 @@ public class P4_JSON {
 		// Si se quiere hacer pruebas con un solo trabajador en ejecución, poner como argumento un 1. Irá mucho más lenta la ejecución porque los ficheros se procesarán secuencialmente
 		ExecutorService ejecutor = Executors.newFixedThreadPool(numDeNucleos);
 		
-		long tiempoComienzo = System.currentTimeMillis();
 		AtomicInteger numTrabajadoresTerminados = new AtomicInteger(0);
 		int numTrabajadores=0;
 		System.out.print ("Lanzando hilos al pool ");
