@@ -2,6 +2,7 @@ package piat.opendatasearch;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Alvaro Miguel Arroyo Gonzalez 51549946T
@@ -29,7 +30,8 @@ public class GenerarXML {
 	 * @param Colecciones con la información obtenida del documento XML de entrada
 	 * @return String con el documento XML de salida
 	 */	
-	public static String generar (List<String> lConcepts, Map<String, Map<String, String>> hDatasets, String [] args){
+	public static String generar (List<String> lConcepts, Map<String, Map<String, String>> hDatasets,
+					String [] args, ConcurrentHashMap<String, List<Map<String, String>>> mapa){
 		StringBuilder salidaXML= new StringBuilder();
 		salidaXML.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		salidaXML.append("<searchResults \txmlns=\"http://piat.dte.upm.es/practica3\"");
@@ -65,5 +67,11 @@ public class GenerarXML {
 		salidaXML.append("\n\t</results>");
 		salidaXML.append("\n</searchResults>");
 		return salidaXML.toString();
+	}
+
+	/*********** Practica 4 *********************/
+
+	private static void generarResources(ConcurrentHashMap<String, List<Map<String, String>>> mapa){
+
 	}
 }

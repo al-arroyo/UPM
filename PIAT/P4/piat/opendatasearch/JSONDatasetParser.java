@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -22,7 +24,8 @@ public class JSONDatasetParser implements Runnable {
 	private String nombreHilo;
 	
 	
-	public JSONDatasetParser (String fichero, List<String> lConcepts, Map<String, List<Map<String,String>>> mDatasetConcepts) { 
+	public JSONDatasetParser (String fichero, List<String> lConcepts, 
+	ConcurrentHashMap<String, List<Map<String,String>>> mDatasetConcepts) { 
 		this.fichero=fichero;
 		this.lConcepts=lConcepts;
 		this.mDatasetConcepts=mDatasetConcepts;

@@ -65,7 +65,8 @@ public class P4_JSON {
 			//Invocar al método getConcepts() del objeto ManejadorXML para obtener un List<String> con las uris de los elementos <concept> cuyo elemento <code> contiene el código de la categoría buscado
 			//Invocar al método getDatasets() del objeto ManejadorXML para obtener un mapa con los datasets de la categoría buscada
 			//Crear el fichero de salida con el nombre recibido en el cuarto argumento de main()
-			String contenido = new GenerarXML().generar(manejadorXML.getConcepts(), manejadorXML.getDatasets(), args);
+			String contenido = new GenerarXML().generar(manejadorXML.getConcepts(), manejadorXML.getDatasets(),
+								args, getDatasetConcepts(manejadorXML.getConcepts(), manejadorXML.getDatasets()));
 			File salida = new File(args[3]);
 			salida.delete();
 			//Escribir en el fichero de salida el contenido del List<String> obtenido en el paso anterior
@@ -75,7 +76,6 @@ public class P4_JSON {
 			bufferedWriter.write(contenido);
 			bufferedWriter.close();
 			validXsd(args);
-			getDatasetConcepts(manejadorXML.getConcepts(), manejadorXML.getDatasets());
 		} catch(SAXException | ParserConfigurationException | IOException e){
 			e.printStackTrace();
 		}
@@ -190,7 +190,7 @@ public class P4_JSON {
 		System.out.print ("Lanzando hilos al pool ");
 		for (String json: lConcepts){
 			System.out.print (".");
-			ejecutor.execute(new Trabajador(json, mapa));
+			ejecutor.execute(new JSONDatasetParser(json, lConcepts, mapa));
 			numTrabajadores++;
 			//break; // Descomentando este break, solo se ejecuta el primer trabajador
 		}
