@@ -135,6 +135,18 @@ public class JSONDatasetParser implements Runnable {
 				case "url":
 					map.put("url", jsonReader.nextString());
 					break;
+				case "title":
+					map.put("title", jsonReader.nextString());
+					break;
+				case "link":
+					map.put("link", jsonReader.nextString());
+					break;
+				case "event-location":
+					map.put("location", jsonReader.nextString());
+					break;
+				case "street-address":
+					map.put("street", jsonReader.nextString());
+					break;
 				default:
 					jsonReader.skipValue();
 			}
