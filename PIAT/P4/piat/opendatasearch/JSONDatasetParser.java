@@ -55,10 +55,9 @@ public class JSONDatasetParser implements Runnable {
 
 			// inicio del consumo de los evantos del fichero json
 
-			jsonReader.beginArray(); // Consumo el "[" de apertura del array
+			jsonReader.beginObject(); // Consumo el "{" de apertura del objeto
 			while (jsonReader.hasNext()){
-				jsonReader.beginObject(); // Consumo el "{" de apertura del objeto
-				while (jsonReader.hasNext()){
+				//jsonReader.beginObject(); // Consumo el "{" de apertura del objeto
 					String name = jsonReader.nextName();
 					if (name.equals("@graph")){
 						finProcesar=procesar_graph(jsonReader, graphs, lConcepts);
@@ -66,10 +65,8 @@ public class JSONDatasetParser implements Runnable {
 					}
 					else jsonReader.skipValue();
 				}
-				jsonReader.endObject(); // Consumo el "}" de cierre del objeto
-				if (finProcesar) break;
-			}
-			jsonReader.endArray(); // Consumo el "]" de cierre del array
+				//jsonReader.endObject(); // Consumo el "}" de cierre del objeto
+				jsonReader.close();
 			inputStream.close();
 		} catch (FileNotFoundException e) {
 			System.out.println(nombreHilo+"El fichero no existe. Ignorándolo");
@@ -94,11 +91,8 @@ public class JSONDatasetParser implements Runnable {
 		//  	- Consumir el último "}" del objeto
 		// 		- Ver si se han añadido 5 graph a la lista, para en ese caso poner la variable finProcesar a true
 		//	- Si se ha llegado al fin del array, consumir el último "]" del array
+		jsonReader.beginArray();
 		while (jsonReader.hasNext()){
-			switch(jsonReader.nextName()){
-				case "@graph":
-					jsonReader.beginArray();
-					while (jsonReader.hasNext()){
 						jsonReader.beginObject();
 						procesar_un_graph(jsonReader, graphs, lConcepts);
 						jsonReader.endObject();
@@ -107,14 +101,8 @@ public class JSONDatasetParser implements Runnable {
 							break;
 						}
 					}
-					jsonReader.endArray();
-					break;
-				default:
-					jsonReader.skipValue();
-			}
-		}
-	    return finProcesar;
-		
+					//jsonReader.endArray();
+					return finProcesar;
 	}
 
 	/*	procesar_un_graph()

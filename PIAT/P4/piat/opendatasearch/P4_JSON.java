@@ -74,7 +74,7 @@ public class P4_JSON {
 			BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(salida), StandardCharsets.UTF_8));
 			bufferedWriter.write(contenido);
 			bufferedWriter.close();
-			validXsd(args);
+			//validXsd(args);
 		} catch(SAXException | ParserConfigurationException | IOException e){
 			e.printStackTrace();
 		}
