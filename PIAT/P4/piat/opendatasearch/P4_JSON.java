@@ -187,13 +187,13 @@ public class P4_JSON {
 		AtomicInteger numTrabajadoresTerminados = new AtomicInteger(0);
 		int numTrabajadores=0;
 		System.out.print ("Lanzando hilos al pool ");
-		for (String json: lConcepts){
+		for (String json: mDatasets.keySet()){
 			System.out.print (".");
 			ejecutor.execute(new JSONDatasetParser(json, lConcepts, mapa));
 			numTrabajadores++;
 			//break; // Descomentando este break, solo se ejecuta el primer trabajador
 		}
-		System.out.print ("\nEn total se van a ejecutar "+numTrabajadores+" trabajadores en el pool. Esperar a que terminen ");
+		System.out.print ("\nEn total se van a ejecutar "+numTrabajadores+" JSONDatasetParser en el pool. Esperar a que terminen ");
 		// Esperar a que terminen todos los trabajadores
 		ejecutor.shutdown();	// Cerrar el ejecutor cuando termine el último trabajador
 		// Cada 10 segundos mostrar cuantos trabajadores se han ejecutado y los que quedan
@@ -202,7 +202,7 @@ public class P4_JSON {
 			System.out.print("\nYa han terminado "+terminados+". Esperando a los "+(numTrabajadores-terminados)+" que quedan ");
 		}
 		// Mostrar todos los trabajadores que se han ejecutado. Debe coincidir con los creados
-		System.out.println("\nYa han terminado los "+numTrabajadoresTerminados.get()+" trabajadores");
+		System.out.println("\nYa han terminado los "+numTrabajadoresTerminados.get()+" JSONDatasetParser");
 		
 
 		return mapa;
