@@ -22,7 +22,17 @@ public class GenerarXML {
 
 	/* Practica 4 */
 	private static final String pResource		= "\n\t\t\t<resource id=\"#ID#\">";
-
+	private static final String pConcept2		= "\n\t\t\t<concept id=\"#ID#\"/>" ;
+	
+	private static final String pLink= "\n\t\t\t\t<link> <![CDATA[#valor#]]> </link>" ;
+	private static final String pEventLocation= "\n\t\t\t\t\t\t<eventLocation>#valor#</eventLocation>";
+	private static final String pArea= "\n\t\t\t\t\t\t\t\t<area>#valor#</area>";
+	private static final String pLocality= "\n\t\t\t\t\t\t\t\t<locality>#valor#</locality>";
+	private static final String pStreet= "\n\t\t\t\t\t\t\t\t<street>#valor#</street>";
+	private static final String pStart= "\n\t\t\t\t\t\t\t<start>#valor#</start>";
+	private static final String pEnd= "\n\t\t\t\t\t\t\t<end>#valor#</end>";
+	private static final String pGeoreference= "\n\t\t\t\t\t\t<georeference>#valor#</georeference>";
+	
 
 	/**  
 	 * Método que deberá ser invocado desde el programa principal
@@ -36,9 +46,9 @@ public class GenerarXML {
 					String [] args, Map<String, List<Map<String, String>>> map){
 		StringBuilder salidaXML= new StringBuilder();
 		salidaXML.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-		salidaXML.append("<searchResults \txmlns=\"http://piat.dte.upm.es/practica3\"");
+		salidaXML.append("<searchResults \txmlns=\"http://piat.dte.upm.es/practica4\"");
 		salidaXML.append("\n\t\t\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-		salidaXML.append("\n\t\t\t\txsi:schemaLocation=\"http://piat.dte.upm.es/practica3 ResultadosBusquedaP3.xsd\">");
+		salidaXML.append("\n\t\t\t\txsi:schemaLocation=\"http://piat.dte.upm.es/practica4 ResultadosBusquedaP4.xsd\">");
 		salidaXML.append("\n\t<summary>");
 		salidaXML.append("\n\t\t<query>"+args[0]+"</query>");
 		salidaXML.append("\n\t\t<numConcepts>"+lConcepts.size()+"</numConcepts>");
@@ -74,18 +84,38 @@ public class GenerarXML {
 
 	/*********** Practica 4 *********************/
 
-	private static void generarResources(StringBuilder salidaXML, Map<String, List<Map<String, String>>> map){
+	public static void generarResources (StringBuilder salidaXML, Map<String, List<Map<String,String>>> mapa){
 		salidaXML.append("\n\t\t<resources>");
-		for (Map.Entry<String, List<Map<String, String>>> entry : map.entrySet()) {
+		
+		for (Map.Entry<String, List<Map<String, String>>> entry : mapa.entrySet()) {
 			List<Map<String, String>> lista = entry.getValue();
-			for (Map<String, String> mapa : lista) {
-				salidaXML.append(pResource.replace("#ID#", entry.getKey()));
-				for (Map.Entry<String, String> entry2 : mapa.entrySet()) {
-					salidaXML.append("\n\t\t\t<"+entry2.getKey()+">"+entry2.getValue()+"</"+entry2.getKey()+">");
-				}
+			for (Map<String, String> mapaValor : lista) {
+					
+				salidaXML.append (pResource.replace("#ID#", entry.getKey()));
+				salidaXML.append (pConcept2.replace("#ID#", mapaValor.get("@type")));
+				salidaXML.append (pLink.replace("#valor#", mapaValor.get("link")));
+				salidaXML.append (pTitle.replace("#valor#", mapaValor.get("title")));
+				salidaXML.append("\n\t\t\t\t<location>" );
+				salidaXML.append (pEventLocation.replace("#valor#", mapaValor.get("eventLocation")));
+				salidaXML.append("\n\t\t\t\t\t\t<address>" );
+				salidaXML.append (pArea.replace("#valor#", mapaValor.get("area")));
+				salidaXML.append (pLocality.replace("#valor#", mapaValor.get("locality")));
+				salidaXML.append (pStreet.replace("#valor#", mapaValor.get("street-address")));
+				salidaXML.append("\n\t\t\t\t\t\t</address>" );
+				salidaXML.append("\n\t\t\t\t\t\t<timetable>" );
+				salidaXML.append (pStart.replace("#valor#", mapaValor.get("dtstart")));
+				salidaXML.append (pEnd.replace("#valor#", mapaValor.get("dtend")));
+				salidaXML.append("\n\t\t\t\t\t\t</timetable>" );
+				salidaXML.append (pGeoreference.replace("#valor#", mapaValor.get("latitude") + " " + mapaValor.get("longitude")));
+				salidaXML.append("\n\t\t\t\t</location>" );
+				salidaXML.append (pDescription.replace("#valor#", mapaValor.get("description")));
+				
 				salidaXML.append("\n\t\t\t</resource>");
+				
 			}
+			
 		}
+		
 		salidaXML.append("\n\t\t</resources>");
 	}
 }

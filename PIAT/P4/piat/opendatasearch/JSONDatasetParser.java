@@ -126,32 +126,75 @@ public class JSONDatasetParser implements Runnable {
 				case "@id":
 					map.put("@id", jsonReader.nextString());
 					break;
-				case "name":
-					map.put("name", jsonReader.nextString());
-					break;
-				case "description":
-					map.put("description", jsonReader.nextString());
-					break;
-				case "url":
-					map.put("url", jsonReader.nextString());
+				case "link":
+					map.put("link", jsonReader.nextString());
 					break;
 				case "title":
 					map.put("title", jsonReader.nextString());
 					break;
-				case "link":
-					map.put("link", jsonReader.nextString());
-					break;
 				case "event-location":
-					map.put("location", jsonReader.nextString());
+					map.put("eventLocation", jsonReader.nextString());
 					break;
-				case "street-address":
-					map.put("street", jsonReader.nextString());
+				case "address":
+					jsonReader.beginObject();
+					while(jsonReader.hasNext()){
+						switch(jsonReader.nextName()){
+							case "area":
+							jsonReader.beginObject();
+							while (jsonReader.hasNext()) {
+								switch (jsonReader.nextName()) {				// Se procesan las propiedades que interean
+								
+								case "@id":	
+									map.put("area", jsonReader.nextString());
+									break;
+								case "locality":	
+									 map.put("locality",jsonReader.nextString());
+										break;
+								case "street-address":
+									 map.put("street-address",jsonReader.nextString());
+									break;
+								default:	
+									jsonReader.skipValue();
+								}
+							}
+							jsonReader.endObject();
+							break;		
+						default:
+							jsonReader.skipValue();
+						}
+					}
+					jsonReader.endObject();
+					break;
+				case "dtstart":
+					map.put("dtstart", jsonReader.nextString());
+					break;
+				case "dtend":
+					map.put("dtend", jsonReader.nextString());
+					break;
+				case "location":
+					jsonReader.beginObject();
+					while (jsonReader.hasNext()) {	
+						switch (jsonReader.nextName()) {
+						case "latitude":
+						map.put("latitude",jsonReader.nextString());
+							break;
+						case "longitude":
+							map.put("longitude",jsonReader.nextString());
+							break;
+						default:	
+							jsonReader.skipValue();
+						}
+					}
+					jsonReader.endObject();
+					break;
+				case "description":
+					map.put("description", jsonReader.nextString());
 					break;
 				default:
 					jsonReader.skipValue();
+				}
 			}
-		}
-		if (map.containsKey("@type")){
+		if (lConcepts.contains(map.get("@type")) && !graphs.contains(map)){
 			graphs.add(map);
 		}
 	}
