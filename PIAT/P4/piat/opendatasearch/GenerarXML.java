@@ -130,7 +130,7 @@ import java.util.Map;
 		}
 		
 		private static void valorValido(String patron, StringBuilder salidaXML, Map<String, String> map, String [] key){
-			if(map.containsKey(key[0]) || map.containsKey(key[1])){
+			if(map.containsKey(key[0])){
 				switch(key.length) {
 				case 2:
 					if(!map.get(key[0]).equals("") && !map.get(key[1]).equals(""))
