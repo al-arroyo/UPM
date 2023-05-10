@@ -132,7 +132,7 @@ public class P5_XPATH {
 			validArg1_2(args[1]);
 			validArg1_2(args[2]);
 			validArg3(args[3]);
-			validArg3(args[4]);
+			validArg4(args[4]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
