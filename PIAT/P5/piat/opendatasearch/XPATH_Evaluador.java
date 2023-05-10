@@ -65,18 +65,33 @@ public class XPATH_Evaluador{
 		List<String> listaInfDatasets = new ArrayList<String>();
 		for(int i=0; i<infDatasets.getLength(); i++){
 			Node nodo = infDatasets.item(i);
-			String infDataset = nodo.getAttributes().getNamedItem("id").getNodeValue();
+			String infDataset = nodo.getAttributes().getNamedItem("dataset").getNodeValue();
 			boolean add = true;
 			if(!listaInfDatasets.contains(infDataset)){
 				listaInfDatasets.add(infDataset);
 			}
 			else
 				add = false;
-			propiedad = new Propiedad("id", infDataset);
+			propiedad = new Propiedad(infDataset, Integer.toString(listaInfDatasets.size()));
 			if(add && !infDataset.equals(""))
 				list.add(propiedad);
 		}
-
+		List<String> listaUbicaciones = new ArrayList<String>();
+		for(int i=0; i<infDatasets.getLength(); i++){
+			Node nodo = infDatasets.item(i);
+			String ubicacion = nodo.getAttributes().getNamedItem("eventLocation").getNodeValue();
+			boolean add = true;
+			if(!listaUbicaciones.contains(ubicacion)){
+				listaUbicaciones.add(ubicacion);
+			}
+			else
+				add = false;
+			propiedad = new Propiedad("ubicacion", ubicacion);
+			if(add && !ubicacion.equals(""))
+				list.add(propiedad);
+		}
+		System.out.println (listaInfDatasets.toString());
+		System.out.println (listaUbicaciones.toString());
 		return list;
 	}
 	/**
