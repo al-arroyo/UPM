@@ -3,7 +3,19 @@ package piat.opendatasearch;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -21,13 +33,49 @@ public class XPATH_Evaluador{
 	 * @throws	ParserConfigurationException 
 	 * @throws	SAXException 
 	 */
-	public static List<Propiedad> evaluar (String ficheroXML) throws IOException, XPathExpressionException {
+	public static List<Propiedad> evaluar (String ficheroXML) throws IOException, XPathExpressionException, ParserConfigurationException, SAXException {
 		// TODO: 
 		// Realiza las 4 consultas XPath al documento XML de entrada que se indican en el enunciado en el apartado "3.2 Búsqueda de información y generación del documento de resultados."
 		// Cada consulta devolverá una información que se añadirá a la colección List <Propiedad>, que es la que devuelve este método
 		// Una consulta puede devolver una propiedad o varias
-		List<Propiedad> list = new ArrayList<>();
-
+		List<Propiedad> list = new ArrayList<Propiedad>();
+		Propiedad propiedad;
+		String resultado;
+		//En primer lugar se crea el arbol DOM a partir del fichero XML fuente
+		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setNamespaceAware(true);
+		final DocumentBuilder builder = factory.newDocumentBuilder();
+		Document doc = builder.parse(ficheroXML);
+		//se crea el objeto XPATH que evaluará las expresiones
+		XPath xPath = XPathFactory.newInstance().newXPath();
+		//Se evalua la primera expresion query
+		String expresionXPATHquery = "//summary/query//text()";
+		String query = (String) xPath.evaluate(expresionXPATHquery, doc, XPathConstants.STRING);
+		propiedad = new Propiedad("query", query);
+		list.add(propiedad);
+		//Se evalua la segunda expresion numeroResources
+		String expresionXPATHnumeroResources = "count(//resource)";
+		Double numeroResources = (Double) xPath.evaluate(expresionXPATHnumeroResources, doc, XPathConstants.NUMBER);
+		resultado = numeroResources.toString();
+		propiedad = new Propiedad("numeroResources", resultado);
+		list.add(propiedad);
+		//Se evalua la tercera expresion infDatasets
+		String expresionXPATHinfDatasets = "//resource";
+		NodeList infDatasets = (NodeList) xPath.evaluate(expresionXPATHinfDatasets, doc, XPathConstants.NODESET);
+		List<String> listaInfDatasets = new ArrayList<String>();
+		for(int i=0; i<infDatasets.getLength(); i++){
+			Node nodo = infDatasets.item(i);
+			String infDataset = nodo.getAttributes().getNamedItem("id").getNodeValue();
+			boolean add = true;
+			if(!listaInfDatasets.contains(infDataset)){
+				listaInfDatasets.add(infDataset);
+			}
+			else
+				add = false;
+			propiedad = new Propiedad("id", infDataset);
+			if(add && !infDataset.equals(""))
+				list.add(propiedad);
+		}
 
 		return list;
 	}
