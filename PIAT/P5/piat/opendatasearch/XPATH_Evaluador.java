@@ -71,10 +71,12 @@ public class XPATH_Evaluador{
 			}	
 			NodeList lResource= (NodeList) xPath.evaluate(xPathDatasetID, inputDoc, XPathConstants.NODESET);
 			for(int i=0;i< lResource.getLength(); i++) {
-			String id = lResource.item(i).getTextContent(); //obtener los id de dataset que también apracen en resource
-			String sPathCountResourceId = "count(//resources/resource[@id=\""+id+"\"])";//Contar las veces que aparece ese id en resources
-			p = new Propiedad(id, (String) xPath.evaluate(sPathCountResourceId, inputDoc, XPathConstants.STRING));
-			lPropiedad.add(p);
+				String id = lResource.item(i).getTextContent(); //obtener los id de dataset que también apracen en resource
+				p = new Propiedad("id", id); //Propiedad con el id del dataset
+				lPropiedad.add(p);
+				String sPathCountResourceId = "count(//resources/resource[@id=\""+id+"\"])";//Contar las veces que aparece ese id en resources
+				p = new Propiedad("num", (String) xPath.evaluate(sPathCountResourceId, inputDoc, XPathConstants.STRING));
+				lPropiedad.add(p);
 			}		
 		}catch (Throwable t) {  t.printStackTrace();  }
 		return lPropiedad;		
