@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <results xmlns="http://www.piat.dte.upm.es/ExamenJunio"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.piat.dte.upm.es/ExamenJunioSchema ExamenJunioSchema.xsd">
+ xsi:schemaLocation="http://www.piat.dte.upm.es/ExamenJunio ExamenJunioSchema.xsd">
 
 		<datasets>
 			<dataset>https://datos.madrid.es/egob/catalogo/209094-0-centros-servicios-sociales.xml</dataset>
