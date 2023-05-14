@@ -73,10 +73,10 @@ public class NumeroConcepts {
 				if (matcher.find()) {
 					String concepto = matcher.group(1);
 					cuentasConcepts.put(concepto, cuentasConcepts.getOrDefault(concepto, 0) + 1);
-				}
 			}
-		}	
-	}
+		}
+	}	
+	
 
 	private static File verificarArgumentos(String[] args) {
 		// Verificar nº de argumentos correcto
