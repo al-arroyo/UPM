@@ -43,7 +43,7 @@ public class P4_JSON {
 	public static void main(String[] args) throws InterruptedException {
 		
 		// Verificar nº de argumentos correcto
-		if (args.length!=4){
+		if (args.length!=5){
 			String mensaje="ERROR: Argumentos incorrectos.";
 			if (args.length>0)
 				mensaje+=" He recibido estos argumentos: "+ Arrays.asList(args).toString()+"\n";
@@ -117,7 +117,9 @@ public class P4_JSON {
 		String regex[] = {"^[0-9]{3,4}(-[0-9A-Z]{3,8})*$",
 					"(.*xml)$",
 					"(.*xsd)$",
-					"(.*xml)$"};
+					"(.*xml)$",
+					"(.*xml)$",
+					"(.*xsd)$"};
 		for (int i = 0; i < args.length; i++) {
 			if (!args[i].matches(regex[i])) {
 				// Código para manejar el caso en que args[i] no coincide con regex[j]
@@ -128,6 +130,8 @@ public class P4_JSON {
 			validArg1_2(args[1]);
 			validArg1_2(args[2]);
 			validArg3(args[3]);
+			validArg3(args[4]);
+			validArg1_2(args[5]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -152,6 +156,11 @@ public class P4_JSON {
 		Validator validator = schema.newValidator();
 		File xmlFile = new File(args[3]);
 		validator.validate(new StreamSource(xmlFile));
+		File schemaFile1 = new File(args[4]);
+		Schema schema1 = schemaFactory.newSchema(schemaFile1);
+		Validator validator1 = schema1.newValidator();
+		File xmlFile1 = new File(args[5]);
+		validator1.validate(new StreamSource(xmlFile1));
 	}
 
 	/*************************************************************  EMPIEZA PRACTICA 4  *************************************************************************/
