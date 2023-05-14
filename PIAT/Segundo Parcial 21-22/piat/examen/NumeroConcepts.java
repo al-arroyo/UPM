@@ -63,15 +63,13 @@ public class NumeroConcepts {
 	 */
 	public static void procesarLinea(String sLine, Map<String, Integer> cuentasConcepts){
 		// TODO:
-		Matcher matcher;
 		String patron = "(https:\\/\\/datos.madrid.es\\/egob\\/kos)\\/*([A-Za-z]*)\\/*([A-Za-z]*)\\/*([A-Za-z]*)";
 		Pattern pTraza = Pattern.compile(patron);	
-		if (sLine.trim().length()>0){
-			matcher = pTraza.matcher(sLine);	// Realizar la casación de la línea con el patrón genérico de una traza
-			if (matcher.matches()) {	// Verificar que la línea es correcta
-				patron = matcher.group(4);
-				pTraza = Pattern.compile(patron);
-				matcher = pTraza.matcher(sLine);
+		Matcher matcher = pTraza.matcher(sLine.trim());
+		if (matcher.matches()) {
+			patron = matcher.group(4);
+			pTraza = Pattern.compile(patron);
+			matcher = pTraza.matcher(sLine);
 				if (matcher.find()) {
 					String concepto = matcher.group(1);
 					cuentasConcepts.put(concepto, cuentasConcepts.getOrDefault(concepto, 0) + 1);
