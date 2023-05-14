@@ -7,9 +7,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,7 +45,7 @@ public class P4_JSON {
 	public static void main(String[] args) throws InterruptedException {
 		
 		// Verificar nº de argumentos correcto
-		if (args.length!=5){
+		if (args.length!=6){
 			String mensaje="ERROR: Argumentos incorrectos.";
 			if (args.length>0)
 				mensaje+=" He recibido estos argumentos: "+ Arrays.asList(args).toString()+"\n";
@@ -156,11 +158,11 @@ public class P4_JSON {
 		Validator validator = schema.newValidator();
 		File xmlFile = new File(args[3]);
 		validator.validate(new StreamSource(xmlFile));
-		File schemaFile1 = new File(args[4]);
+		/*File schemaFile1 = new File(args[4]);
 		Schema schema1 = schemaFactory.newSchema(schemaFile1);
 		Validator validator1 = schema1.newValidator();
 		File xmlFile1 = new File(args[5]);
-		validator1.validate(new StreamSource(xmlFile1));
+		validator1.validate(new StreamSource(xmlFile1));*/
 	}
 
 	/*************************************************************  EMPIEZA PRACTICA 4  *************************************************************************/
@@ -215,5 +217,18 @@ public class P4_JSON {
 		
 
 		return mapa;
+	}
+	//Metodo que devuelve una lista con elementos sacados de List<Map<String, String>>
+	//De cada <Map<String, String> extraemos el valor de la clave "@id" y ese valor
+	//lo agregamos a la lista
+	private List<String> getListURL(Map<String, List<Map<String, String>>> mapa){
+		List<String> listURL = new ArrayList<String>();
+		for(List<Map<String, String>> valores : mapa.values())
+			for(Map<String, String> map : valores){
+				String id = map.get("@id");
+				if(id != null)
+				listURL.add(id);
+			}	
+		return listURL;
 	}
 }
