@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -76,6 +75,16 @@ public class P4_JSON {
 			BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(salida), StandardCharsets.UTF_8));
 			bufferedWriter.write(contenido);
 			bufferedWriter.close();
+			Map<String, Map<String, String>> map = getGraphValues(getListURL(mapa));
+			String contenido1 = SalidaXMLExamen.generar(map);
+			File salida1 = new File(args[4]);
+			salida1.delete();
+			//Escribir en el fichero de salida el contenido del List<String> obtenido en el paso anterior
+			//FileWriter writer = new FileWriter(salida, true);
+			//BufferedWriter para escribir en UTF-8 y evitar problemas con caracteres especiales
+			BufferedWriter bufferedWriter1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(salida1), StandardCharsets.UTF_8));
+			bufferedWriter1.write(contenido1);
+			bufferedWriter1.close();
 			validXsd(args);
 		} catch(SAXException | ParserConfigurationException | IOException e){
 			e.printStackTrace();
@@ -221,7 +230,7 @@ public class P4_JSON {
 	//Metodo que devuelve una lista con elementos sacados de List<Map<String, String>>
 	//De cada <Map<String, String> extraemos el valor de la clave "@id" y ese valor
 	//lo agregamos a la lista
-	private List<String> getListURL(Map<String, List<Map<String, String>>> mapa){
+	private static List<String> getListURL(Map<String, List<Map<String, String>>> mapa){
 		List<String> listURL = new ArrayList<String>();
 		for(List<Map<String, String>> valores : mapa.values())
 			for(Map<String, String> map : valores){
@@ -230,5 +239,41 @@ public class P4_JSON {
 				listURL.add(id);
 			}	
 		return listURL;
+	}
+	private static Map<String, Map<String,String>> getGraphValues (List<String> listaIDs) throws InterruptedException{
+				//Mapa concurrente, solo lo puede tocar un hilo a la vez, si hay un hilo modificandolo los demas esperan a que este acaba
+				ConcurrentHashMap<String,Map<String,String>> mapa = new ConcurrentHashMap<>();
+				//Obtener el nº de núcleos del procesador del ordenador
+				int numDeNucleos = Runtime.getRuntime().availableProcessors();
+				System.out.println ("Se va a crear un pool de hilos para que como máximo haya " + numDeNucleos + " hilos en ejecución simultaneamente.");
+				
+				// Crear un pool donde ejecutar los hilos. El pool tendrá un tamaño del nº de núcleos del ordenador
+				// por lo que nunca podrá haber más hilos que ese número en ejecución simultánea.
+				// Si se quiere hacer pruebas con un solo trabajador en ejecución, poner como argumento un 1. Irá mucho más lenta la ejecución porque los ficheros se procesarán secuencialmente
+				ExecutorService ejecutor = Executors.newFixedThreadPool(numDeNucleos);
+				
+				AtomicInteger numTrabajadoresTerminados = new AtomicInteger(0);
+				int numTrabajadores=0;
+				System.out.print ("Lanzando hilos al pool ");
+				for (String id: listaIDs){
+					System.out.print (".");
+					ejecutor.execute(new JSONGraphParser(id, mapa));
+					numTrabajadores++;
+					//break; // Descomentando este break, solo se ejecuta el primer trabajador
+				}
+				System.out.print ("\nEn total se van a ejecutar "+numTrabajadores+" JSONDatasetParser en el pool. Esperar a que terminen ");
+				// Esperar a que terminen todos los trabajadores
+				ejecutor.shutdown();	// Cerrar el ejecutor cuando termine el último trabajador
+				// Cada 10 segundos mostrar cuantos trabajadores se han ejecutado y los que quedan
+				while (!ejecutor.awaitTermination(10, TimeUnit.SECONDS)) {
+					final int terminados=numTrabajadoresTerminados.get();
+					System.out.print("\nYa han terminado "+terminados+". Esperando a los "+(numTrabajadores-terminados)+" que quedan ");
+				}
+				// Mostrar todos los trabajadores que se han ejecutado. Debe coincidir con los creados
+				System.out.println("\nYa han terminado los "+numTrabajadoresTerminados.get()+" JSONGraphParser");
+				
+		
+				return mapa;
+		
 	}
 }
