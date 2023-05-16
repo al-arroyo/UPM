@@ -1,6 +1,6 @@
 {
 	"query": "018",
-	"numResources": 23,
+	"numResources": 21,
 	"infDataset": [
 		{
 			"id": "https://datos.madrid.es/egob/catalogo/206974-0-agenda-eventos-culturales-100.json",
@@ -20,7 +20,7 @@
 		},
 		{
 			"id": "https://datos.madrid.es/egob/catalogo/300261-0-agenda-proximas-carreras.json",
-			"num": "3"
+			"num": "1"
 		}
 	],
 	"ubicaciones": [
@@ -29,11 +29,11 @@
 		"Centro Cultural Moncloa (Moncloa - Aravaca)",
 		"Jardín del Bulevar de Peña Gorbea",
 		"Auditorio al aire libre. Parque Aluche",
-		"Centro Deportivo Municipal Gallur",
 		"Centro de Educación Ambiental de Casa de Campo",
+		"Parque Juan Carlos I",
+		"Parque Deportivo Puerta de Hierro",
 		"Espacio de Igualdad Lourdes Hernández. Carabanchel",
 		"Biblioteca Pública Municipal Dámaso Alonso (Chamartín)",
-		"Biblioteca Pública Municipal Iván de Vargas (Centro)",
 		"Biblioteca Pública Municipal Canillejas (San Blas-Canillejas)"
 	]
 }

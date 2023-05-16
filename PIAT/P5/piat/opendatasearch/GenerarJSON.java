@@ -48,7 +48,8 @@ public class GenerarJSON {
 			if ((posicion=buscarPropiedad("eventLocation", listaPropiedades))>=0){ // ----> "ubicaciones": ["tercero", "segundo", "cuarto"            ]
 				List<String> listaUbicaciones = new ArrayList<String>();
 				for (int i=0;i<listaPropiedades.size();i++){
-					if(listaPropiedades.get(i).nombre.equals("eventLocation") && listaUbicaciones.contains(listaPropiedades.get(i).valor)==false){
+					if(listaPropiedades.get(i).nombre.equals("eventLocation") && listaUbicaciones.contains(listaPropiedades.get(i).valor)==false
+					&& !listaPropiedades.get(i).valor.equals("")){
 						listaUbicaciones.add(listaPropiedades.get(i).valor);
 					}
 				}

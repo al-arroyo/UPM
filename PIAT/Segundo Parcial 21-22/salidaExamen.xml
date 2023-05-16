@@ -19,6 +19,13 @@
 			<pc:tipoPostalCode>vcard:postal-code</pc:tipoPostalCode>
 			<pc:postalCode>28023</pc:postalCode>
 		</pc:graph>
+<<<<<<< HEAD
+=======
+		<pc:graph id="https://datos.madrid.es/egob/catalogo/tipo/evento/11780613-aprende-bailar-marinera.json">
+			<pc:tipoPostalCode>vcard:postal-code</pc:tipoPostalCode>
+			<pc:postalCode>28037</pc:postalCode>
+		</pc:graph>
+>>>>>>> 100d6b52ea707b6d5effe89e2f9e7e101e124b5f
 		<pc:graph id="https://datos.madrid.es/egob/catalogo/tipo/evento/11976655-aromas-danza.json">
 			<pc:tipoPostalCode>vcard:postal-code</pc:tipoPostalCode>
 			<pc:postalCode>28009</pc:postalCode>
