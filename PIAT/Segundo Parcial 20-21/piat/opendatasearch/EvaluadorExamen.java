@@ -36,7 +36,8 @@ public class EvaluadorExamen{
 	public static List<Propiedad> evaluar (String ficheroXML) throws IOException, XPathExpressionException {
 		// TODO: 
 		// Realiza las 4 consultas XPath al documento XML de entrada que se indican en el enunciado en el apartado "3.2 Búsqueda de información y generación del documento de resultados."
-
+		List<Propiedad> lPropiedad = new ArrayList<Propiedad>();
+		return lPropiedad;		
 	}//del (main)
 
 	/**

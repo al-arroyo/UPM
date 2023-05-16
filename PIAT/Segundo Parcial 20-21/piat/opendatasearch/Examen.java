@@ -38,7 +38,7 @@ import org.xml.sax.SAXException;
  * Portal de Datos Abiertos del Ayuntamiento de Madrid
  *
  */
-public class P5_XPATH {
+public class Examen {
 
 
 	public static void main(String[] args) throws InterruptedException {
@@ -77,7 +77,8 @@ public class P5_XPATH {
 			bufferedWriter.close();
 			validXsd(args);
 			//Practica 5 - Generar el fichero JSON
-			GenerarJSON.generar(args[4], XPATH_Evaluador.evaluar(args[3]));
+			//GenerarJSON.generar(args[4], XPATH_Evaluador.evaluar(args[3]));
+			SalidaJSONExamen.generar(args[4], EvaluadorExamen.evaluar(args[3]));
 		} catch(SAXException | ParserConfigurationException | IOException
 				| XPathExpressionException e){
 			e.printStackTrace();
@@ -132,7 +133,7 @@ public class P5_XPATH {
 			validArg1_2(args[1]);
 			validArg1_2(args[2]);
 			validArg3(args[3]);
-			validArg4(args[4]);
+			validArg3(args[4]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -211,14 +212,5 @@ public class P5_XPATH {
 		
 		
 		return mapa;
-	}
-	/*************************************************************  EMPIEZA PRACTICA 5  *************************************************************************/
-
-	//Comprobar que se puede crear y escribir en el fichero de salida json
-	private static void validArg4(String arg) throws IOException{
-		File file = new File(arg);
-		file.delete();
-		if(file.createNewFile() && file.canWrite())
-			System.out.println("Se pude crear y escribir en el fichero "+arg);
 	}
 }
