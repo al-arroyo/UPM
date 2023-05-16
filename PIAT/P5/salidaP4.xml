@@ -232,37 +232,6 @@
 				<description>Con la participación de los grupos:  Grupo de baile 'Chervona Kalyna' (Ucrania) bajo la dirección de Anatoly y Nelva Halchynskyy. Grupo folclórico 'Aires de Murcia' (Murcia), bajo la dirección de María del Mar Diaz. Ballet 'Ara de Madrid', bajo la dirección de Carmina Villar.</description>
 			</resource>
 			<resource id="https://datos.madrid.es/egob/catalogo/212504-0-agenda-actividades-deportes.json">
-			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas"/>
-				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=3ea4cb9390508810VgnVCM2000001f4a900aRCRD]]> </link>
-				<title>40ª Copa del Mundo de Sable Masculino individual y por equipos 'Villa de Madrid'</title>
-				<location>
-						<eventLocation>Centro Deportivo Municipal Gallur</eventLocation>
-						<address>
-								<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Latina/Barrio/LosCarmenes</area>
-								<locality>MADRID</locality>
-								<street>CALLE GALLUR 2</street>
-						</address>
-						<timetable>
-							<start>2023-05-12 10:00:00.0</start>
-							<end>2023-05-14 23:59:00.0</end>
-						</timetable>
-						<georeference>40.398465832065 -3.7353834506869217</georeference>
-				</location>
-			</resource>
-			<resource id="https://datos.madrid.es/egob/catalogo/212504-0-agenda-actividades-deportes.json">
-			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/CarrerasMaratones"/>
-				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=ea79971d5f807810VgnVCM1000001d4a900aRCRD]]> </link>
-				<title>Actividades de psicomotricidad infantil con motivo de la carrera vertical Bomberos de Madrid</title>
-				<location>
-						<address>
-						</address>
-						<timetable>
-							<start>2023-05-13 09:30:00.0</start>
-							<end>2023-05-13 23:59:00.0</end>
-						</timetable>
-				</location>
-			</resource>
-			<resource id="https://datos.madrid.es/egob/catalogo/212504-0-agenda-actividades-deportes.json">
 			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/CarrerasMaratones"/>
 				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=6accc41facc27810VgnVCM1000001d4a900aRCRD]]> </link>
 				<title>Carrera Popular Stop Sanfilippo 2023</title>
@@ -295,15 +264,51 @@
 			</resource>
 			<resource id="https://datos.madrid.es/egob/catalogo/212504-0-agenda-actividades-deportes.json">
 			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas"/>
-				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=a21103b16dbf7810VgnVCM2000001f4a900aRCRD]]> </link>
-				<title>Corre por la Esclerosis Múltiple</title>
+				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=712a8daaa32d4710VgnVCM1000001d4a900aRCRD]]> </link>
+				<title>Correr por Madrid</title>
 				<location>
 						<address>
 						</address>
 						<timetable>
-							<start>2023-05-13 09:00:00.0</start>
-							<end>2023-05-13 23:59:00.0</end>
+							<start>2022-09-01 00:00:00.0</start>
+							<end>2023-06-30 23:59:00.0</end>
 						</timetable>
+				</location>
+			</resource>
+			<resource id="https://datos.madrid.es/egob/catalogo/212504-0-agenda-actividades-deportes.json">
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas"/>
+				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=6a73b16daa0b2810VgnVCM1000001d4a900aRCRD]]> </link>
+				<title>Piragüismo por Madrid</title>
+				<location>
+						<eventLocation>Parque Juan Carlos I</eventLocation>
+						<address>
+								<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid 28042/Distrito/Barajas/Barrio/Corralejos</area>
+								<locality>MADRID 28042</locality>
+								<street>GLORIETA S.A.R. DON JUAN DE BORBON Y BATTEMBERG, 5 5</street>
+						</address>
+						<timetable>
+							<start>2022-09-01 00:00:00.0</start>
+							<end>2023-07-31 23:59:00.0</end>
+						</timetable>
+						<georeference>40.45999848510341 -3.6148888706303586</georeference>
+				</location>
+			</resource>
+			<resource id="https://datos.madrid.es/egob/catalogo/212504-0-agenda-actividades-deportes.json">
+			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas"/>
+				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=8e200c51a2a08810VgnVCM1000001d4a900aRCRD]]> </link>
+				<title>Volleyball World Beach ProTour Futures</title>
+				<location>
+						<eventLocation>Parque Deportivo Puerta de Hierro</eventLocation>
+						<address>
+								<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Moncloa-Aravaca/Barrio/Aravaca</area>
+								<locality>MADRID</locality>
+								<street>CARRETERA DE LA CORUÑA </street>
+						</address>
+						<timetable>
+							<start>2023-05-11 00:00:00.0</start>
+							<end>2023-05-21 23:59:00.0</end>
+						</timetable>
+						<georeference>40.463352206633466 -3.749646028757586</georeference>
 				</location>
 			</resource>
 			<resource id="https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json">
@@ -455,24 +460,6 @@
 			</resource>
 			<resource id="https://datos.madrid.es/egob/catalogo/206717-0-agenda-eventos-bibliotecas.json">
 			<concept id="https://datos.madrid.es/egob/kos/actividades/CursosTalleres"/>
-				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=c12a3c22fe0e7810VgnVCM2000001f4a900aRCRD]]> </link>
-				<title>Actividad de dibujo: Vamos a dibujar y viajar en el tiempo</title>
-				<location>
-						<eventLocation>Biblioteca Pública Municipal Iván de Vargas (Centro)</eventLocation>
-						<address>
-								<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Centro/Barrio/Palacio</area>
-								<locality>MADRID</locality>
-								<street>CALLE SAN JUSTO 5</street>
-						</address>
-						<timetable>
-							<start>2023-05-14 11:00:00.0</start>
-							<end>2023-05-14 23:59:00.0</end>
-						</timetable>
-						<georeference>40.41410290844665 -3.7098591212735883</georeference>
-				</location>
-			</resource>
-			<resource id="https://datos.madrid.es/egob/catalogo/206717-0-agenda-eventos-bibliotecas.json">
-			<concept id="https://datos.madrid.es/egob/kos/actividades/CursosTalleres"/>
 				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=38a384827f543810VgnVCM1000001d4a900aRCRD]]> </link>
 				<title>Amar la existencia</title>
 				<location>
@@ -489,17 +476,22 @@
 						<georeference>40.44640229188281 -3.6117933204271098</georeference>
 				</location>
 			</resource>
-			<resource id="https://datos.madrid.es/egob/catalogo/300261-0-agenda-proximas-carreras.json">
-			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/CarrerasMaratones"/>
-				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=ea79971d5f807810VgnVCM1000001d4a900aRCRD]]> </link>
-				<title>Actividades de psicomotricidad infantil con motivo de la carrera vertical Bomberos de Madrid</title>
+			<resource id="https://datos.madrid.es/egob/catalogo/206717-0-agenda-eventos-bibliotecas.json">
+			<concept id="https://datos.madrid.es/egob/kos/actividades/CuentacuentosTiteresMarionetas"/>
+				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=d13ae0abb0608810VgnVCM2000001f4a900aRCRD]]> </link>
+				<title>Andrex el veganosaurio</title>
 				<location>
+						<eventLocation>Biblioteca Pública Municipal Eugenio Trías. Casa de Fieras de El Retiro (Retiro)</eventLocation>
 						<address>
+								<area>https://datos.madrid.es/egob/kos/Provincia/Madrid/Municipio/Madrid/Distrito/Retiro/Barrio/LosJeronimos</area>
+								<locality>MADRID</locality>
+								<street>PASEO FERNÁN NÚÑEZ 24</street>
 						</address>
 						<timetable>
-							<start>2023-05-13 09:30:00.0</start>
-							<end>2023-05-13 23:59:00.0</end>
+							<start>2023-05-20 12:00:00.0</start>
+							<end>2023-05-20 23:59:00.0</end>
 						</timetable>
+						<georeference>40.4166091081099 -3.6795930368034804</georeference>
 				</location>
 			</resource>
 			<resource id="https://datos.madrid.es/egob/catalogo/300261-0-agenda-proximas-carreras.json">
@@ -512,19 +504,6 @@
 						<timetable>
 							<start>2023-05-21 09:00:00.0</start>
 							<end>2023-05-21 23:59:00.0</end>
-						</timetable>
-				</location>
-			</resource>
-			<resource id="https://datos.madrid.es/egob/catalogo/300261-0-agenda-proximas-carreras.json">
-			<concept id="https://datos.madrid.es/egob/kos/actividades/ActividadesDeportivas/CarrerasMaratones"/>
-				<link> <![CDATA[http://www.madrid.es/sites/v/index.jsp?vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&vgnextoid=0848cb6573ae6810VgnVCM1000001d4a900aRCRD]]> </link>
-				<title>VII Carrera vertical Bomberos de Madrid - Torre Emperador</title>
-				<location>
-						<address>
-						</address>
-						<timetable>
-							<start>2023-05-13 09:30:00.0</start>
-							<end>2023-05-13 23:59:00.0</end>
 						</timetable>
 				</location>
 			</resource>
