@@ -4,6 +4,7 @@ package piat.opendatasearch;
  * 	DNI o documento identificativo:  
  */
 
+/* Clase estática para crear un String con el xml a partir de la información que se pasa como parámetro en mGraph*/
 
 
 import java.util.HashMap;
@@ -12,18 +13,16 @@ import java.util.Map;
 public class ResultsToXML {
 
 
-	/** transform()
-	 * @param sXSLFile	path al fichero XSL con la descripción de la transformación
-	 * @param sOUTFile	path al fichero resultante de la transformación
-	 * @param sConceptLabel	nombre de la categoría sometida a búsqueda
-	 */
 	public static String resultsToXML (Map <String, HashMap<String, String>> datos){
+		StringBuilder salidaXML= new StringBuilder();
+		//TODO: Almacenar en salidaXML el texto XML válido respecto al esquema del documento graphs.xsd a partir de la información que hay en el mapa mGraph
 
 
 		
 		
 		
-		
+		return salidaXML.toString();
+
 	}
 
 	
