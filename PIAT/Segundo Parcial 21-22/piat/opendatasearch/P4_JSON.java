@@ -167,11 +167,12 @@ public class P4_JSON {
 		Validator validator = schema.newValidator();
 		File xmlFile = new File(args[3]);
 		validator.validate(new StreamSource(xmlFile));
-		/*File schemaFile1 = new File(args[4]);
-		Schema schema1 = schemaFactory.newSchema(schemaFile1);
+		SchemaFactory schemaFactory1 = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		File schemaFile1 = new File(args[5]);
+		Schema schema1 = schemaFactory1.newSchema(schemaFile1);
 		Validator validator1 = schema1.newValidator();
-		File xmlFile1 = new File(args[5]);
-		validator1.validate(new StreamSource(xmlFile1));*/
+		File xmlFile1 = new File(args[4]);
+		validator1.validate(new StreamSource(xmlFile1));
 	}
 
 	/*************************************************************  EMPIEZA PRACTICA 4  *************************************************************************/
