@@ -7,7 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,6 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.swing.RowFilter.Entry;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -43,7 +46,7 @@ public class P4_JSON {
 	public static void main(String[] args) throws InterruptedException {
 		
 		// Verificar nº de argumentos correcto
-		if (args.length!=4){
+		if (args.length!=6){
 			String mensaje="ERROR: Argumentos incorrectos.";
 			if (args.length>0)
 				mensaje+=" He recibido estos argumentos: "+ Arrays.asList(args).toString()+"\n";
@@ -74,6 +77,12 @@ public class P4_JSON {
 			BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(salida), StandardCharsets.UTF_8));
 			bufferedWriter.write(contenido);
 			bufferedWriter.close();
+			String contenido1 = SalidaXMLExamen.generar(getGraphValues(getListId(mapa)));
+			File salida1 = new File(args[5]);
+			salida.delete();
+			BufferedWriter bufferedWriter1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(salida1), StandardCharsets.UTF_8));
+			bufferedWriter1.write(contenido1);
+			bufferedWriter1.close();
 			validXsd(args);
 		} catch(SAXException | ParserConfigurationException | IOException e){
 			e.printStackTrace();
@@ -117,6 +126,8 @@ public class P4_JSON {
 		String regex[] = {"^[0-9]{3,4}(-[0-9A-Z]{3,8})*$",
 					"(.*xml)$",
 					"(.*xsd)$",
+					"(.*xml)$",
+					"(.*xsd)$",
 					"(.*xml)$"};
 		for (int i = 0; i < args.length; i++) {
 			if (!args[i].matches(regex[i])) {
@@ -128,6 +139,8 @@ public class P4_JSON {
 			validArg1_2(args[1]);
 			validArg1_2(args[2]);
 			validArg3(args[3]);
+			validArg1_2(args[4]);
+			validArg3(args[5]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -152,6 +165,11 @@ public class P4_JSON {
 		Validator validator = schema.newValidator();
 		File xmlFile = new File(args[3]);
 		validator.validate(new StreamSource(xmlFile));
+		File schemaFile1 = new File(args[4]);
+		Schema schema1 = schemaFactory.newSchema(schemaFile1);
+		Validator validator1 = schema1.newValidator();
+		File xmlFile1 = new File(args[5]);
+		validator1.validate(new StreamSource(xmlFile1));
 	}
 
 	/*************************************************************  EMPIEZA PRACTICA 4  *************************************************************************/
@@ -206,5 +224,49 @@ public class P4_JSON {
 		
 
 		return mapa;
+	}
+	private static List<String>getListId(Map<String, List<Map<String, String>>> mDatasets){
+		List<String> list = new ArrayList<String>();
+		for(List<Map<String, String>> Entry:mDatasets.values()){
+			for(Map<String, String> map : Entry){
+				if(map.containsKey("@id"))
+					list.add(map.get("@id"));
+			}
+		}
+		return list;
+	}
+	private static Map<String, Map<String,String>> getGraphValues (List<String> listaIDs) throws InterruptedException {
+		ConcurrentHashMap<String, Map<String,String>>  mapaGordo = new ConcurrentHashMap<>();
+		//Obtener el nº de núcleos del procesador del ordenador
+		int numDeNucleos = Runtime.getRuntime().availableProcessors();
+		System.out.println ("Se va a crear un pool de hilos para que como máximo haya " + numDeNucleos + " hilos en ejecución simultaneamente.");
+		
+		// Crear un pool donde ejecutar los hilos. El pool tendrá un tamaño del nº de núcleos del ordenador
+		// por lo que nunca podrá haber más hilos que ese número en ejecución simultánea.
+		// Si se quiere hacer pruebas con un solo trabajador en ejecución, poner como argumento un 1. Irá mucho más lenta la ejecución porque los ficheros se procesarán secuencialmente
+		ExecutorService ejecutor = Executors.newFixedThreadPool(numDeNucleos);
+		
+		AtomicInteger numTrabajadoresTerminados = new AtomicInteger(0);
+		int numTrabajadores=0;
+		System.out.print ("Lanzando hilos al pool ");
+		for (String json: listaIDs){
+			System.out.print (".");
+			ejecutor.execute(new JSONGraphParser(json, mapaGordo));
+			numTrabajadores++;
+			//break; // Descomentando este break, solo se ejecuta el primer trabajador
+		}
+		System.out.print ("\nEn total se van a ejecutar "+numTrabajadores+" JSONDatasetParser en el pool. Esperar a que terminen ");
+		// Esperar a que terminen todos los trabajadores
+		ejecutor.shutdown();	// Cerrar el ejecutor cuando termine el último trabajador
+		// Cada 10 segundos mostrar cuantos trabajadores se han ejecutado y los que quedan
+		while (!ejecutor.awaitTermination(10, TimeUnit.SECONDS)) {
+			final int terminados=numTrabajadoresTerminados.get();
+			System.out.print("\nYa han terminado "+terminados+". Esperando a los "+(numTrabajadores-terminados)+" que quedan ");
+		}
+		// Mostrar todos los trabajadores que se han ejecutado. Debe coincidir con los creados
+		System.out.println("\nYa han terminado los "+numTrabajadoresTerminados.get()+" JSONDatasetParser");
+		
+
+		return mapaGordo;
 	}
 }

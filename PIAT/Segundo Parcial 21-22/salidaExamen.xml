@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pc:graphs 	xmlns:pc="http://www.piat.dte.upm.es/examenJunio"
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xsi:schemaLocation="http://www.piat.dte.upm.es/examenJunio graphs.xsd">
+			<pc:graph id="https://datos.madrid.es/egob/catalogo/tipo/evento/11949320-alegria-cirque-du-soleil-circo-sol-.json">
+				<pc:tipoPostalCode>vcard:postal-code</pc:tipoPostalCode>
+				<pc:postalCode>28011</pc:postalCode>
+			</pc:graph>
+			<pc:graph id="https://datos.madrid.es/egob/catalogo/tipo/evento/11990810-asociacion-cultural-chilena-cal-canto.json">
+				<pc:tipoPostalCode>vcard:postal-code</pc:tipoPostalCode>
+				<pc:postalCode>28044</pc:postalCode>
+			</pc:graph>
+			<pc:graph id="https://datos.madrid.es/egob/catalogo/tipo/evento/11780613-aprende-bailar-marinera.json">
+				<pc:tipoPostalCode>vcard:postal-code</pc:tipoPostalCode>
+				<pc:postalCode>28037</pc:postalCode>
+			</pc:graph>
+			<pc:graph id="https://datos.madrid.es/egob/catalogo/tipo/evento/12006315-camino.json">
+				<pc:tipoPostalCode>vcard:postal-code</pc:tipoPostalCode>
+				<pc:postalCode>28023</pc:postalCode>
+			</pc:graph>
+			<pc:graph id="https://datos.madrid.es/egob/catalogo/tipo/evento/11976655-aromas-danza.json">
+				<pc:tipoPostalCode>vcard:postal-code</pc:tipoPostalCode>
+				<pc:postalCode>28009</pc:postalCode>
+			</pc:graph>
+			<pc:graph id="https://datos.madrid.es/egob/catalogo/tipo/evento/11987250-bailando-versos.json">
+				<pc:tipoPostalCode>vcard:postal-code</pc:tipoPostalCode>
+				<pc:postalCode>28031</pc:postalCode>
+			</pc:graph>
+		</pc:graphs>
