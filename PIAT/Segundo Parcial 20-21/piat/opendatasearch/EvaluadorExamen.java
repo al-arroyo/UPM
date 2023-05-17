@@ -52,9 +52,7 @@ public class EvaluadorExamen{
 			final String xPathTheme="";
 			//b) Número de elementos <theme> hijos de <dataset>.
 			final String xPathCountTheme="";
-			//c) Por cada elemento <dataset>, hijo de <datasets>, número de elementos <resource> cuyo atributo id es igual al atributo id del elemento <dataset>
-			final String xPathDatasetID=""; //me coge todos los id de dataset que aparecen también en algún resoruce		
-			//d) Contenido de cada uno de los elementos <title>, descendientes de <resource>. Si su contenido está vacío no se tendrá en cuenta. Si una ubicación está repetida sólo se añadirá una vez al documento de salida.
+			//c) Contenido de cada uno de los elementos <title>, descendientes de <resource>. Si su contenido está vacío no se tendrá en cuenta. Si una ubicación está repetida sólo se añadirá una vez al documento de salida.
 			final String xPathTitle="";
 
 		
