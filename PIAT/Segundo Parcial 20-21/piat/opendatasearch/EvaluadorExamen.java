@@ -49,12 +49,26 @@ public class EvaluadorExamen{
 			// Cada consulta devolverá una información que se añadirá a la colección List <Propiedad>, que es la que devuelve este método
 			/*Rutas consultas*/
 			//a) Contenido textual del elemento <theme>.
-			final String xPathTheme="";
+			final String xPathTheme="//theme//text()";
 			//b) Número de elementos <theme> hijos de <dataset>.
-			final String xPathCountTheme="";
+			final String xPathCountTheme="count(//theme=\"#valor#\")";
 			//c) Contenido de cada uno de los elementos <title>, descendientes de <resource>. Si su contenido está vacío no se tendrá en cuenta. Si una ubicación está repetida sólo se añadirá una vez al documento de salida.
-			final String xPathTitle="";
-
+			final String xPathTitle="//title//text()";
+			Propiedad p;
+			NodeList lThemes= (NodeList) xPath.evaluate(xPathTheme, inputDoc, XPathConstants.NODESET);
+			for(int i=0;i< lThemes.getLength(); i++) {
+				String theme = lThemes.item(i).getTextContent(); //obtener los theme de dataset que también apracen en resource
+				p = new Propiedad("theme", theme); //Propiedad con el theme del dataset
+				lPropiedad.add(p);
+				xPathCountTheme.replace("#valor#", theme);//Contar las veces que aparece ese theme en resources
+				p = new Propiedad("num", (String) xPath.evaluate(xPathCountTheme, inputDoc, XPathConstants.STRING));
+				lPropiedad.add(p);
+			}
+			NodeList lTitle= (NodeList) xPath.evaluate(xPathTitle, inputDoc, XPathConstants.NODESET);
+			for(int i=0;i< lTitle.getLength(); i++) {
+				p = new Propiedad("title", lTitle.item(i).getTextContent()); //ir creando cada propiedad título
+				lPropiedad.add(p);
+			}	
 		
 		}catch (Throwable t) {  t.printStackTrace();  }
 		return lPropiedad;		
