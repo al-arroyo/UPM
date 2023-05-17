@@ -44,7 +44,7 @@ public class Examen {
 	public static void main(String[] args) throws InterruptedException {
 		
 		// Verificar nº de argumentos correcto
-		if (args.length!=5){
+		if (args.length!=6){
 			String mensaje="ERROR: Argumentos incorrectos.";
 			if (args.length>0)
 				mensaje+=" He recibido estos argumentos: "+ Arrays.asList(args).toString()+"\n";
@@ -77,8 +77,8 @@ public class Examen {
 			bufferedWriter.close();
 			validXsd(args);
 			//Practica 5 - Generar el fichero JSON
-			//GenerarJSON.generar(args[4], XPATH_Evaluador.evaluar(args[3]));
-			SalidaJSONExamen.generar(args[4], EvaluadorExamen.evaluar(args[3]));
+			GenerarJSON.generar(args[4], XPATH_Evaluador.evaluar(args[3]));
+			SalidaJSONExamen.generar(args[5], EvaluadorExamen.evaluar(args[3]));
 		} catch(SAXException | ParserConfigurationException | IOException
 				| XPathExpressionException e){
 			e.printStackTrace();
@@ -122,6 +122,7 @@ public class Examen {
 					"(.*xml)$",
 					"(.*xsd)$",
 					"(.*xml)$",
+					"(.*json)$",
 					"(.*json)$"};
 		for (int i = 0; i < args.length; i++) {
 			if (!args[i].matches(regex[i])) {
@@ -134,6 +135,7 @@ public class Examen {
 			validArg1_2(args[2]);
 			validArg3(args[3]);
 			validArg3(args[4]);
+			validArg3(args[5]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

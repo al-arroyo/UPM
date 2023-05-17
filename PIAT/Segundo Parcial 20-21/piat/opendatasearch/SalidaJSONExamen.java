@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.stream.JsonWriter;
-import piat.opendatasearch.XPATH_Evaluador.Propiedad;
+import piat.opendatasearch.EvaluadorExamen.Propiedad;
 
 /**
  * Clase usada para crear un fichero JSON
