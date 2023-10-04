@@ -12,6 +12,7 @@ public class AplicacionCalculadoraGUI {
 	public static void main(String[] args) {
 
 		// Instanciar los objetos necesarios.
+		new CalculadoraGUI(new AdaptadorOperacionesCalculadoraGUI());
 	}
 
 }

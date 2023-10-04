@@ -9,8 +9,6 @@ import CalculadoraGUI.ICalculadora;
 public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 
 	// Escribir los métodos.
-	private	double	memoria = 0;
-	private	double	resultado = 0;
 	private OperacionesCalculadora operaciones = new OperacionesCalculadora();
 	/*
 	 *	public void memoriaAniadir()
@@ -18,7 +16,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	*/
 	@Override
 	public void memoriaAniadir() {
-		// TODO Auto-generated method stub
 		operaciones.implementacionMA();
 	}
 	/*
@@ -27,7 +24,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public void memoriaLimpiar() {
-		// TODO Auto-generated method stub
 		operaciones.implementacionML();
 	}
 	/*
@@ -38,7 +34,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double memoriaObtener() {
-		// TODO Auto-generated method stub
 		return operaciones.implementacionMO();
 	}
 	/*
@@ -49,7 +44,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double obtenerUltimoResultado() {
-		// TODO Auto-generated method stub
 		return operaciones.implementacionUR();
 	}
 	/*
@@ -63,7 +57,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double multiplicar(double operando1, double operando2) {
-		// TODO Auto-generated method stub
 		return operaciones.implementacionMultiplicar(operando1, operando2);
 	}
 	/*
@@ -77,7 +70,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double restar(double operando1, double operando2) {
-		// TODO Auto-generated method stub
 		return operaciones.implementacionRestar(operando1, operando2);
 	}
 	/*
@@ -91,7 +83,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double sumar(double operando1, double operando2) {
-		// TODO Auto-generated method stub
 		return operaciones.implementacionSumar(operando1, operando2);
 	}
 	/*
@@ -107,7 +98,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double dividir(double dividendo, double divisor) throws Exception {
-		// TODO Auto-generated method stub
 		return operaciones.implementacionDividir(dividendo, divisor);
 	}
 	/*
@@ -120,14 +110,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double elevarAlCuadrado(double operando) {
-		// TODO Auto-generated method stub
-		double resultado = 0;
-		try {
-			resultado = operaciones.implementacionCuadrado(operando);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return resultado;
+		return	operaciones.implementacionCuadrado(operando);
 	}
 }

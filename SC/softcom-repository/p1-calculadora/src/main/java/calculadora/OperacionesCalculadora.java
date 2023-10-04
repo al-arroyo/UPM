@@ -29,7 +29,6 @@ public class OperacionesCalculadora{
 		try {
 			resultado = (operando1/operando2);
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println("El divisor no puede ser 0 o una indeterminacion 0/0");
 		}
 		return resultado;
@@ -42,7 +41,7 @@ public class OperacionesCalculadora{
 		return resultado;
 	}
 	public void implementacionMA(){
-		this.memoria += resultado;
+		memoria = resultado;
 	}
 	public void implementacionML(){
 		memoria = 0;
