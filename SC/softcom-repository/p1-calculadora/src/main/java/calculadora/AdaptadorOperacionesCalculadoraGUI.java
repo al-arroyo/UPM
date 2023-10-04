@@ -109,7 +109,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 			Elevado al cuadrado
 	 */
 	@Override
-	public double elevarAlCuadrado(double operando) {
+	public double elevarAlCuadrado(double operando){
 		return	operaciones.implementacionCuadrado(operando);
 	}
 }

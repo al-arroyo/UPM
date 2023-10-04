@@ -1,5 +1,7 @@
 package calculadora;
 
+import CalculadoraGUI.CalculadoraGUI;
+
 /** Esta es la clase que contiene el método main() de la aplicación de la calculadora y de la aplicación cleinte de la calculadora.
  * 
  */

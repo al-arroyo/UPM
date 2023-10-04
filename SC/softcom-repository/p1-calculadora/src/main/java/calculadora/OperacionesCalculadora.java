@@ -26,14 +26,15 @@ public class OperacionesCalculadora{
 		return resultado;
 	}
 	public double implementacionDividir(double operando1, double operando2) throws Exception{
-		try {
+		if (operando1 == 0 && operando2 == 0)
+			throw new Exception("Error: es una indeterminacion 0/0");
+		else if(operando1 != 1 && operando2 == 0)
+			throw new Exception("Error: el divisor no puede ser 0");
+		else
 			resultado = (operando1/operando2);
-		} catch (Exception e) {
-			System.out.println("El divisor no puede ser 0 o una indeterminacion 0/0");
-		}
 		return resultado;
 	}
-	public double implementacionCuadrado(double operando) throws Exception{
+	public double implementacionCuadrado(double operando){
 		resultado = (operando*operando);
 		return resultado;
 	}
