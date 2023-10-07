@@ -18,12 +18,11 @@ public class ServicioCalculadora {
      * @param numero1 Primer número a sumar.
      * @param numero2 Segundo número a sumar.
      * @return Resultado de la suma.
-     * @throws CalculadoraExcepcion Si ocurre un error durante la suma.
      * 
      * @param operando1
      * @param operando2
      */
-    public double suma(double operando1, double operando2) throws CalculadoraExcepcion, org.apache.thrift.TException;
+    public double suma(double operando1, double operando2) throws org.apache.thrift.TException;
 
     /**
      * Resta dos números enteros.
@@ -36,7 +35,7 @@ public class ServicioCalculadora {
      * @param operando1
      * @param operando2
      */
-    public double resta(double operando1, double operando2) throws CalculadoraExcepcion, org.apache.thrift.TException;
+    public double resta(double operando1, double operando2) throws org.apache.thrift.TException;
 
     /**
      * Multiplica dos números enteros.
@@ -49,7 +48,7 @@ public class ServicioCalculadora {
      * @param operando1
      * @param operando2
      */
-    public double multiplicacion(double operando1, double operando2) throws CalculadoraExcepcion, org.apache.thrift.TException;
+    public double multiplicacion(double operando1, double operando2) throws org.apache.thrift.TException;
 
     /**
      * Divide dos números enteros.
@@ -121,7 +120,7 @@ public class ServicioCalculadora {
     }
 
     @Override
-    public double suma(double operando1, double operando2) throws CalculadoraExcepcion, org.apache.thrift.TException
+    public double suma(double operando1, double operando2) throws org.apache.thrift.TException
     {
       send_suma(operando1, operando2);
       return recv_suma();
@@ -135,21 +134,18 @@ public class ServicioCalculadora {
       sendBase("suma", args);
     }
 
-    public double recv_suma() throws CalculadoraExcepcion, org.apache.thrift.TException
+    public double recv_suma() throws org.apache.thrift.TException
     {
       suma_result result = new suma_result();
       receiveBase(result, "suma");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      if (result.excepcion != null) {
-        throw result.excepcion;
-      }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "suma failed: unknown result");
     }
 
     @Override
-    public double resta(double operando1, double operando2) throws CalculadoraExcepcion, org.apache.thrift.TException
+    public double resta(double operando1, double operando2) throws org.apache.thrift.TException
     {
       send_resta(operando1, operando2);
       return recv_resta();
@@ -163,21 +159,18 @@ public class ServicioCalculadora {
       sendBase("resta", args);
     }
 
-    public double recv_resta() throws CalculadoraExcepcion, org.apache.thrift.TException
+    public double recv_resta() throws org.apache.thrift.TException
     {
       resta_result result = new resta_result();
       receiveBase(result, "resta");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      if (result.excepcion != null) {
-        throw result.excepcion;
-      }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "resta failed: unknown result");
     }
 
     @Override
-    public double multiplicacion(double operando1, double operando2) throws CalculadoraExcepcion, org.apache.thrift.TException
+    public double multiplicacion(double operando1, double operando2) throws org.apache.thrift.TException
     {
       send_multiplicacion(operando1, operando2);
       return recv_multiplicacion();
@@ -191,15 +184,12 @@ public class ServicioCalculadora {
       sendBase("multiplicacion", args);
     }
 
-    public double recv_multiplicacion() throws CalculadoraExcepcion, org.apache.thrift.TException
+    public double recv_multiplicacion() throws org.apache.thrift.TException
     {
       multiplicacion_result result = new multiplicacion_result();
       receiveBase(result, "multiplicacion");
       if (result.isSetSuccess()) {
         return result.success;
-      }
-      if (result.excepcion != null) {
-        throw result.excepcion;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "multiplicacion failed: unknown result");
     }
@@ -389,7 +379,7 @@ public class ServicioCalculadora {
       }
 
       @Override
-      public java.lang.Double getResult() throws CalculadoraExcepcion, org.apache.thrift.TException {
+      public java.lang.Double getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -427,7 +417,7 @@ public class ServicioCalculadora {
       }
 
       @Override
-      public java.lang.Double getResult() throws CalculadoraExcepcion, org.apache.thrift.TException {
+      public java.lang.Double getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -465,7 +455,7 @@ public class ServicioCalculadora {
       }
 
       @Override
-      public java.lang.Double getResult() throws CalculadoraExcepcion, org.apache.thrift.TException {
+      public java.lang.Double getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -726,12 +716,8 @@ public class ServicioCalculadora {
       @Override
       public suma_result getResult(I iface, suma_args args) throws org.apache.thrift.TException {
         suma_result result = new suma_result();
-        try {
-          result.success = iface.suma(args.operando1, args.operando2);
-          result.setSuccessIsSet(true);
-        } catch (CalculadoraExcepcion excepcion) {
-          result.excepcion = excepcion;
-        }
+        result.success = iface.suma(args.operando1, args.operando2);
+        result.setSuccessIsSet(true);
         return result;
       }
     }
@@ -759,12 +745,8 @@ public class ServicioCalculadora {
       @Override
       public resta_result getResult(I iface, resta_args args) throws org.apache.thrift.TException {
         resta_result result = new resta_result();
-        try {
-          result.success = iface.resta(args.operando1, args.operando2);
-          result.setSuccessIsSet(true);
-        } catch (CalculadoraExcepcion excepcion) {
-          result.excepcion = excepcion;
-        }
+        result.success = iface.resta(args.operando1, args.operando2);
+        result.setSuccessIsSet(true);
         return result;
       }
     }
@@ -792,12 +774,8 @@ public class ServicioCalculadora {
       @Override
       public multiplicacion_result getResult(I iface, multiplicacion_args args) throws org.apache.thrift.TException {
         multiplicacion_result result = new multiplicacion_result();
-        try {
-          result.success = iface.multiplicacion(args.operando1, args.operando2);
-          result.setSuccessIsSet(true);
-        } catch (CalculadoraExcepcion excepcion) {
-          result.excepcion = excepcion;
-        }
+        result.success = iface.multiplicacion(args.operando1, args.operando2);
+        result.setSuccessIsSet(true);
         return result;
       }
     }
@@ -1037,11 +1015,7 @@ public class ServicioCalculadora {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             suma_result result = new suma_result();
-            if (e instanceof CalculadoraExcepcion) {
-              result.excepcion = (CalculadoraExcepcion) e;
-              result.setExcepcionIsSet(true);
-              msg = result;
-            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
               return;
@@ -1109,11 +1083,7 @@ public class ServicioCalculadora {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             resta_result result = new resta_result();
-            if (e instanceof CalculadoraExcepcion) {
-              result.excepcion = (CalculadoraExcepcion) e;
-              result.setExcepcionIsSet(true);
-              msg = result;
-            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
               return;
@@ -1181,11 +1151,7 @@ public class ServicioCalculadora {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             multiplicacion_result result = new multiplicacion_result();
-            if (e instanceof CalculadoraExcepcion) {
-              result.excepcion = (CalculadoraExcepcion) e;
-              result.setExcepcionIsSet(true);
-              msg = result;
-            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
               return;
@@ -2100,18 +2066,15 @@ public class ServicioCalculadora {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("suma_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.DOUBLE, (short)0);
-    private static final org.apache.thrift.protocol.TField EXCEPCION_FIELD_DESC = new org.apache.thrift.protocol.TField("excepcion", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new suma_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new suma_resultTupleSchemeFactory();
 
     private double success; // required
-    private @org.apache.thrift.annotation.Nullable CalculadoraExcepcion excepcion; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success"),
-      EXCEPCION((short)1, "excepcion");
+      SUCCESS((short)0, "success");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -2129,8 +2092,6 @@ public class ServicioCalculadora {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
-          case 1: // EXCEPCION
-            return EXCEPCION;
           default:
             return null;
         }
@@ -2181,8 +2142,6 @@ public class ServicioCalculadora {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
-      tmpMap.put(_Fields.EXCEPCION, new org.apache.thrift.meta_data.FieldMetaData("excepcion", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CalculadoraExcepcion.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(suma_result.class, metaDataMap);
     }
@@ -2191,13 +2150,11 @@ public class ServicioCalculadora {
     }
 
     public suma_result(
-      double success,
-      CalculadoraExcepcion excepcion)
+      double success)
     {
       this();
       this.success = success;
       setSuccessIsSet(true);
-      this.excepcion = excepcion;
     }
 
     /**
@@ -2206,9 +2163,6 @@ public class ServicioCalculadora {
     public suma_result(suma_result other) {
       __isset_bitfield = other.__isset_bitfield;
       this.success = other.success;
-      if (other.isSetExcepcion()) {
-        this.excepcion = new CalculadoraExcepcion(other.excepcion);
-      }
     }
 
     @Override
@@ -2220,7 +2174,6 @@ public class ServicioCalculadora {
     public void clear() {
       setSuccessIsSet(false);
       this.success = 0.0;
-      this.excepcion = null;
     }
 
     public double getSuccess() {
@@ -2245,30 +2198,6 @@ public class ServicioCalculadora {
       __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
     }
 
-    @org.apache.thrift.annotation.Nullable
-    public CalculadoraExcepcion getExcepcion() {
-      return this.excepcion;
-    }
-
-    public void setExcepcion(@org.apache.thrift.annotation.Nullable CalculadoraExcepcion excepcion) {
-      this.excepcion = excepcion;
-    }
-
-    public void unsetExcepcion() {
-      this.excepcion = null;
-    }
-
-    /** Returns true if field excepcion is set (has been assigned a value) and false otherwise */
-    public boolean isSetExcepcion() {
-      return this.excepcion != null;
-    }
-
-    public void setExcepcionIsSet(boolean value) {
-      if (!value) {
-        this.excepcion = null;
-      }
-    }
-
     @Override
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
@@ -2277,14 +2206,6 @@ public class ServicioCalculadora {
           unsetSuccess();
         } else {
           setSuccess((java.lang.Double)value);
-        }
-        break;
-
-      case EXCEPCION:
-        if (value == null) {
-          unsetExcepcion();
-        } else {
-          setExcepcion((CalculadoraExcepcion)value);
         }
         break;
 
@@ -2297,9 +2218,6 @@ public class ServicioCalculadora {
       switch (field) {
       case SUCCESS:
         return getSuccess();
-
-      case EXCEPCION:
-        return getExcepcion();
 
       }
       throw new java.lang.IllegalStateException();
@@ -2315,8 +2233,6 @@ public class ServicioCalculadora {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
-      case EXCEPCION:
-        return isSetExcepcion();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -2343,15 +2259,6 @@ public class ServicioCalculadora {
           return false;
       }
 
-      boolean this_present_excepcion = true && this.isSetExcepcion();
-      boolean that_present_excepcion = true && that.isSetExcepcion();
-      if (this_present_excepcion || that_present_excepcion) {
-        if (!(this_present_excepcion && that_present_excepcion))
-          return false;
-        if (!this.excepcion.equals(that.excepcion))
-          return false;
-      }
-
       return true;
     }
 
@@ -2360,10 +2267,6 @@ public class ServicioCalculadora {
       int hashCode = 1;
 
       hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(success);
-
-      hashCode = hashCode * 8191 + ((isSetExcepcion()) ? 131071 : 524287);
-      if (isSetExcepcion())
-        hashCode = hashCode * 8191 + excepcion.hashCode();
 
       return hashCode;
     }
@@ -2382,16 +2285,6 @@ public class ServicioCalculadora {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = java.lang.Boolean.compare(isSetExcepcion(), other.isSetExcepcion());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetExcepcion()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.excepcion, other.excepcion);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -2421,14 +2314,6 @@ public class ServicioCalculadora {
 
       sb.append("success:");
       sb.append(this.success);
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("excepcion:");
-      if (this.excepcion == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.excepcion);
-      }
       first = false;
       sb.append(")");
       return sb.toString();
@@ -2485,15 +2370,6 @@ public class ServicioCalculadora {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 1: // EXCEPCION
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.excepcion = new CalculadoraExcepcion();
-                struct.excepcion.read(iprot);
-                struct.setExcepcionIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -2511,11 +2387,6 @@ public class ServicioCalculadora {
         if (struct.isSetSuccess()) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           oprot.writeDouble(struct.success);
-          oprot.writeFieldEnd();
-        }
-        if (struct.excepcion != null) {
-          oprot.writeFieldBegin(EXCEPCION_FIELD_DESC);
-          struct.excepcion.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -2540,30 +2411,19 @@ public class ServicioCalculadora {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        if (struct.isSetExcepcion()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
+        oprot.writeBitSet(optionals, 1);
         if (struct.isSetSuccess()) {
           oprot.writeDouble(struct.success);
-        }
-        if (struct.isSetExcepcion()) {
-          struct.excepcion.write(oprot);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, suma_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           struct.success = iprot.readDouble();
           struct.setSuccessIsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.excepcion = new CalculadoraExcepcion();
-          struct.excepcion.read(iprot);
-          struct.setExcepcionIsSet(true);
         }
       }
     }
@@ -3044,18 +2904,15 @@ public class ServicioCalculadora {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("resta_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.DOUBLE, (short)0);
-    private static final org.apache.thrift.protocol.TField EXCEPCION_FIELD_DESC = new org.apache.thrift.protocol.TField("excepcion", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new resta_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new resta_resultTupleSchemeFactory();
 
     private double success; // required
-    private @org.apache.thrift.annotation.Nullable CalculadoraExcepcion excepcion; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success"),
-      EXCEPCION((short)1, "excepcion");
+      SUCCESS((short)0, "success");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -3073,8 +2930,6 @@ public class ServicioCalculadora {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
-          case 1: // EXCEPCION
-            return EXCEPCION;
           default:
             return null;
         }
@@ -3125,8 +2980,6 @@ public class ServicioCalculadora {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
-      tmpMap.put(_Fields.EXCEPCION, new org.apache.thrift.meta_data.FieldMetaData("excepcion", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CalculadoraExcepcion.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(resta_result.class, metaDataMap);
     }
@@ -3135,13 +2988,11 @@ public class ServicioCalculadora {
     }
 
     public resta_result(
-      double success,
-      CalculadoraExcepcion excepcion)
+      double success)
     {
       this();
       this.success = success;
       setSuccessIsSet(true);
-      this.excepcion = excepcion;
     }
 
     /**
@@ -3150,9 +3001,6 @@ public class ServicioCalculadora {
     public resta_result(resta_result other) {
       __isset_bitfield = other.__isset_bitfield;
       this.success = other.success;
-      if (other.isSetExcepcion()) {
-        this.excepcion = new CalculadoraExcepcion(other.excepcion);
-      }
     }
 
     @Override
@@ -3164,7 +3012,6 @@ public class ServicioCalculadora {
     public void clear() {
       setSuccessIsSet(false);
       this.success = 0.0;
-      this.excepcion = null;
     }
 
     public double getSuccess() {
@@ -3189,30 +3036,6 @@ public class ServicioCalculadora {
       __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
     }
 
-    @org.apache.thrift.annotation.Nullable
-    public CalculadoraExcepcion getExcepcion() {
-      return this.excepcion;
-    }
-
-    public void setExcepcion(@org.apache.thrift.annotation.Nullable CalculadoraExcepcion excepcion) {
-      this.excepcion = excepcion;
-    }
-
-    public void unsetExcepcion() {
-      this.excepcion = null;
-    }
-
-    /** Returns true if field excepcion is set (has been assigned a value) and false otherwise */
-    public boolean isSetExcepcion() {
-      return this.excepcion != null;
-    }
-
-    public void setExcepcionIsSet(boolean value) {
-      if (!value) {
-        this.excepcion = null;
-      }
-    }
-
     @Override
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
@@ -3221,14 +3044,6 @@ public class ServicioCalculadora {
           unsetSuccess();
         } else {
           setSuccess((java.lang.Double)value);
-        }
-        break;
-
-      case EXCEPCION:
-        if (value == null) {
-          unsetExcepcion();
-        } else {
-          setExcepcion((CalculadoraExcepcion)value);
         }
         break;
 
@@ -3241,9 +3056,6 @@ public class ServicioCalculadora {
       switch (field) {
       case SUCCESS:
         return getSuccess();
-
-      case EXCEPCION:
-        return getExcepcion();
 
       }
       throw new java.lang.IllegalStateException();
@@ -3259,8 +3071,6 @@ public class ServicioCalculadora {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
-      case EXCEPCION:
-        return isSetExcepcion();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -3287,15 +3097,6 @@ public class ServicioCalculadora {
           return false;
       }
 
-      boolean this_present_excepcion = true && this.isSetExcepcion();
-      boolean that_present_excepcion = true && that.isSetExcepcion();
-      if (this_present_excepcion || that_present_excepcion) {
-        if (!(this_present_excepcion && that_present_excepcion))
-          return false;
-        if (!this.excepcion.equals(that.excepcion))
-          return false;
-      }
-
       return true;
     }
 
@@ -3304,10 +3105,6 @@ public class ServicioCalculadora {
       int hashCode = 1;
 
       hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(success);
-
-      hashCode = hashCode * 8191 + ((isSetExcepcion()) ? 131071 : 524287);
-      if (isSetExcepcion())
-        hashCode = hashCode * 8191 + excepcion.hashCode();
 
       return hashCode;
     }
@@ -3326,16 +3123,6 @@ public class ServicioCalculadora {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = java.lang.Boolean.compare(isSetExcepcion(), other.isSetExcepcion());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetExcepcion()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.excepcion, other.excepcion);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -3365,14 +3152,6 @@ public class ServicioCalculadora {
 
       sb.append("success:");
       sb.append(this.success);
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("excepcion:");
-      if (this.excepcion == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.excepcion);
-      }
       first = false;
       sb.append(")");
       return sb.toString();
@@ -3429,15 +3208,6 @@ public class ServicioCalculadora {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 1: // EXCEPCION
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.excepcion = new CalculadoraExcepcion();
-                struct.excepcion.read(iprot);
-                struct.setExcepcionIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -3455,11 +3225,6 @@ public class ServicioCalculadora {
         if (struct.isSetSuccess()) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           oprot.writeDouble(struct.success);
-          oprot.writeFieldEnd();
-        }
-        if (struct.excepcion != null) {
-          oprot.writeFieldBegin(EXCEPCION_FIELD_DESC);
-          struct.excepcion.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -3484,30 +3249,19 @@ public class ServicioCalculadora {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        if (struct.isSetExcepcion()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
+        oprot.writeBitSet(optionals, 1);
         if (struct.isSetSuccess()) {
           oprot.writeDouble(struct.success);
-        }
-        if (struct.isSetExcepcion()) {
-          struct.excepcion.write(oprot);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, resta_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           struct.success = iprot.readDouble();
           struct.setSuccessIsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.excepcion = new CalculadoraExcepcion();
-          struct.excepcion.read(iprot);
-          struct.setExcepcionIsSet(true);
         }
       }
     }
@@ -3988,18 +3742,15 @@ public class ServicioCalculadora {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("multiplicacion_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.DOUBLE, (short)0);
-    private static final org.apache.thrift.protocol.TField EXCEPCION_FIELD_DESC = new org.apache.thrift.protocol.TField("excepcion", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new multiplicacion_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new multiplicacion_resultTupleSchemeFactory();
 
     private double success; // required
-    private @org.apache.thrift.annotation.Nullable CalculadoraExcepcion excepcion; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success"),
-      EXCEPCION((short)1, "excepcion");
+      SUCCESS((short)0, "success");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -4017,8 +3768,6 @@ public class ServicioCalculadora {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
-          case 1: // EXCEPCION
-            return EXCEPCION;
           default:
             return null;
         }
@@ -4069,8 +3818,6 @@ public class ServicioCalculadora {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
-      tmpMap.put(_Fields.EXCEPCION, new org.apache.thrift.meta_data.FieldMetaData("excepcion", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CalculadoraExcepcion.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(multiplicacion_result.class, metaDataMap);
     }
@@ -4079,13 +3826,11 @@ public class ServicioCalculadora {
     }
 
     public multiplicacion_result(
-      double success,
-      CalculadoraExcepcion excepcion)
+      double success)
     {
       this();
       this.success = success;
       setSuccessIsSet(true);
-      this.excepcion = excepcion;
     }
 
     /**
@@ -4094,9 +3839,6 @@ public class ServicioCalculadora {
     public multiplicacion_result(multiplicacion_result other) {
       __isset_bitfield = other.__isset_bitfield;
       this.success = other.success;
-      if (other.isSetExcepcion()) {
-        this.excepcion = new CalculadoraExcepcion(other.excepcion);
-      }
     }
 
     @Override
@@ -4108,7 +3850,6 @@ public class ServicioCalculadora {
     public void clear() {
       setSuccessIsSet(false);
       this.success = 0.0;
-      this.excepcion = null;
     }
 
     public double getSuccess() {
@@ -4133,30 +3874,6 @@ public class ServicioCalculadora {
       __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
     }
 
-    @org.apache.thrift.annotation.Nullable
-    public CalculadoraExcepcion getExcepcion() {
-      return this.excepcion;
-    }
-
-    public void setExcepcion(@org.apache.thrift.annotation.Nullable CalculadoraExcepcion excepcion) {
-      this.excepcion = excepcion;
-    }
-
-    public void unsetExcepcion() {
-      this.excepcion = null;
-    }
-
-    /** Returns true if field excepcion is set (has been assigned a value) and false otherwise */
-    public boolean isSetExcepcion() {
-      return this.excepcion != null;
-    }
-
-    public void setExcepcionIsSet(boolean value) {
-      if (!value) {
-        this.excepcion = null;
-      }
-    }
-
     @Override
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
@@ -4165,14 +3882,6 @@ public class ServicioCalculadora {
           unsetSuccess();
         } else {
           setSuccess((java.lang.Double)value);
-        }
-        break;
-
-      case EXCEPCION:
-        if (value == null) {
-          unsetExcepcion();
-        } else {
-          setExcepcion((CalculadoraExcepcion)value);
         }
         break;
 
@@ -4185,9 +3894,6 @@ public class ServicioCalculadora {
       switch (field) {
       case SUCCESS:
         return getSuccess();
-
-      case EXCEPCION:
-        return getExcepcion();
 
       }
       throw new java.lang.IllegalStateException();
@@ -4203,8 +3909,6 @@ public class ServicioCalculadora {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
-      case EXCEPCION:
-        return isSetExcepcion();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -4231,15 +3935,6 @@ public class ServicioCalculadora {
           return false;
       }
 
-      boolean this_present_excepcion = true && this.isSetExcepcion();
-      boolean that_present_excepcion = true && that.isSetExcepcion();
-      if (this_present_excepcion || that_present_excepcion) {
-        if (!(this_present_excepcion && that_present_excepcion))
-          return false;
-        if (!this.excepcion.equals(that.excepcion))
-          return false;
-      }
-
       return true;
     }
 
@@ -4248,10 +3943,6 @@ public class ServicioCalculadora {
       int hashCode = 1;
 
       hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(success);
-
-      hashCode = hashCode * 8191 + ((isSetExcepcion()) ? 131071 : 524287);
-      if (isSetExcepcion())
-        hashCode = hashCode * 8191 + excepcion.hashCode();
 
       return hashCode;
     }
@@ -4270,16 +3961,6 @@ public class ServicioCalculadora {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = java.lang.Boolean.compare(isSetExcepcion(), other.isSetExcepcion());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetExcepcion()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.excepcion, other.excepcion);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -4309,14 +3990,6 @@ public class ServicioCalculadora {
 
       sb.append("success:");
       sb.append(this.success);
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("excepcion:");
-      if (this.excepcion == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.excepcion);
-      }
       first = false;
       sb.append(")");
       return sb.toString();
@@ -4373,15 +4046,6 @@ public class ServicioCalculadora {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 1: // EXCEPCION
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.excepcion = new CalculadoraExcepcion();
-                struct.excepcion.read(iprot);
-                struct.setExcepcionIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -4399,11 +4063,6 @@ public class ServicioCalculadora {
         if (struct.isSetSuccess()) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           oprot.writeDouble(struct.success);
-          oprot.writeFieldEnd();
-        }
-        if (struct.excepcion != null) {
-          oprot.writeFieldBegin(EXCEPCION_FIELD_DESC);
-          struct.excepcion.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -4428,30 +4087,19 @@ public class ServicioCalculadora {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        if (struct.isSetExcepcion()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
+        oprot.writeBitSet(optionals, 1);
         if (struct.isSetSuccess()) {
           oprot.writeDouble(struct.success);
-        }
-        if (struct.isSetExcepcion()) {
-          struct.excepcion.write(oprot);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, multiplicacion_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           struct.success = iprot.readDouble();
           struct.setSuccessIsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.excepcion = new CalculadoraExcepcion();
-          struct.excepcion.read(iprot);
-          struct.setExcepcionIsSet(true);
         }
       }
     }

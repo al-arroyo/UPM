@@ -26,13 +26,13 @@ public class ClienteCalculadoraGUI {
 
             AdaptadorOperacionesCalculadoraGUI adaptador = new AdaptadorOperacionesCalculadoraGUI(client);
 
-            // Realiza operaciones de cálculo utilizando adaptador
+            // Realiza operaciones de calculo utilizando adaptador
             adaptador.sumar(1, 2);
             adaptador.dividir(10, 5);
 
             transport.close();
         } catch (CalculadoraExcepcion e) {
-            System.err.println("Error en la operación de la calculadora: " + e.getMensaje());
+            System.err.println("Error en la operacion de la calculadora: " + e.getMensaje());
         } catch (Exception e) {
             e.printStackTrace();
         }

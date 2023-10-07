@@ -1,4 +1,4 @@
-package calculadora;
+package servidor;
 
 import CalculadoraGUI.ICalculadora;
 
@@ -12,7 +12,6 @@ public class OperacionesCalculadora{
 	private	double	memoria = 0;
 	private	double	resultado = 0;
 	// Escribir los métodos.
-	AdaptadorOperacionesCalculadoraGUI adaptador = new AdaptadorOperacionesCalculadoraGUI();
 	public double implementacionSumar(double operando1, double operando2){
 		resultado = (operando1+operando2);
 		return resultado;

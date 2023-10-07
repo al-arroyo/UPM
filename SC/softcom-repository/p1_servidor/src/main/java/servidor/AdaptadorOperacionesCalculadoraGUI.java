@@ -1,6 +1,7 @@
-package calculadora;
+package servidor;
 
 import CalculadoraGUI.ICalculadora;
+import ServicioCalculadora.ServicioCalculadora;
 
 /** Esta clase sirve para adaptar la interfaz de la clase calculadora.OperacionesCalculadora a la interfaz
  * de CalculadoraGUI.ICalculadora.
@@ -10,6 +11,9 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 
 	// Escribir los métodos.
 	private OperacionesCalculadora operaciones = new OperacionesCalculadora();
+	public AdaptadorOperacionesCalculadoraGUI(ServicioCalculadora.Client cliente) {
+		super();
+	}
 	/*
 	 *	public void memoriaAniadir()
 		Añade a la memoria acumuladora el último resultado obtenido al realizar una operación aritmética.
