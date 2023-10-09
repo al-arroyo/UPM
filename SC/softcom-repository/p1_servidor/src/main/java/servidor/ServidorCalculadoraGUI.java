@@ -5,6 +5,7 @@ import org.apache.thrift.TException;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TSimpleServer;
+import org.apache.thrift.server.TThreadPoolServer;
 import org.apache.thrift.transport.TServerSocket;
 /** Esta es la clase que contiene el método main() de la aplicación de la calculadora y de la aplicación cleinte de la calculadora.
  * 
@@ -24,8 +25,8 @@ public class ServidorCalculadoraGUI {
 			TServerSocket serviceTransport = new TServerSocket(PUERTO);
 			ServicioCalculadora.Iface handler = new AdaptadorOperacionesCalculadoraGUI();
 			TProcessor processor = new ServicioCalculadora.Processor<>(handler);
-			TServer server = new TSimpleServer(new TSimpleServer.Args(serviceTransport)
-					.processor(processor));
+			TServer server = new TThreadPoolServer(new TThreadPoolServer.Args(serviceTransport)
+							.processor(processor));
 			server.serve();
         } catch (TException e) {
             e.printStackTrace();
