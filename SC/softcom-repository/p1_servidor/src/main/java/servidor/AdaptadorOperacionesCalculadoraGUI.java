@@ -1,19 +1,20 @@
 package servidor;
 
+import org.apache.thrift.TException;
+
 import CalculadoraGUI.ICalculadora;
-import ServicioCalculadora.ServicioCalculadora;
+import calculadora.OperacionesCalculadora;
+import thriftStubs.CalculadoraExcepcion;
+import thriftStubs.ServicioCalculadora.Iface;
 
 /** Esta clase sirve para adaptar la interfaz de la clase calculadora.OperacionesCalculadora a la interfaz
  * de CalculadoraGUI.ICalculadora.
  * Se peude utilizar un adaptador de clase o de objeto.
  */
-public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
-
+public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora,Iface {
+	
 	// Escribir los métodos.
 	private OperacionesCalculadora operaciones = new OperacionesCalculadora();
-	public AdaptadorOperacionesCalculadoraGUI(ServicioCalculadora.Client cliente) {
-		super();
-	}
 	/*
 	 *	public void memoriaAniadir()
 		Añade a la memoria acumuladora el último resultado obtenido al realizar una operación aritmética.
@@ -115,5 +116,15 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	@Override
 	public double elevarAlCuadrado(double operando){
 		return	operaciones.implementacionCuadrado(operando);
+	}
+	@Override
+	public double multiplicacion(double operando1, double operando2) throws TException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public double division(double dividendo, double divisor) throws CalculadoraExcepcion, TException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

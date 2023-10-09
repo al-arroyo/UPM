@@ -1,4 +1,4 @@
-namespace java ServicioCalculadora
+namespace java thriftStubs
 
 exception CalculadoraExcepcion {
     1: string mensaje

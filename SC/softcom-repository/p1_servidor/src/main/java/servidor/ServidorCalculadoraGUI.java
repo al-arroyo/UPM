@@ -1,11 +1,11 @@
 package servidor;
 
-import ServicioCalculadora.ServicioCalculadora;
-import servidor.AdaptadorOperacionesCalculadoraGUI;
-import ServicioCalculadora.CalculadoraExcepcion;
-import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.transport.TSocket;
-import org.apache.thrift.transport.TTransport;
+import thriftStubs.ServicioCalculadora;
+import org.apache.thrift.TException;
+import org.apache.thrift.TProcessor;
+import org.apache.thrift.server.TServer;
+import org.apache.thrift.server.TSimpleServer;
+import org.apache.thrift.transport.TServerSocket;
 /** Esta es la clase que contiene el método main() de la aplicación de la calculadora y de la aplicación cleinte de la calculadora.
  * 
  */
@@ -15,19 +15,21 @@ public class ServidorCalculadoraGUI {
 	 * pasándole una instancia nueva de una clase que implementa OperacionesCalculadoraGUI.
 	 * @param args Argumentos del método main()
 	 */
+	private final static int PUERTO = 8585;
+	
 	public static void main(String[] args) {
 
 		// Instanciar los objetos necesarios.
 		try {
-			CalculadoraGUI calculadora = new CalculadoraGUI(new AdaptadorOperacionesCalculadoraGUI(null));
-
-			TServerTransport serverTransport = new TServerSocket(9090);
-			TServer server = new TSimpleServer(new TServer.Args(serverTransport).protocolFactory(new Factory()));
-
-			System.out.println("Iniciando el servidor...");
+			TServerSocket serviceTransport = new TServerSocket(PUERTO);
+			ServicioCalculadora.Iface handler = new AdaptadorOperacionesCalculadoraGUI();
+			TProcessor processor = new ServicioCalculadora.Processor<>(handler);
+			TServer server = new TSimpleServer(new TSimpleServer.Args(serviceTransport)
+					.processor(processor));
 			server.serve();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (TException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

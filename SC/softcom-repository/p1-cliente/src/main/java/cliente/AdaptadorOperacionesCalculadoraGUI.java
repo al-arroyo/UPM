@@ -1,7 +1,13 @@
 package cliente;
 
+import org.apache.thrift.TException;
+import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TSocket;
+import org.apache.thrift.transport.TTransport;
+
 import CalculadoraGUI.ICalculadora;
-import ServicioCalculadora.ServicioCalculadora;
+import thriftStubs.ServicioCalculadora;
 
 /** Esta clase sirve para adaptar la interfaz de la clase calculadora.OperacionesCalculadora a la interfaz
  * de CalculadoraGUI.ICalculadora.
@@ -10,9 +16,23 @@ import ServicioCalculadora.ServicioCalculadora;
 public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 
 	// Escribir los métodos.
-	private OperacionesCalculadora operaciones = new OperacionesCalculadora();
-	public AdaptadorOperacionesCalculadoraGUI(ServicioCalculadora.Client cliente) {
-		super();
+	//private OperacionesCalculadora operaciones = new OperacionesCalculadora();
+	public static final String SERVIDOR = "localhost";
+	public static final int PUERTO = 8585;
+	
+	private ServicioCalculadora.Client cliente;	
+	
+	public AdaptadorOperacionesCalculadoraGUI() {
+		try {
+			TTransport transport = new TSocket(SERVIDOR,PUERTO);
+			transport.open();
+			TProtocol protocol = new TBinaryProtocol(transport);
+			cliente = new ServicioCalculadora.Client(protocol);
+
+		}catch(TException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	/*
 	 *	public void memoriaAniadir()
@@ -20,7 +40,12 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	*/
 	@Override
 	public void memoriaAniadir() {
-		operaciones.implementacionMA();
+		try {
+			cliente.memoriaAniadir();
+		} catch (TException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	/*
 	 *	public void memoriaLimpiar()
@@ -28,7 +53,12 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public void memoriaLimpiar() {
-		operaciones.implementacionML();
+		try {
+			cliente.memoriaLimpiar();
+		} catch (TException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	/*
 	 *	public double memoriaObtener()
@@ -38,7 +68,12 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double memoriaObtener() {
-		return operaciones.implementacionMO();
+		try {
+			return cliente.memoriaObtener();
+		} catch (TException e) {
+			// TODO Auto-generated catch block
+			return Double.NaN;
+		}
 	}
 	/*
 	 *	public double obtenerUltimoResultado()
@@ -48,7 +83,12 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double obtenerUltimoResultado() {
-		return operaciones.implementacionUR();
+		try {
+			return cliente.obtenerUltimoResultado();
+		} catch (TException e) {
+			// TODO Auto-generated catch block
+			return Double.NaN;
+		}
 	}
 	/*
 	 *	public double multiplicar(double operando1, double operando2)
@@ -61,7 +101,12 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double multiplicar(double operando1, double operando2) {
-		return operaciones.implementacionMultiplicar(operando1, operando2);
+		try {
+			return cliente.multiplicacion(operando1, operando2);
+		} catch (TException e) {
+			// TODO Auto-generated catch block
+			return Double.NaN;
+		}
 	}
 	/*
 	 *	public double restar(double operando1, double operando2)
@@ -74,7 +119,12 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double restar(double operando1, double operando2) {
-		return operaciones.implementacionRestar(operando1, operando2);
+		try {
+			return cliente.restar(operando1, operando2);
+		} catch (TException e) {
+			// TODO Auto-generated catch block
+			return Double.NaN;
+		}
 	}
 	/*
 	 *	public double sumar(double operando1, double operando2)
@@ -87,7 +137,11 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double sumar(double operando1, double operando2) {
-		return operaciones.implementacionSumar(operando1, operando2);
+		try {
+			return cliente.sumar(operando1, operando2);
+		}catch (TException e) {
+			return Double.NaN;
+		}
 	}
 	/*
 	 *	public double dividir(double dividendo,	double divisor)throws Exception
@@ -102,7 +156,11 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double dividir(double dividendo, double divisor) throws Exception {
-		return operaciones.implementacionDividir(dividendo, divisor);
+		try {
+			return cliente.division(dividendo, divisor);
+		}catch (TException e) {
+			return Double.NaN;
+		}
 	}
 	/*
 	 *	public double elevarAlCuadrado(double operando)
@@ -114,6 +172,11 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double elevarAlCuadrado(double operando){
-		return	operaciones.implementacionCuadrado(operando);
+		try {
+			return cliente.elevarAlCuadrado(operando);
+		} catch (TException e) {
+			// TODO Auto-generated catch block
+			return Double.NaN;
+		}
 	}
 }
