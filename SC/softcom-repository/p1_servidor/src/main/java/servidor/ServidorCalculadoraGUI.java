@@ -19,15 +19,15 @@ public class ServidorCalculadoraGUI {
 
 		// Instanciar los objetos necesarios.
 		try {
-            CalculadoraGUI calculadora = new CalculadoraGUI(new AdaptadorOperacionesCalculadoraGUI(null));
+			CalculadoraGUI calculadora = new CalculadoraGUI(new AdaptadorOperacionesCalculadoraGUI(null));
 
-            TServerTransport serverTransport = new TServerSocket(9090);
-            TServer server = new TSimpleServer(new TServer.Args(serverTransport).protocolFactory(new Factory()));
+			TServerTransport serverTransport = new TServerSocket(9090);
+			TServer server = new TSimpleServer(new TServer.Args(serverTransport).protocolFactory(new Factory()));
 
-            System.out.println("Iniciando el servidor...");
-            server.serve();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			System.out.println("Iniciando el servidor...");
+			server.serve();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
