@@ -1,6 +1,6 @@
 package calculadora;
 
-import CalculadoraGUI.ICalculadora;
+import thriftStubs.CalculadoraExcepcion;
 
 /** Esta clase contiene la implementación final de cada operación disponible en la calculadora.
  * Debe contener un método público de instancia por cada método de la interfaz CalculadoraGUI.ICalculadora.
@@ -13,41 +13,41 @@ public class OperacionesCalculadora{
 	private	double	resultado = 0;
 	// Escribir los métodos.
 	//AdaptadorOperacionesCalculadoraGUI adaptador = new AdaptadorOperacionesCalculadoraGUI();
-	public double implementacionSumar(double operando1, double operando2){
+	public synchronized double implementacionSumar(double operando1, double operando2){
 		resultado = (operando1+operando2);
 		return resultado;
 	}
-	public double implementacionRestar(double operando1, double operando2){
+	public synchronized double implementacionRestar(double operando1, double operando2){
 				resultado = (operando1-operando2);
 		return resultado;
 	}
-	public double implementacionMultiplicar(double operando1, double operando2){
+	public synchronized double implementacionMultiplicar(double operando1, double operando2){
 		resultado = operando1*operando2;
 		return resultado;
 	}
-	public double implementacionDividir(double operando1, double operando2) throws Exception{
+	public synchronized double implementacionDividir(double operando1, double operando2) throws CalculadoraExcepcion{
 		if (operando1 == 0 && operando2 == 0)
-			throw new Exception("Error: es una indeterminacion 0/0");
+			throw new CalculadoraExcepcion("Error: es una indeterminacion 0/0");
 		else if(operando1 != 1 && operando2 == 0)
-			throw new Exception("Error: el divisor no puede ser 0");
+			throw new CalculadoraExcepcion("Error: el divisor no puede ser 0");
 		else
 			resultado = (operando1/operando2);
 		return resultado;
 	}
-	public double implementacionCuadrado(double operando){
+	public synchronized double implementacionCuadrado(double operando){
 		resultado = (operando*operando);
 		return resultado;
 	}
-	public double implementacionUR(){
+	public synchronized double implementacionUR(){
 		return resultado;
 	}
-	public void implementacionMA(){
+	public synchronized void implementacionMA(){
 		memoria = resultado;
 	}
-	public void implementacionML(){
+	public synchronized void implementacionML(){
 		memoria = 0;
 	}
-	public double implementacionMO(){
+	public synchronized double implementacionMO(){
 		return memoria;
 	}
 }

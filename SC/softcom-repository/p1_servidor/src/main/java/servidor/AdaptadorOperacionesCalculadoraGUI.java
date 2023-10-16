@@ -20,7 +20,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora,Iface {
 		Añade a la memoria acumuladora el último resultado obtenido al realizar una operación aritmética.
 	*/
 	@Override
-	public synchronized void memoriaAniadir() {
+	public void memoriaAniadir() {
 		operaciones.implementacionMA();
 	}
 	/*
@@ -28,7 +28,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora,Iface {
 		Pone a cero la memoria acumuladora de la calculadora.
 	 */
 	@Override
-	public synchronized void memoriaLimpiar() {
+	public void memoriaLimpiar() {
 		operaciones.implementacionML();
 	}
 	/*
@@ -38,7 +38,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora,Iface {
 			Valor de la memoria
 	 */
 	@Override
-	public synchronized double memoriaObtener() {
+	public double memoriaObtener() {
 		return operaciones.implementacionMO();
 	}
 	/*
@@ -48,7 +48,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora,Iface {
 			último resultado obtenido al realizar una operación aritmética. Si no se ha realizado ninguna operación aritmética antes, devuelve cero.
 	 */
 	@Override
-	public synchronized double obtenerUltimoResultado() {
+	public double obtenerUltimoResultado() {
 		return operaciones.implementacionUR();
 	}
 	/*
@@ -61,7 +61,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora,Iface {
 			Multiplicación de los dos operandos
 	 */
 	@Override
-	public synchronized double multiplicar(double operando1, double operando2) {
+	public double multiplicar(double operando1, double operando2) {
 		return operaciones.implementacionMultiplicar(operando1, operando2);
 	}
 	/*
@@ -74,7 +74,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora,Iface {
 			Resta del operando2 al operando1
 	 */
 	@Override
-	public synchronized double restar(double operando1, double operando2) {
+	public double restar(double operando1, double operando2) {
 		return operaciones.implementacionRestar(operando1, operando2);
 	}
 	/*
@@ -87,7 +87,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora,Iface {
 			Suma de los dos operandos
 	 */
 	@Override
-	public synchronized double sumar(double operando1, double operando2) {
+	public double sumar(double operando1, double operando2) {
 		return operaciones.implementacionSumar(operando1, operando2);
 	}
 	/*
@@ -102,7 +102,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora,Iface {
 			Exception - Excepción arrojada cuando se produce una división por cero o cuando se produce una indeterminación 0/0. La excepción debe contener un texto explicativo de la razón de la excepción.
 	 */
 	@Override
-	public synchronized double dividir(double dividendo, double divisor) throws Exception {
+	public double dividir(double dividendo, double divisor) throws CalculadoraExcepcion {
 		return operaciones.implementacionDividir(dividendo, divisor);
 	}
 	/*
@@ -114,16 +114,16 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora,Iface {
 			Elevado al cuadrado
 	 */
 	@Override
-	public synchronized double elevarAlCuadrado(double operando){
+	public double elevarAlCuadrado(double operando){
 		return	operaciones.implementacionCuadrado(operando);
 	}
 	@Override
-	public synchronized double multiplicacion(double operando1, double operando2) throws TException {
+	public double multiplicacion(double operando1, double operando2) throws TException {
 		// TODO Auto-generated method stub
 		return operaciones.implementacionMultiplicar(operando1, operando2);
 	}
 	@Override
-	public synchronized double division(double dividendo, double divisor) throws CalculadoraExcepcion, TException {
+	public double division(double dividendo, double divisor) throws CalculadoraExcepcion, TException {
 		// TODO Auto-generated method stub
 		try {
 			return operaciones.implementacionDividir(dividendo, divisor);
