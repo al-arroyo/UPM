@@ -1,51 +1,31 @@
-package cliente;
+package servidor;
 
-import org.apache.thrift.TException;
-import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.transport.TSocket;
-import org.apache.thrift.transport.TTransport;
+import java.rmi.RemoteException;
 
-import CalculadoraGUI.ICalculadora;
-import thriftStubs.ServicioCalculadora;
+import calculadora.OperacionesCalculadora;
+import calculadoraRMI.CalculadoraExcepcion;
+import calculadoraRMI.ICalculadoraRMI;
 
 /** Esta clase sirve para adaptar la interfaz de la clase calculadora.OperacionesCalculadora a la interfaz
  * de CalculadoraGUI.ICalculadora.
  * Se peude utilizar un adaptador de clase o de objeto.
  */
-public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
-
+public class AdaptadorOperacionesCalculadoraRMI implements ICalculadoraRMI {
+	
 	// Escribir los métodos.
-	//private OperacionesCalculadora operaciones = new OperacionesCalculadora();
-	public static final String SERVIDOR = "localhost";
-	public static final int PUERTO = 8585;
-	
-	private ServicioCalculadora.Client cliente;	
-	
-	public AdaptadorOperacionesCalculadoraGUI() {
-		try {
-			TTransport transport = new TSocket(SERVIDOR,PUERTO);
-			transport.open();
-			TProtocol protocol = new TBinaryProtocol(transport);
-			cliente = new ServicioCalculadora.Client(protocol);
-
-		}catch(TException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		}
+	private OperacionesCalculadora operaciones = new OperacionesCalculadora();
+	AdaptadorOperacionesCalculadoraRMI() throws RemoteException
+	{
+		operaciones = new OperacionesCalculadora();
 	}
+
 	/*
 	 *	public void memoriaAniadir()
 		Añade a la memoria acumuladora el último resultado obtenido al realizar una operación aritmética.
 	*/
 	@Override
 	public void memoriaAniadir() {
-		try {
-			cliente.memoriaAniadir();
-		} catch (TException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		operaciones.implementacionMA();
 	}
 	/*
 	 *	public void memoriaLimpiar()
@@ -53,12 +33,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public void memoriaLimpiar() {
-		try {
-			cliente.memoriaLimpiar();
-		} catch (TException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		operaciones.implementacionML();
 	}
 	/*
 	 *	public double memoriaObtener()
@@ -68,12 +43,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double memoriaObtener() {
-		try {
-			return cliente.memoriaObtener();
-		} catch (TException e) {
-			// TODO Auto-generated catch block
-			return Double.NaN;
-		}
+		return operaciones.implementacionMO();
 	}
 	/*
 	 *	public double obtenerUltimoResultado()
@@ -83,12 +53,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double obtenerUltimoResultado() {
-		try {
-			return cliente.obtenerUltimoResultado();
-		} catch (TException e) {
-			// TODO Auto-generated catch block
-			return Double.NaN;
-		}
+		return operaciones.implementacionUR();
 	}
 	/*
 	 *	public double multiplicar(double operando1, double operando2)
@@ -101,12 +66,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double multiplicar(double operando1, double operando2) {
-		try {
-			return cliente.multiplicacion(operando1, operando2);
-		} catch (TException e) {
-			// TODO Auto-generated catch block
-			return Double.NaN;
-		}
+		return operaciones.implementacionMultiplicar(operando1, operando2);
 	}
 	/*
 	 *	public double restar(double operando1, double operando2)
@@ -119,12 +79,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double restar(double operando1, double operando2) {
-		try {
-			return cliente.restar(operando1, operando2);
-		} catch (TException e) {
-			// TODO Auto-generated catch block
-			return Double.NaN;
-		}
+		return operaciones.implementacionRestar(operando1, operando2);
 	}
 	/*
 	 *	public double sumar(double operando1, double operando2)
@@ -137,11 +92,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double sumar(double operando1, double operando2) {
-		try {
-			return cliente.sumar(operando1, operando2);
-		}catch (TException e) {
-			return Double.NaN;
-		}
+		return operaciones.implementacionSumar(operando1, operando2);
 	}
 	/*
 	 *	public double dividir(double dividendo,	double divisor)throws Exception
@@ -155,12 +106,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 			Exception - Excepción arrojada cuando se produce una división por cero o cuando se produce una indeterminación 0/0. La excepción debe contener un texto explicativo de la razón de la excepción.
 	 */
 	@Override
-	public double dividir(double dividendo, double divisor) throws Exception {
-		try {
-			return cliente.division(dividendo, divisor);
-		}catch (TException e) {
-			return Double.NaN;
-		}
+	public double dividir(double dividendo, double divisor) throws CalculadoraExcepcion {
+		return operaciones.implementacionDividir(dividendo, divisor);
 	}
 	/*
 	 *	public double elevarAlCuadrado(double operando)
@@ -172,10 +119,21 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	 */
 	@Override
 	public double elevarAlCuadrado(double operando){
+		return	operaciones.implementacionCuadrado(operando);
+	}
+	@Override
+	public double multiplicacion(double operando1, double operando2) throws TException {
+		// TODO Auto-generated method stub
+		return operaciones.implementacionMultiplicar(operando1, operando2);
+	}
+	@Override
+	public double division(double dividendo, double divisor) throws CalculadoraExcepcion, TException {
+		// TODO Auto-generated method stub
 		try {
-			return cliente.elevarAlCuadrado(operando);
-		} catch (TException e) {
+			return operaciones.implementacionDividir(dividendo, divisor);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return Double.NaN;
 		}
 	}
