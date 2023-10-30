@@ -24,11 +24,10 @@ public class ServidorCalculadoraRMI {
 			ICalculadoraRMI operaciones = new AdaptadorOperacionesCalculadoraRMI();
 			ICalculadoraRMI remoteStub = (ICalculadoraRMI) UnicastRemoteObject.exportObject(operaciones, 0);
 //			Registry registry = LocateRegistry.getRegistry();
-			Registry registry = LocateRegistry.createRegistry(1099);
+			Registry registry = LocateRegistry.createRegistry(PUERTO);
 			registry.rebind("Calculadora", remoteStub);
         } catch (RemoteException e) {
             e.printStackTrace();
-        }
+        } 
     }
-
 }

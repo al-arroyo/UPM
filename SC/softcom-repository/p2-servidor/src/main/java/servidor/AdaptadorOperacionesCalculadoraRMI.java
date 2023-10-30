@@ -13,7 +13,7 @@ import calculadoraRMI.ICalculadoraRMI;
 public class AdaptadorOperacionesCalculadoraRMI implements ICalculadoraRMI {
 	
 	// Escribir los métodos.
-	private OperacionesCalculadora operaciones = new OperacionesCalculadora();
+	private OperacionesCalculadora operaciones;
 	AdaptadorOperacionesCalculadoraRMI() throws RemoteException
 	{
 		operaciones = new OperacionesCalculadora();
@@ -105,9 +105,16 @@ public class AdaptadorOperacionesCalculadoraRMI implements ICalculadoraRMI {
 		Throws:
 			Exception - Excepción arrojada cuando se produce una división por cero o cuando se produce una indeterminación 0/0. La excepción debe contener un texto explicativo de la razón de la excepción.
 	 */
+
 	@Override
-	public double dividir(double dividendo, double divisor) throws CalculadoraExcepcion {
-		return operaciones.implementacionDividir(dividendo, divisor);
+	public double dividir(double dividendo, double divisor) throws CalculadoraExcepcion, RemoteException {
+		// TODO Auto-generated method stub
+		try {
+			return operaciones.implementacionDividir(dividendo, divisor);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new CalculadoraExcepcion(e.getMessage());
+		}
 	}
 	/*
 	 *	public double elevarAlCuadrado(double operando)
@@ -118,23 +125,9 @@ public class AdaptadorOperacionesCalculadoraRMI implements ICalculadoraRMI {
 			Elevado al cuadrado
 	 */
 	@Override
-	public double elevarAlCuadrado(double operando){
-		return	operaciones.implementacionCuadrado(operando);
-	}
-	@Override
-	public double multiplicacion(double operando1, double operando2) throws TException {
+	public double elevarCuadrado(double operando) throws RemoteException {
 		// TODO Auto-generated method stub
-		return operaciones.implementacionMultiplicar(operando1, operando2);
+		return operaciones.implementacionCuadrado(operando);
 	}
-	@Override
-	public double division(double dividendo, double divisor) throws CalculadoraExcepcion, TException {
-		// TODO Auto-generated method stub
-		try {
-			return operaciones.implementacionDividir(dividendo, divisor);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return Double.NaN;
-		}
-	}
+
 }
