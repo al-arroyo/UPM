@@ -93,6 +93,7 @@ public class OperacionesCalculadora{
 				throw new Exception ("Operacion desconocida");
 
 		}
-		return resultado;
+		memoria = resultado;
+		return memoria;
 	}
 }
