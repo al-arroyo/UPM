@@ -1,8 +1,5 @@
 package cliente;
 
-import java.rmi.RemoteException;
-
-
 import CalculadoraGUI.CalculadoraGUI;
 
 /** Esta es la clase que contiene el método main() de la aplicación de la calculadora y de la aplicación cleinte de la calculadora.
@@ -16,11 +13,6 @@ public class ClienteCalculadoraRMI {
 	 */
 	public static void main(String[] args) {
 	
-		try {
-			new CalculadoraGUI(new AdaptadorOperacionesCalculadoraGUI());
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		new CalculadoraGUI(new AdaptadorOperacionesCalculadoraGUI());
 	}
 }

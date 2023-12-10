@@ -1,33 +1,20 @@
 package cliente;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+
 
 import CalculadoraGUI.ICalculadora;
-import calculadoraRMI.CalculadoraExcepcion;
-import calculadoraRMI.ICalculadoraRMI;
 
 /** Esta clase sirve para adaptar la interfaz de la clase calculadora.OperacionesCalculadora a la interfaz
  * de CalculadoraGUI.ICalculadora.
  * Se peude utilizar un adaptador de clase o de objeto.
  */
-public class AdaptadorOperacionesCalculadoraGUI implements ICalculadoraRMI, ICalculadora{
+public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	
 	// Escribir los métodos.
-	private static ICalculadoraRMI stubCliente;
 	private final static int PUERTO = 8585;
-	public AdaptadorOperacionesCalculadoraGUI() throws RemoteException
+	public AdaptadorOperacionesCalculadoraGUI()
 	{
-		try {
-			Registry registry = LocateRegistry.getRegistry("localhost", PUERTO);
-			stubCliente = (ICalculadoraRMI) registry.lookup("Calculadora");
 
-		} catch (NotBoundException | RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/*
@@ -36,12 +23,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadoraRMI, ICal
 	*/
 	@Override
 	public void memoriaAniadir() {
-		try {
-			stubCliente.memoriaAniadir();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	/*
 	 *	public void memoriaLimpiar()
@@ -49,12 +30,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadoraRMI, ICal
 	 */
 	@Override
 	public void memoriaLimpiar() {
-		try {
-			stubCliente.memoriaLimpiar();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	/*
 	 *	public double memoriaObtener()
@@ -64,12 +39,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadoraRMI, ICal
 	 */
 	@Override
 	public double memoriaObtener() {
-		try {
-			return stubCliente.memoriaObtener();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return 0;
 	}
 	/*
@@ -80,12 +49,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadoraRMI, ICal
 	 */
 	@Override
 	public double obtenerUltimoResultado() {
-		try {
-			return stubCliente.obtenerUltimoResultado();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return 0;
 	}
 	/*
@@ -99,12 +62,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadoraRMI, ICal
 	 */
 	@Override
 	public double multiplicar(double operando1, double operando2) {
-		try {
-			return stubCliente.multiplicar(operando1, operando2);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return 0;
 	}
 	/*
@@ -118,12 +75,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadoraRMI, ICal
 	 */
 	@Override
 	public double restar(double operando1, double operando2) {
-		try {
-			return stubCliente.restar(operando1, operando2);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return 0;
 	}
 	/*
@@ -137,12 +88,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadoraRMI, ICal
 	 */
 	@Override
 	public double sumar(double operando1, double operando2) {
-		try {
-			return stubCliente.sumar(operando1, operando2);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return 0;
 	}
 	/*
@@ -161,12 +106,10 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadoraRMI, ICal
 	public double dividir(double dividendo, double divisor) throws Exception {
 		// TODO Auto-generated method stub
 		try {
-			return stubCliente.dividir(dividendo, divisor);
-		} catch (CalculadoraExcepcion e) {
+		} catch (Exception e) {
 			throw new Exception( e.getMessage() );
-		} catch (RemoteException e) {
-			return 0; // Esto es una alternativa...
 		}
+		return 0;
 	}
 	/*
 	 *	public double elevarAlCuadrado(double operando)
@@ -176,10 +119,6 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadoraRMI, ICal
 		Returns:
 			Elevado al cuadrado
 	 */
-	@Override
-	public double elevarCuadrado(double operando) throws RemoteException {
-		// TODO Auto-generated method stub
-		return stubCliente.elevarCuadrado(operando);
-	}
+
 
 }
