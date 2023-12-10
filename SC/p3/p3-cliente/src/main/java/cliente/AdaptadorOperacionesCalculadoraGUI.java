@@ -2,6 +2,8 @@ package cliente;
 
 
 
+import java.util.List;
+
 import CalculadoraGUI.ICalculadora;
 import wsCalculadora.Exception_Exception;
 import wsCalculadora.OperacionesCalculadora;
@@ -146,8 +148,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	@Override
 	public String[] getOperaciones(int numeroBotonesDisponibles)
 	{
-        java.util.List<java.lang.String> _getOperaciones__return = port.getOperaciones(numeroBotonesDisponibles);
-        return (String[]) _getOperaciones__return.toArray();
+        List<String> _getOperaciones__return = port.getOperaciones(numeroBotonesDisponibles);
+        return _getOperaciones__return.toArray(new String[0]);
 	}
 
 
