@@ -1,26 +1,32 @@
 package calculadora;
 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 
-
+@WebService(targetNamespace = "http://calculadora/", portName = "OperacionesCalculadoraPort", serviceName = "OperacionesCalculadoraService")
 public class OperacionesCalculadora{
 	private	double	memoria = 0;
 	private	double	resultado = 0;
 
+	@WebMethod(operationName = "implementacionSumar", action = "urn:ImplementacionSumar")
 	public synchronized double implementacionSumar(double operando1, double operando2){
 		resultado = (operando1+operando2);
 		return resultado;
 	}
 
+	@WebMethod(operationName = "implementacionRestar", action = "urn:ImplementacionRestar")
 	public synchronized double implementacionRestar(double operando1, double operando2){
 				resultado = (operando1-operando2);
 		return resultado;
 	}
 
+	@WebMethod(operationName = "implementacionMultiplicar", action = "urn:ImplementacionMultiplicar")
 	public synchronized double implementacionMultiplicar(double operando1, double operando2){
 		resultado = operando1*operando2;
 		return resultado;
 	}
 
+	@WebMethod(operationName = "implementacionDividir", action = "urn:ImplementacionDividir")
 	public synchronized double implementacionDividir(double operando1, double operando2) throws Exception{
 		if (operando1 == 0 && operando2 == 0)
 			throw new Exception("Error: es una indeterminacion 0/0");
@@ -30,22 +36,27 @@ public class OperacionesCalculadora{
 			resultado = (operando1/operando2);
 		return resultado;
 	}
+	@WebMethod(operationName = "implementacionUR", action = "urn:ImplementacionUR")
 	public synchronized double implementacionUR(){
 		return resultado;
 	}
 
+	@WebMethod(operationName = "implementacionMA", action = "urn:ImplementacionMA")
 	public synchronized void implementacionMA(){
 		memoria = resultado;
 	}
 	
+	@WebMethod(operationName = "implementacionML", action = "urn:ImplementacionML")
 	public synchronized void implementacionML(){
 		memoria = 0;
 	}
 
+	@WebMethod(operationName = "implementacionMO", action = "urn:ImplementacionMO")
 	public synchronized double implementacionMO(){
 		return memoria;
 	}
 
+	@WebMethod(operationName = "getOperaciones", action = "urn:GetOperaciones")
 	public synchronized String[] getOperaciones(int numeroBotonesDisponibles)
 	{
 		String [] operaciones = {"x^2","sqtr(x)","ln(x)","tg(x)"};
@@ -61,6 +72,7 @@ public class OperacionesCalculadora{
 		return operaciones;
 	}
 
+	@WebMethod(operationName = "operar", action = "urn:Operar")
 	public synchronized double operar(int numeroDeOperacion, double operando) throws Exception{
 		double resultado = 0;
 		switch(numeroDeOperacion)
