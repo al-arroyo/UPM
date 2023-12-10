@@ -3,6 +3,9 @@ package cliente;
 
 
 import CalculadoraGUI.ICalculadora;
+import wsCalculadora.Exception_Exception;
+import wsCalculadora.OperacionesCalculadora;
+import wsCalculadora.OperacionesCalculadoraService;
 
 /** Esta clase sirve para adaptar la interfaz de la clase calculadora.OperacionesCalculadora a la interfaz
  * de CalculadoraGUI.ICalculadora.
@@ -10,11 +13,13 @@ import CalculadoraGUI.ICalculadora;
  */
 public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	
-	// Escribir los métodos.
-	private final static int PUERTO = 8585;
-	public AdaptadorOperacionesCalculadoraGUI()
-	{
+	private OperacionesCalculadoraService ss;
+	private OperacionesCalculadora port;
 
+	public AdaptadorOperacionesCalculadoraGUI(OperacionesCalculadoraService ss, OperacionesCalculadora port)
+	{
+		this.ss = ss;
+		this.port = port;
 	}
 
 	/*
@@ -23,6 +28,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	*/
 	@Override
 	public void memoriaAniadir() {
+        port.implementacionMA();
 	}
 	/*
 	 *	public void memoriaLimpiar()
@@ -30,6 +36,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	 */
 	@Override
 	public void memoriaLimpiar() {
+        port.implementacionML();
+
 	}
 	/*
 	 *	public double memoriaObtener()
@@ -39,7 +47,9 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	 */
 	@Override
 	public double memoriaObtener() {
-		return 0;
+        double _implementacionMO__return = port.implementacionMO();
+		return _implementacionMO__return;
+
 	}
 	/*
 	 *	public double obtenerUltimoResultado()
@@ -49,7 +59,9 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	 */
 	@Override
 	public double obtenerUltimoResultado() {
-		return 0;
+        double _implementacionUR__return = port.implementacionUR();
+
+		return _implementacionUR__return;
 	}
 	/*
 	 *	public double multiplicar(double operando1, double operando2)
@@ -62,7 +74,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	 */
 	@Override
 	public double multiplicar(double operando1, double operando2) {
-		return 0;
+        double _implementacionMultiplicar__return = port.implementacionMultiplicar(operando1, operando2);
+		return _implementacionMultiplicar__return;
 	}
 	/*
 	 *	public double restar(double operando1, double operando2)
@@ -75,7 +88,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	 */
 	@Override
 	public double restar(double operando1, double operando2) {
-		return 0;
+        double _implementacionRestar__return = port.implementacionRestar(operando1, operando2);
+		return _implementacionRestar__return;
 	}
 	/*
 	 *	public double sumar(double operando1, double operando2)
@@ -88,7 +102,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	 */
 	@Override
 	public double sumar(double operando1, double operando2) {
-		return 0;
+        double _implementacionSumar__return = port.implementacionSumar(operando1, operando2);
+		return _implementacionSumar__return;
 	}
 	/*
 	 *	public double dividir(double dividendo,	double divisor)throws Exception
@@ -106,19 +121,34 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora{
 	public double dividir(double dividendo, double divisor) throws Exception {
 		// TODO Auto-generated method stub
 		try {
-		} catch (Exception e) {
-			throw new Exception( e.getMessage() );
+            double _implementacionDividir__return = port.implementacionDividir(dividendo, divisor);
+            System.out.println("implementacionDividir.result=" + _implementacionDividir__return);
+
+        } catch (Exception_Exception e) {
+            System.out.println("Expected exception: Exception has occurred.");
+            System.out.println(e.toString());
 		}
 		return 0;
 	}
-	/*
-	 *	public double elevarAlCuadrado(double operando)
-		Eleva al cuadrado el operando y devuelve el resultado.
-		Parameters:
-			operando - Operando
-		Returns:
-			Elevado al cuadrado
-	 */
+	@Override
+	public double operar(int numeroDeOperacion, double operando) throws Exception
+	{
+        try {
+            double _operar__return = port.operar(numeroDeOperacion, operando);
+            System.out.println("operar.result=" + _operar__return);
+
+        } catch (Exception_Exception e) {
+            System.out.println("Expected exception: Exception has occurred.");
+            System.out.println(e.toString());
+        }
+		return 0;
+	}
+	@Override
+	public String[] getOperaciones(int numeroBotonesDisponibles)
+	{
+        java.util.List<java.lang.String> _getOperaciones__return = port.getOperaciones(numeroBotonesDisponibles);
+        return (String[]) _getOperaciones__return.toArray();
+	}
 
 
 }
