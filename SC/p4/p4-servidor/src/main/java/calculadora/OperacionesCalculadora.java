@@ -1,7 +1,6 @@
 package calculadora;
 
-import javax.jws.WebMethod;
-import javax.jws.WebService;
+
 
 public class OperacionesCalculadora{
 	private	double	memoria = 0;
