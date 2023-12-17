@@ -51,7 +51,7 @@ public class OperacionesCalculadora{
 		String [] operaciones = {"x^2","sqtr(x)","ln(x)","tg(x)"};
 		int i = 0;
 		String []aux = new String[numeroBotonesDisponibles] ;
-		if(numeroBotonesDisponibles < 4)
+		while(numeroBotonesDisponibles < 4)
 		{
 			aux[i] = operaciones[i];
 			i++;
@@ -63,25 +63,27 @@ public class OperacionesCalculadora{
 
 	public synchronized double operar(int numeroDeOperacion, double operando) throws Exception{
 		double resultado = 0;
-		switch(numeroDeOperacion)
-		{
-			case 0:
-				resultado = operando * operando;
-				break;
-			case 1:
-				resultado = Math.sqrt(operando);
-				break;
-			case 2:
-				resultado = Math.log(operando);
-				break;
-			case 3:
-				resultado = Math.tan(operando);
-				break;
-			default:
-				throw new Exception ("Operacion desconocida");
-
+		try {	
+			switch(numeroDeOperacion)
+			{
+				case 0:
+					resultado = operando * operando;
+					break;
+				case 1:
+					resultado = Math.sqrt(operando);
+					break;
+				case 2:
+					resultado = Math.log(operando);
+					break;
+				case 3:
+					resultado = Math.tan(operando);
+					break;
+				default:
+					throw new Exception ("Operacion desconocida");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
-		memoria = resultado;
-		return memoria;
+		return resultado;
 	}
 }
