@@ -1,9 +1,5 @@
 package cliente;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.jws.WebMethod;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation.Builder;
@@ -15,6 +11,7 @@ import javax.ws.rs.core.Response.Status;
 import org.glassfish.jersey.client.ClientConfig;
 
 import CalculadoraGUI.ICalculadora;
+import entidades.BotonesCalculadora;
 import entidades.Resultado;
 
 
@@ -101,9 +98,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	public void memoriaLimpiar() {
 		Resultado resultado = null;
 		Builder peticion = target.path("memoria")
-				.request()
-				.accept(MediaType.APPLICATION_XML);
-		Response response = peticion.get();
+				.request();
+		Response response = peticion.delete();
 		resultado=	response.readEntity(Resultado.class);
 
 	}
@@ -111,9 +107,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	public void memoriaAniadir() {
 		Resultado resultado = null;
 		Builder peticion = target.path("memoria")
-				.request()
-				.accept(MediaType.APPLICATION_XML);
-		Response response = peticion.get();
+				.request();
+		Response response = peticion.head();
 		resultado=	response.readEntity(Resultado.class);
 	}
 
@@ -134,7 +129,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 					.queryParam("numeroDeOperacion", numeroDeOperacion)
 					.queryParam("operando", operando)
 					.request()
-					.accept(MediaType.APPLICATION_XML);
+					.accept(MediaType.APPLICATION_XML)
+					.accept(MediaType.TEXT_PLAIN);
 		Response response = peticion.get();
 		if(response.getStatusInfo() == Status.PRECONDITION_FAILED)
 			throw new Exception(response.readEntity(String.class));
@@ -143,15 +139,14 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 	}
 
 	public String[] getOperaciones(int numeroBotonesDisponibles) {
-		Resultado resultado = null;
+		BotonesCalculadora resultado = null;
 		Builder peticion = target.path("operaciones")
 					.queryParam("numeroBotonesDisponibles", numeroBotonesDisponibles)
 					.request()
 					.accept(MediaType.APPLICATION_XML);
 		Response response = peticion.get();
-		resultado = response.readEntity(Resultado.class);
+		resultado = response.readEntity(BotonesCalculadora.class);
 		return resultado.getListaOperaciones();
-		
 	}
 
 }
