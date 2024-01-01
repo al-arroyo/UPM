@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import calculadora.OperacionesCalculadora;
+import entidades.BotonesCalculadora;
 import entidades.Resultado;
 
 @Path("/calculadora")
@@ -25,11 +26,11 @@ public class OperacionesCalculadoraREST {
 	@Path("operaciones")
 	@Produces(MediaType.APPLICATION_ATOM_XML)
 	public Response getOperaciones(@QueryParam("numeroBotonesDisponibles") int num) {
-		Resultado result = new Resultado();
 		ResponseBuilder response = Response.status(Response.Status.OK);
+		BotonesCalculadora botones = new BotonesCalculadora();
 		String[] resultado = operaciones.getOperaciones(num);
-		result.setListaOperaciones(resultado);
-		response = response.entity(result);
+		botones.setListaOperaciones(resultado);
+		response.entity(botones);
 		return response.build();
 	}
 	@GET
