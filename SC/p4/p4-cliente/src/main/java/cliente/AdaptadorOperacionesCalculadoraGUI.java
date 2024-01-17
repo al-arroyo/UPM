@@ -20,8 +20,6 @@ import entidades.Resultado;
  */
 public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 
-	// private ServicioCalculadora.Iface stubCliente; //Clases creadas con el thrift
-
 	public WebTarget target;
 	private Cookie sessionId;
 	private final String key = "JSESSIONID";
@@ -165,6 +163,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 					.request()
 					.accept(MediaType.APPLICATION_XML)
 					.accept(MediaType.TEXT_PLAIN);
+		if(sessionId != null)
+			peticion = peticion.cookie(sessionId);
 		Response response = peticion.get();
 		final Cookie aSessionId = response.getCookies().get(key);
 		if(sessionId == null)
