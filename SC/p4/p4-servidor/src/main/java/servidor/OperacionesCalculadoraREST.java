@@ -147,7 +147,7 @@ public class OperacionesCalculadoraREST {
 	@Produces({MediaType.APPLICATION_XML})
 	public Response operaciones(@QueryParam("numeroOperaciones") int numeroOperaciones) {
 		ResponseBuilder response = Response.status(Response.Status.OK);
-		BotonesCalculadora botones = new BotonesCalculadora();
+		Resultado botones = new Resultado();
 		String[] resultado = this.getOperacionesCalculadora().getOperaciones(numeroOperaciones);
 		botones.setListaOperaciones(resultado);
 		

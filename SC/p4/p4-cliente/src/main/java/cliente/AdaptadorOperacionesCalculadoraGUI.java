@@ -1,9 +1,5 @@
 package cliente;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.jws.WebMethod;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation.Builder;
@@ -11,12 +7,9 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
 import org.glassfish.jersey.client.ClientConfig;
 
 import CalculadoraGUI.ICalculadora;
-import entidades.BotonesCalculadora;
 import entidades.Resultado;
 
 /**
@@ -127,7 +120,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 
 	public void memoriaLimpiar() {
 		Builder peticion = target.path("/memoria")
-				.request();
+				.request()
+				.accept(MediaType.APPLICATION_XML);
 		if(sessionId != null)
 			peticion = peticion.cookie(sessionId);
 		Response response = peticion.delete();
@@ -139,7 +133,8 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 
 	public void memoriaAniadir() {
 		Builder peticion = target.path("/memoria")
-				.request();
+				.request()
+				.accept(MediaType.APPLICATION_XML);
 		if(sessionId != null)
 			peticion = peticion.cookie(sessionId);
 		Response response = peticion.head();
@@ -171,14 +166,17 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 					.accept(MediaType.APPLICATION_XML)
 					.accept(MediaType.TEXT_PLAIN);
 		Response response = peticion.get();
+		final Cookie aSessionId = response.getCookies().get(key);
+		if(sessionId == null)
+			sessionId = aSessionId;
 		switch(response.getMediaType().toString()) {
-		case "application/xml":
-			Resultado resultado = response.readEntity(Resultado.class);
-	        return resultado.getResultado();
-		case "text/plain":
-			throw new Exception(response.readEntity(String.class));
-		default:
-	        throw new Exception("Formato de respuesta desconocido: " + response.getMediaType().toString());
+			case "application/xml":
+				Resultado resultado = response.readEntity(Resultado.class);
+		        return resultado.getResultado();
+			case "text/plain":
+				throw new Exception(response.readEntity(String.class));
+			default:
+		        throw new Exception("Formato de respuesta desconocido: " + response.getMediaType().toString());
 		}
 	}
 
@@ -193,7 +191,7 @@ public class AdaptadorOperacionesCalculadoraGUI implements ICalculadora {
 		final Cookie aSessionId = response.getCookies().get(key);
 		if(sessionId == null)
 			sessionId = aSessionId;
-		BotonesCalculadora res = response.readEntity(BotonesCalculadora.class);
+		Resultado res = response.readEntity(Resultado.class);
 		return res.getListaOperaciones();
 	}
 
